@@ -1,8 +1,8 @@
 [gd_scene load_steps=6 format=3 uid="uid://cxse4qwte5vaq"]
 
-[ext_resource type="Script" path="res://addons/gloot/core/inventory_grid.gd" id="1_i22a1"]
-[ext_resource type="Resource" uid="uid://d3mo4eqngg0b1" path="res://assets/gloot/backpack_items.tres" id="2_udq3n"]
-[ext_resource type="Script" path="res://addons/gloot/ui/ctrl_inventory_grid_ex.gd" id="3_ygyrc"]
+[ext_resource type="Script" path="res://addons/gloot/core/inventory_grid.gd" id="1_g65wp"]
+[ext_resource type="Resource" uid="uid://d3mo4eqngg0b1" path="res://assets/gloot/backpack_items.tres" id="2_lxv6k"]
+[ext_resource type="Script" path="res://addons/gloot/ui/ctrl_inventory_grid_ex.gd" id="3_nn5si"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_jurgw"]
 bg_color = Color(0.231373, 0.0980392, 0.0235294, 1)
@@ -19,22 +19,22 @@ grow_horizontal = 2
 grow_vertical = 2
 
 [node name="InventoryGrid" type="Node" parent="."]
-script = ExtResource("1_i22a1")
+script = ExtResource("1_g65wp")
 size = Vector2i(5, 5)
-item_protoset = ExtResource("2_udq3n")
+item_protoset = ExtResource("2_lxv6k")
 
 [node name="CtrlInventoryGridEx" type="Control" parent="."]
-custom_minimum_size = Vector2(573, 573)
+custom_minimum_size = Vector2(648, 648)
 layout_mode = 2
 anchors_preset = 0
-offset_right = 573.0
-offset_bottom = 573.0
+offset_right = 648.0
+offset_bottom = 648.0
 grow_horizontal = 2
 grow_vertical = 2
-script = ExtResource("3_ygyrc")
+script = ExtResource("3_nn5si")
 field_style = SubResource("StyleBoxFlat_jurgw")
 field_highlighted_style = SubResource("StyleBoxFlat_fsinp")
-field_dimensions = Vector2(113, 113)
+field_dimensions = Vector2(128, 128)
 item_spacing = 2
 draw_selections = true
 inventory_path = NodePath("../InventoryGrid")

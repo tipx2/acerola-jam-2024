@@ -1,0 +1,30 @@
+[gd_scene load_steps=6 format=3 uid="uid://bqbk4qjsfcv20"]
+
+[ext_resource type="Script" path="res://scripts/world.gd" id="1_wjo8l"]
+[ext_resource type="PackedScene" uid="uid://dx5x5ljxp22fg" path="res://scenes/square_room.tscn" id="2_04yut"]
+[ext_resource type="Script" path="res://scripts/player.gd" id="3_oufre"]
+[ext_resource type="Texture2D" uid="uid://b6oauoaaaw8am" path="res://assets/visuals/channels4_profile.png" id="4_ctofi"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_71bwt"]
+radius = 11.1803
+
+[node name="world" type="Node2D"]
+script = ExtResource("1_wjo8l")
+
+[node name="SquareRoom" parent="." instance=ExtResource("2_04yut")]
+
+[node name="player" type="CharacterBody2D" parent="."]
+script = ExtResource("3_oufre")
+speed = 200
+
+[node name="Camera2D" type="Camera2D" parent="player"]
+zoom = Vector2(2, 2)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="player"]
+shape = SubResource("CircleShape2D_71bwt")
+
+[node name="Sprite2D" type="Sprite2D" parent="player"]
+scale = Vector2(0.0177778, 0.02)
+texture = ExtResource("4_ctofi")
+
+[connection signal="map_generated" from="SquareRoom" to="." method="_on_square_room_map_generated"]
