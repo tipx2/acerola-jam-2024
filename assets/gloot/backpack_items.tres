@@ -1,0 +1,18 @@
+[gd_resource type="Resource" script_class="ItemProtoset" load_steps=2 format=3 uid="uid://d3mo4eqngg0b1"]
+
+[ext_resource type="Script" path="res://addons/gloot/core/item_protoset.gd" id="1_cfvbe"]
+
+[resource]
+script = ExtResource("1_cfvbe")
+json_data = "[
+    {
+        \"description\": \"mmm, yummy meat. DElicIOUC!!S\",
+        \"height\": \"2\",
+        \"id\": \"MonsterMeat\",
+        \"image\": \"res://assets/visuals/channels4_profile.jpg\",
+        \"name\": \"Monster Meat\",
+        \"positive_rotation\": \"false\",
+        \"rotated\": \"false\",
+        \"width\": \"2\"
+    }
+]"
