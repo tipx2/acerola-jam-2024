@@ -1,4 +1,4 @@
-[gd_scene load_steps=6 format=3 uid="uid://dx5x5ljxp22fg"]
+[gd_scene load_steps=7 format=3 uid="uid://dx5x5ljxp22fg"]
 
 [ext_resource type="Script" path="res://scripts/square_room.gd" id="1_x8mnt"]
 [ext_resource type="Texture2D" uid="uid://8rjmmlta2sf5" path="res://assets/visuals/RandomLevelGenTileset.png" id="2_mcgkj"]
@@ -518,11 +518,21 @@ texture_region_size = Vector2i(32, 32)
 
 [sub_resource type="TileSet" id="TileSet_852yh"]
 tile_size = Vector2i(32, 32)
-physics_layer_0/collision_layer = 1
+physics_layer_0/collision_layer = 3
+physics_layer_0/collision_mask = 3
 terrain_set_0/mode = 0
 terrain_set_0/terrain_0/name = "wall"
 terrain_set_0/terrain_0/color = Color(0.0745098, 0.345098, 0.588235, 1)
 sources/1 = SubResource("TileSetAtlasSource_pdmcx")
+
+[sub_resource type="NavigationPolygon" id="NavigationPolygon_3712i"]
+vertices = PackedVector2Array(19928, 20009, -19876, 20009, -19876, -19999, 20232, -20100)
+polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3)])
+outlines = Array[PackedVector2Array]([PackedVector2Array(-19886, -20009, -19886, 20019, 19938, 20019, 20243, -20111)])
+parsed_geometry_type = 1
+source_geometry_mode = 1
+source_geometry_group_name = &"navigation"
+agent_radius = 15.0
 
 [node name="SquareRoom" type="Node2D"]
 script = ExtResource("1_x8mnt")
@@ -532,7 +542,10 @@ self_modulate = Color(0, 0, 0, 1)
 scale = Vector2(40000, 40000)
 texture = ExtResource("3_8ho1n")
 
-[node name="TileMap" type="TileMap" parent="."]
+[node name="TileMap" type="TileMap" parent="." groups=["navigation"]]
 scale = Vector2(2, 2)
 tile_set = SubResource("TileSet_852yh")
 format = 2
+
+[node name="NavigationRegion2D" type="NavigationRegion2D" parent="."]
+navigation_polygon = SubResource("NavigationPolygon_3712i")

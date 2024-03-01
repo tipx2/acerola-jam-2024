@@ -1,30 +1,47 @@
-[gd_scene load_steps=6 format=3 uid="uid://bqbk4qjsfcv20"]
+[gd_scene load_steps=5 format=3 uid="uid://bqbk4qjsfcv20"]
 
 [ext_resource type="Script" path="res://scripts/world.gd" id="1_wjo8l"]
 [ext_resource type="PackedScene" uid="uid://dx5x5ljxp22fg" path="res://scenes/square_room.tscn" id="2_04yut"]
-[ext_resource type="Script" path="res://scripts/player.gd" id="3_oufre"]
-[ext_resource type="Texture2D" uid="uid://b6oauoaaaw8am" path="res://assets/visuals/channels4_profile.png" id="4_ctofi"]
-
-[sub_resource type="CircleShape2D" id="CircleShape2D_71bwt"]
-radius = 11.1803
+[ext_resource type="PackedScene" uid="uid://cggixt2rmuqrk" path="res://scenes/player.tscn" id="3_gr6f7"]
+[ext_resource type="PackedScene" uid="uid://bvka4v8r5qjnb" path="res://scenes/end_portal.tscn" id="4_072hb"]
 
 [node name="world" type="Node2D"]
 script = ExtResource("1_wjo8l")
 
 [node name="SquareRoom" parent="." instance=ExtResource("2_04yut")]
 
-[node name="player" type="CharacterBody2D" parent="."]
-script = ExtResource("3_oufre")
-speed = 200
+[node name="player" parent="." instance=ExtResource("3_gr6f7")]
 
-[node name="Camera2D" type="Camera2D" parent="player"]
-zoom = Vector2(2, 2)
+[node name="Control" type="Control" parent="player"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="player"]
-shape = SubResource("CircleShape2D_71bwt")
+[node name="debugui" type="Control" parent="player/Control"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+grow_horizontal = 2
+grow_vertical = 2
 
-[node name="Sprite2D" type="Sprite2D" parent="player"]
-scale = Vector2(0.0177778, 0.02)
-texture = ExtResource("4_ctofi")
+[node name="Label" type="Label" parent="player/Control/debugui"]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 15
+text = "YOU ENDED!! YAHOO"
+
+[node name="EndPortal" parent="." instance=ExtResource("4_072hb")]
 
 [connection signal="map_generated" from="SquareRoom" to="." method="_on_square_room_map_generated"]
+[connection signal="level_ended" from="EndPortal" to="." method="_on_end_portal_level_ended"]

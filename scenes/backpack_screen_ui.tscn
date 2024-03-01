@@ -1,8 +1,9 @@
-[gd_scene load_steps=6 format=3 uid="uid://cxse4qwte5vaq"]
+[gd_scene load_steps=7 format=3 uid="uid://cxse4qwte5vaq"]
 
 [ext_resource type="Script" path="res://addons/gloot/core/inventory_grid.gd" id="1_g65wp"]
 [ext_resource type="Resource" uid="uid://d3mo4eqngg0b1" path="res://assets/gloot/backpack_items.tres" id="2_lxv6k"]
 [ext_resource type="Script" path="res://addons/gloot/ui/ctrl_inventory_grid_ex.gd" id="3_nn5si"]
+[ext_resource type="Script" path="res://addons/gloot/core/inventory_item.gd" id="3_u0ql1"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_jurgw"]
 bg_color = Color(0.231373, 0.0980392, 0.0235294, 1)
@@ -22,6 +23,11 @@ grow_vertical = 2
 script = ExtResource("1_g65wp")
 size = Vector2i(5, 5)
 item_protoset = ExtResource("2_lxv6k")
+
+[node name="_Node_119444" type="Node" parent="InventoryGrid"]
+script = ExtResource("3_u0ql1")
+protoset = ExtResource("2_lxv6k")
+prototype_id = "MonsterMeat"
 
 [node name="CtrlInventoryGridEx" type="Control" parent="."]
 custom_minimum_size = Vector2(648, 648)

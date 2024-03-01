@@ -17,7 +17,7 @@ func _init(starting_pos : Vector2, new_borders : Rect2):
 
 func walk(steps) -> Array:
 	for _s in steps:
-		if randf() <= 0.25 or steps_since_turn >= 2:
+		if randf() <= 0.25 or steps_since_turn >= 1:
 			change_direction()
 		
 		if step():
@@ -28,7 +28,7 @@ func walk(steps) -> Array:
 
 func step():
 	var target_pos = pos + dir
-	if borders.has_point(target_pos):
+	if borders.has_point(target_pos) or target_pos in step_history:
 		steps_since_turn += 1
 		pos = target_pos
 		return true
