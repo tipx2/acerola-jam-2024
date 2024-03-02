@@ -1,57 +1,29 @@
-[gd_scene load_steps=13 format=3 uid="uid://c1wccewjs5pok"]
+[gd_scene load_steps=7 format=3 uid="uid://c0hnp5n85ngx0"]
 
-[ext_resource type="Script" path="res://scripts/shop_screen.gd" id="1_adgk6"]
-[ext_resource type="Script" path="res://addons/gloot/ui/ctrl_inventory_grid_ex.gd" id="1_ru7hd"]
-[ext_resource type="Script" path="res://addons/gloot/core/inventory_grid.gd" id="2_e44r5"]
-[ext_resource type="AudioStream" uid="uid://buqj7suo1kr8x" path="res://assets/audio/sfx/buzzer_fadeout_eqd.wav" id="2_mk6pl"]
-[ext_resource type="Script" path="res://addons/gloot/ui/ctrl_inventory_grid.gd" id="2_nxhjy"]
-[ext_resource type="Resource" uid="uid://d3mo4eqngg0b1" path="res://assets/gloot/backpack_items.tres" id="3_iel5h"]
+[ext_resource type="Shader" path="res://assets/shaders/warp.gdshader" id="1_lmfmi"]
+[ext_resource type="Script" path="res://scripts/Inventory.gd" id="2_lin4v"]
 
-[sub_resource type="Animation" id="Animation_e7cjs"]
-resource_name = "flash"
-length = 0.7
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath(".:modulate")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.2, 0.7),
-"transitions": PackedFloat32Array(1, 1, 1),
-"update": 0,
-"values": [Color(1, 1, 1, 1), Color(0.639216, 0, 0.054902, 1), Color(1, 1, 1, 1)]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("AudioStreamPlayer:playing")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [true]
-}
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_jl44o"]
+shader = ExtResource("1_lmfmi")
+shader_parameter/intensity = 1.202
+shader_parameter/radius = 0.735
 
-[sub_resource type="Animation" id="Animation_tcne5"]
-length = 0.001
+[sub_resource type="Gradient" id="Gradient_1ijtv"]
+offsets = PackedFloat32Array(0.0740741, 0.145763, 0.261017, 0.359322, 0.477966, 0.583051, 0.684746, 0.79661, 0.918644)
+colors = PackedColorArray(0.438471, 0.286389, 0.992214, 1, 0.552941, 0.0352941, 0.866667, 1, 0.431373, 0.301961, 1, 1, 0.215686, 0.0980392, 0.909804, 1, 0.101957, 0.0330053, 0.328648, 1, 0.0937607, 0.0283182, 0.286763, 1, 0.39242, 0.0727494, 0.478069, 1, 0.457452, 0.425812, 0.90736, 1, 0.162226, 0.000109353, 0.515643, 1)
 
-[sub_resource type="AnimationLibrary" id="AnimationLibrary_imbnn"]
-_data = {
-"RESET": SubResource("Animation_tcne5"),
-"flash": SubResource("Animation_e7cjs")
-}
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_htflq"]
+noise_type = 3
+domain_warp_enabled = true
+domain_warp_type = 2
+domain_warp_fractal_type = 0
+metadata/_preview_in_3d_space_ = true
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_eg65k"]
-bg_color = Color(0.231373, 0.0980392, 0.0235294, 1)
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ao18x"]
-bg_color = Color(0.890196, 0.596078, 0.423529, 1)
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_yt2yi"]
-bg_color = Color(0.709804, 0.709804, 0.709804, 1)
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_bxm5o"]
+in_3d_space = true
+seamless = true
+color_ramp = SubResource("Gradient_1ijtv")
+noise = SubResource("FastNoiseLite_htflq")
 
 [node name="ShopScreen" type="Control"]
 layout_mode = 3
@@ -60,9 +32,9 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-script = ExtResource("1_adgk6")
 
-[node name="Panel" type="Panel" parent="."]
+[node name="bg" type="Control" parent="."]
+visible = false
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -70,7 +42,35 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="CenterContainer" type="CenterContainer" parent="Panel"]
+[node name="TextureRect" type="TextureRect" parent="bg"]
+material = SubResource("ShaderMaterial_jl44o")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = SubResource("NoiseTexture2D_bxm5o")
+
+[node name="ColorRect2" type="ColorRect" parent="bg"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.0745098, 0.0156863, 0.14902, 0.905882)
+
+[node name="Inventory" type="ColorRect" parent="."]
+layout_mode = 1
+offset_left = 146.0
+offset_top = 164.0
+offset_right = 899.0
+offset_bottom = 932.0
+color = Color(0.243137, 0.141176, 0.0666667, 1)
+script = ExtResource("2_lin4v")
+
+[node name="MarginContainer" type="MarginContainer" parent="Inventory"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -78,185 +78,28 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="VBoxContainer" type="VBoxContainer" parent="Panel/CenterContainer"]
-layout_mode = 2
-theme_override_constants/separation = 70
-
-[node name="CenterContainer2" type="CenterContainer" parent="Panel/CenterContainer/VBoxContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="Inventory/MarginContainer"]
 layout_mode = 2
 
-[node name="money_label" type="Label" parent="Panel/CenterContainer/VBoxContainer/CenterContainer2"]
-unique_name_in_owner = true
-layout_mode = 2
-theme_override_font_sizes/font_size = 70
-text = "Cash Money:"
-
-[node name="AnimationPlayer" type="AnimationPlayer" parent="Panel/CenterContainer/VBoxContainer/CenterContainer2/money_label"]
-libraries = {
-"": SubResource("AnimationLibrary_imbnn")
-}
-
-[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="Panel/CenterContainer/VBoxContainer/CenterContainer2/money_label"]
-stream = ExtResource("2_mk6pl")
-bus = &"sfx"
-
-[node name="CenterContainer" type="CenterContainer" parent="Panel/CenterContainer/VBoxContainer"]
+[node name="Header" type="HBoxContainer" parent="Inventory/MarginContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 100)
 layout_mode = 2
 
-[node name="HBoxContainer" type="HBoxContainer" parent="Panel/CenterContainer/VBoxContainer/CenterContainer"]
+[node name="Button_Spawner" type="Button" parent="Inventory/MarginContainer/VBoxContainer/Header"]
+custom_minimum_size = Vector2(300, 70)
 layout_mode = 2
-theme_override_constants/separation = 80
+size_flags_horizontal = 6
+size_flags_vertical = 4
+text = "Spawn"
 
-[node name="CenterContainer2" type="CenterContainer" parent="Panel/CenterContainer/VBoxContainer/CenterContainer/HBoxContainer"]
+[node name="ScrollContainer" type="ScrollContainer" parent="Inventory/MarginContainer/VBoxContainer"]
 layout_mode = 2
+size_flags_vertical = 3
 
-[node name="InventoryCtrl" type="Control" parent="Panel/CenterContainer/VBoxContainer/CenterContainer/HBoxContainer/CenterContainer2"]
-custom_minimum_size = Vector2(308, 308)
+[node name="GridContainer" type="GridContainer" parent="Inventory/MarginContainer/VBoxContainer/ScrollContainer"]
 layout_mode = 2
-script = ExtResource("1_ru7hd")
-field_style = SubResource("StyleBoxFlat_eg65k")
-field_highlighted_style = SubResource("StyleBoxFlat_ao18x")
-field_dimensions = Vector2(60, 60)
-item_spacing = 2
-draw_selections = true
-inventory_path = NodePath("../../../../../../../InventoryDB")
+theme_override_constants/h_separation = 0
+theme_override_constants/v_separation = 0
+columns = 7
 
-[node name="CenterContainer" type="CenterContainer" parent="Panel/CenterContainer/VBoxContainer/CenterContainer/HBoxContainer"]
-layout_mode = 2
-
-[node name="ShopCtrl" type="Control" parent="Panel/CenterContainer/VBoxContainer/CenterContainer/HBoxContainer/CenterContainer"]
-custom_minimum_size = Vector2(448, 448)
-layout_mode = 2
-script = ExtResource("2_nxhjy")
-field_dimensions = Vector2(64, 64)
-grid_color = Color(0.847059, 0.835294, 0.792157, 1)
-inventory_path = NodePath("../../../../../../../ShopDB")
-
-[node name="tooltip" type="PanelContainer" parent="."]
-visible = false
-layout_mode = 1
-offset_right = 200.0
-offset_bottom = 128.0
-mouse_filter = 2
-theme_override_styles/panel = SubResource("StyleBoxFlat_yt2yi")
-
-[node name="MarginContainer" type="MarginContainer" parent="tooltip"]
-layout_mode = 2
-mouse_filter = 2
-theme_override_constants/margin_left = 5
-theme_override_constants/margin_top = 10
-theme_override_constants/margin_right = 5
-theme_override_constants/margin_bottom = 10
-
-[node name="CenterContainer" type="CenterContainer" parent="tooltip/MarginContainer"]
-layout_mode = 2
-mouse_filter = 2
-
-[node name="VBoxContainer" type="VBoxContainer" parent="tooltip/MarginContainer/CenterContainer"]
-layout_mode = 2
-mouse_filter = 2
-
-[node name="CenterContainer" type="CenterContainer" parent="tooltip/MarginContainer/CenterContainer/VBoxContainer"]
-layout_mode = 2
-mouse_filter = 2
-
-[node name="tooltip_title" type="Label" parent="tooltip/MarginContainer/CenterContainer/VBoxContainer/CenterContainer"]
-unique_name_in_owner = true
-layout_mode = 2
-theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
-theme_override_constants/outline_size = 10
-theme_override_font_sizes/font_size = 28
-text = "Silly Item"
-
-[node name="ColorRect" type="ColorRect" parent="tooltip/MarginContainer/CenterContainer/VBoxContainer"]
-custom_minimum_size = Vector2(0, 3)
-layout_mode = 2
-mouse_filter = 2
-color = Color(0.843137, 0.843137, 0.843137, 1)
-
-[node name="CenterContainer2" type="CenterContainer" parent="tooltip/MarginContainer/CenterContainer/VBoxContainer"]
-layout_mode = 2
-mouse_filter = 2
-
-[node name="tooltip_description" type="RichTextLabel" parent="tooltip/MarginContainer/CenterContainer/VBoxContainer/CenterContainer2"]
-unique_name_in_owner = true
-custom_minimum_size = Vector2(200, 0)
-layout_mode = 2
-mouse_filter = 2
-theme_override_colors/font_shadow_color = Color(0.207843, 0.207843, 0.207843, 0.243137)
-theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
-theme_override_constants/shadow_offset_y = 3
-theme_override_constants/shadow_outline_size = -80
-theme_override_constants/outline_size = 5
-theme_override_font_sizes/normal_font_size = 12
-bbcode_enabled = true
-text = "[center][color=green]informative[/color] [color=red]item[/color] [shake rate=20.0 level=5 connected=1]description[/shake][/center]"
-fit_content = true
-
-[node name="ColorRect2" type="ColorRect" parent="tooltip/MarginContainer/CenterContainer/VBoxContainer"]
-custom_minimum_size = Vector2(0, 3)
-layout_mode = 2
-mouse_filter = 2
-color = Color(0.843137, 0.843137, 0.843137, 1)
-
-[node name="CenterContainer3" type="CenterContainer" parent="tooltip/MarginContainer/CenterContainer/VBoxContainer"]
-layout_mode = 2
-mouse_filter = 2
-
-[node name="tooltip_type" type="RichTextLabel" parent="tooltip/MarginContainer/CenterContainer/VBoxContainer/CenterContainer3"]
-unique_name_in_owner = true
-custom_minimum_size = Vector2(200, 30)
-layout_mode = 2
-theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
-theme_override_constants/outline_size = 5
-theme_override_font_sizes/normal_font_size = 11
-bbcode_enabled = true
-text = "[center]Type: [/center]"
-
-[node name="cost_tooltip" type="PanelContainer" parent="."]
-visible = false
-layout_mode = 0
-offset_right = 104.0
-offset_bottom = 60.0
-mouse_filter = 2
-
-[node name="MarginContainer" type="MarginContainer" parent="cost_tooltip"]
-layout_mode = 2
-mouse_filter = 2
-theme_override_constants/margin_left = 5
-theme_override_constants/margin_top = 5
-theme_override_constants/margin_right = 5
-theme_override_constants/margin_bottom = 5
-
-[node name="CenterContainer" type="CenterContainer" parent="cost_tooltip/MarginContainer"]
-layout_mode = 2
-mouse_filter = 2
-
-[node name="price_label" type="Label" parent="cost_tooltip/MarginContainer/CenterContainer"]
-unique_name_in_owner = true
-layout_mode = 2
-theme_override_font_sizes/font_size = 36
-text = "£5.00"
-
-[node name="InventoryDB" type="Node" parent="."]
-unique_name_in_owner = true
-script = ExtResource("2_e44r5")
-size = Vector2i(5, 5)
-item_protoset = ExtResource("3_iel5h")
-
-[node name="ShopDB" type="Node" parent="."]
-unique_name_in_owner = true
-script = ExtResource("2_e44r5")
-size = Vector2i(7, 7)
-item_protoset = ExtResource("3_iel5h")
-
-[connection signal="inventory_item_context_activated" from="Panel/CenterContainer/VBoxContainer/CenterContainer/HBoxContainer/CenterContainer2/InventoryCtrl" to="." method="_on_inventory_ctrl_inventory_item_context_activated"]
-[connection signal="item_mouse_entered" from="Panel/CenterContainer/VBoxContainer/CenterContainer/HBoxContainer/CenterContainer2/InventoryCtrl" to="." method="_on_inventory_ctrl_item_mouse_entered"]
-[connection signal="item_mouse_exited" from="Panel/CenterContainer/VBoxContainer/CenterContainer/HBoxContainer/CenterContainer2/InventoryCtrl" to="." method="_on_inventory_ctrl_item_mouse_exited"]
-[connection signal="inventory_item_context_activated" from="Panel/CenterContainer/VBoxContainer/CenterContainer/HBoxContainer/CenterContainer/ShopCtrl" to="." method="_on_shop_ctrl_inventory_item_context_activated"]
-[connection signal="item_mouse_entered" from="Panel/CenterContainer/VBoxContainer/CenterContainer/HBoxContainer/CenterContainer/ShopCtrl" to="." method="_on_shop_ctrl_item_mouse_entered"]
-[connection signal="item_mouse_exited" from="Panel/CenterContainer/VBoxContainer/CenterContainer/HBoxContainer/CenterContainer/ShopCtrl" to="." method="_on_shop_ctrl_item_mouse_exited"]
-[connection signal="item_added" from="InventoryDB" to="." method="_on_inventory_db_item_added"]
-[connection signal="item_removed" from="InventoryDB" to="." method="_on_inventory_db_item_removed"]
-[connection signal="item_added" from="ShopDB" to="." method="_on_shop_db_item_added"]
-[connection signal="item_removed" from="ShopDB" to="." method="_on_shop_db_item_removed"]
+[connection signal="pressed" from="Inventory/MarginContainer/VBoxContainer/Header/Button_Spawner" to="Inventory" method="_on_button_spawner_pressed"]
