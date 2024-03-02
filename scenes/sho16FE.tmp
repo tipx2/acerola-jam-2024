@@ -1,0 +1,179 @@
+[gd_scene load_steps=9 format=3 uid="uid://c1wccewjs5pok"]
+
+[ext_resource type="Script" path="res://scripts/shop_screen.gd" id="1_adgk6"]
+[ext_resource type="Script" path="res://addons/gloot/ui/ctrl_inventory_grid_ex.gd" id="1_ru7hd"]
+[ext_resource type="Script" path="res://addons/gloot/core/inventory_grid.gd" id="2_e44r5"]
+[ext_resource type="Script" path="res://addons/gloot/ui/ctrl_inventory_grid.gd" id="2_nxhjy"]
+[ext_resource type="Resource" uid="uid://d3mo4eqngg0b1" path="res://assets/gloot/backpack_items.tres" id="3_iel5h"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_eg65k"]
+bg_color = Color(0.231373, 0.0980392, 0.0235294, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ao18x"]
+bg_color = Color(0.890196, 0.596078, 0.423529, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_yt2yi"]
+bg_color = Color(0.709804, 0.709804, 0.709804, 1)
+
+[node name="ShopScreen" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_adgk6")
+
+[node name="Panel" type="Panel" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="CenterContainer" type="CenterContainer" parent="Panel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Panel/CenterContainer"]
+layout_mode = 2
+theme_override_constants/separation = 40
+
+[node name="CenterContainer2" type="CenterContainer" parent="Panel/CenterContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="money_label" type="Label" parent="Panel/CenterContainer/VBoxContainer/CenterContainer2"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_font_sizes/font_size = 56
+text = "Cash Money:"
+
+[node name="CenterContainer" type="CenterContainer" parent="Panel/CenterContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Panel/CenterContainer/VBoxContainer/CenterContainer"]
+layout_mode = 2
+theme_override_constants/separation = 80
+
+[node name="CenterContainer2" type="CenterContainer" parent="Panel/CenterContainer/VBoxContainer/CenterContainer/HBoxContainer"]
+layout_mode = 2
+
+[node name="InventoryCtrl" type="Control" parent="Panel/CenterContainer/VBoxContainer/CenterContainer/HBoxContainer/CenterContainer2"]
+custom_minimum_size = Vector2(308, 308)
+layout_mode = 2
+script = ExtResource("1_ru7hd")
+field_style = SubResource("StyleBoxFlat_eg65k")
+field_highlighted_style = SubResource("StyleBoxFlat_ao18x")
+field_dimensions = Vector2(60, 60)
+item_spacing = 2
+draw_selections = true
+inventory_path = NodePath("../../../../../../../InventoryDB")
+
+[node name="CenterContainer" type="CenterContainer" parent="Panel/CenterContainer/VBoxContainer/CenterContainer/HBoxContainer"]
+layout_mode = 2
+
+[node name="ShopCtrl" type="Control" parent="Panel/CenterContainer/VBoxContainer/CenterContainer/HBoxContainer/CenterContainer"]
+custom_minimum_size = Vector2(448, 448)
+layout_mode = 2
+script = ExtResource("2_nxhjy")
+field_dimensions = Vector2(64, 64)
+grid_color = Color(0.847059, 0.835294, 0.792157, 1)
+inventory_path = NodePath("../../../../../../../ShopDB")
+
+[node name="tooltip" type="Control" parent="."]
+layout_mode = 1
+offset_right = 397.0
+offset_bottom = 410.0
+
+[node name="Panel" type="Panel" parent="tooltip"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_yt2yi")
+
+[node name="CenterContainer" type="CenterContainer" parent="tooltip"]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 184.0
+grow_horizontal = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="tooltip/CenterContainer"]
+layout_mode = 2
+
+[node name="CenterContainer" type="CenterContainer" parent="tooltip/CenterContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="title" type="Label" parent="tooltip/CenterContainer/VBoxContainer/CenterContainer"]
+layout_mode = 2
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 10
+theme_override_font_sizes/font_size = 56
+text = "Silly Item"
+
+[node name="CenterContainer5" type="CenterContainer" parent="tooltip/CenterContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="ColorRect" type="ColorRect" parent="tooltip/CenterContainer/VBoxContainer/CenterContainer5"]
+custom_minimum_size = Vector2(350, 4)
+layout_mode = 2
+color = Color(0.843137, 0.843137, 0.843137, 1)
+
+[node name="CenterContainer2" type="CenterContainer" parent="tooltip/CenterContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="description" type="RichTextLabel" parent="tooltip/CenterContainer/VBoxContainer/CenterContainer2"]
+custom_minimum_size = Vector2(200, 10)
+layout_mode = 2
+theme_override_colors/font_shadow_color = Color(0.207843, 0.207843, 0.207843, 0.243137)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/shadow_offset_y = 3
+theme_override_constants/shadow_outline_size = -80
+theme_override_constants/outline_size = 5
+theme_override_font_sizes/normal_font_size = 25
+bbcode_enabled = true
+text = "[center][color=green]informative[/color] [color=red]item[/color] [shake rate=20.0 level=5 connected=1]description[/shake][/center]"
+fit_content = true
+
+[node name="CenterContainer4" type="CenterContainer" parent="tooltip/CenterContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="ColorRect" type="ColorRect" parent="tooltip/CenterContainer/VBoxContainer/CenterContainer4"]
+custom_minimum_size = Vector2(350, 4)
+layout_mode = 2
+color = Color(0.843137, 0.843137, 0.843137, 1)
+
+[node name="CenterContainer3" type="CenterContainer" parent="tooltip/CenterContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="type" type="Label" parent="tooltip/CenterContainer/VBoxContainer/CenterContainer3"]
+layout_mode = 2
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 5
+theme_override_font_sizes/font_size = 20
+text = "Type: "
+
+[node name="InventoryDB" type="Node" parent="."]
+unique_name_in_owner = true
+script = ExtResource("2_e44r5")
+size = Vector2i(5, 5)
+item_protoset = ExtResource("3_iel5h")
+
+[node name="ShopDB" type="Node" parent="."]
+unique_name_in_owner = true
+script = ExtResource("2_e44r5")
+size = Vector2i(7, 7)
+item_protoset = ExtResource("3_iel5h")
+
+[connection signal="item_mouse_entered" from="Panel/CenterContainer/VBoxContainer/CenterContainer/HBoxContainer/CenterContainer2/InventoryCtrl" to="." method="_on_inventory_ctrl_item_mouse_entered"]
+[connection signal="item_mouse_exited" from="Panel/CenterContainer/VBoxContainer/CenterContainer/HBoxContainer/CenterContainer2/InventoryCtrl" to="." method="_on_inventory_ctrl_item_mouse_exited"]
+[connection signal="item_mouse_entered" from="Panel/CenterContainer/VBoxContainer/CenterContainer/HBoxContainer/CenterContainer/ShopCtrl" to="." method="_on_shop_ctrl_item_mouse_entered"]
+[connection signal="item_mouse_exited" from="Panel/CenterContainer/VBoxContainer/CenterContainer/HBoxContainer/CenterContainer/ShopCtrl" to="." method="_on_shop_ctrl_item_mouse_exited"]

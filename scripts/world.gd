@@ -36,6 +36,10 @@ func round_start() -> void:
 	# move portal
 	var corresponding_direction = corresponding_directions[round_direction]
 	portal_ref.global_position = get_tile_global_pos(get_superlative_tile(corresponding_direction))
+	
+	# spawn enemies
+	for _x in range(5):
+		spawn_enemy_pos_random(basic_enemy_scene)
 
 func get_tile_global_pos(tile : Vector2) -> Vector2:
 	return tile_map_ref.to_global(tile_map_ref.map_to_local(tile))
@@ -69,7 +73,7 @@ func spawn_enemy_pos_random(enemy_scene : PackedScene) -> void:
 	var enemy_instance = enemy_scene.instantiate()
 	call_deferred("add_child", enemy_instance)
 	enemy_instance.set_as_top_level(true)
-	# enemy_instance.global_position = get_random_tile_pos()
+	enemy_instance.global_position = get_tile_global_pos(tile_list_ref.pick_random())
 
 
 func _on_end_portal_level_ended():

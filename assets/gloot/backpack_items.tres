@@ -6,13 +6,36 @@
 script = ExtResource("1_cfvbe")
 json_data = "[
     {
-        \"description\": \"mmm, yummy meat. DElicIOUC!!S\",
+        \"description\": \"this item sure does example\",
         \"height\": \"2\",
-        \"id\": \"MonsterMeat\",
+        \"id\": \"ExampleItem\",
         \"image\": \"res://assets/visuals/channels4_profile.jpg\",
-        \"name\": \"Monster Meat\",
-        \"positive_rotation\": \"false\",
-        \"rotated\": \"false\",
+        \"name\": \"Example Item\",
+        \"price\": \"10\",
+        \"rotation\": \"0\",
+        \"type\": \"ExampleItemType\",
         \"width\": \"2\"
+    },
+    {
+        \"description\": \"this item is super\",
+        \"height\": \"1\",
+        \"id\": \"SuperDuperItem\",
+        \"image\": \"res://assets/visuals/icon.svg\",
+        \"name\": \"Super Duper Duper Item\",
+        \"price\": \"20\",
+        \"rotation\": \"0\",
+        \"type\": \"SillyItemType\",
+        \"width\": \"1\"
+    },
+    {
+        \"description\": \"[i]Stop moving data from [shake rate=10.0 level=5]CPU[/shake] to [shake rate=10.0 level=5]GPU[/shake]![/i]\",
+        \"height\": \"1\",
+        \"id\": \"Acerola\",
+        \"image\": \"res://assets/visuals/channels4_profile.jpg\",
+        \"name\": \"Acerola\",
+        \"price\": \"50\",
+        \"rotation\": \"0\",
+        \"type\": \"[color=red]Youtuber[/color]\",
+        \"width\": \"1\"
     }
 ]"

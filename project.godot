@@ -24,6 +24,12 @@ general/text_to_speech=true
 
 Globals="*res://scripts/globals.gd"
 
+[display]
+
+window/size/viewport_width=1920
+window/size/viewport_height=1080
+window/size/mode=3
+
 [editor_plugins]
 
 enabled=PackedStringArray("res://addons/gloot/plugin.cfg")
