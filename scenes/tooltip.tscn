@@ -1,14 +1,16 @@
-[gd_scene load_steps=2 format=3 uid="uid://b2bs04605fxq0"]
+[gd_scene load_steps=3 format=3 uid="uid://b2bs04605fxq0"]
+
+[ext_resource type="Script" path="res://scripts/tooltip.gd" id="1_dosja"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_yt2yi"]
 bg_color = Color(0.709804, 0.709804, 0.709804, 1)
 
 [node name="tooltip" type="PanelContainer"]
-visible = false
 offset_right = 200.0
 offset_bottom = 128.0
 mouse_filter = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_yt2yi")
+script = ExtResource("1_dosja")
 
 [node name="MarginContainer" type="MarginContainer" parent="."]
 layout_mode = 2

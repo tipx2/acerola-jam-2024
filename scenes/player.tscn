@@ -9,9 +9,6 @@ radius = 11.1803
 [node name="player" type="CharacterBody2D" groups=["player"]]
 script = ExtResource("1_nx67x")
 
-[node name="Camera2D" type="Camera2D" parent="."]
-zoom = Vector2(2, 2)
-
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_71bwt")
 

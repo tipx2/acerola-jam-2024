@@ -3,9 +3,11 @@ class_name BasicEnemy
 
 @export var BASE_SPEED := 150.0
 var speed : float
+var intangible
 
 var player : Node2D
 @onready var navigation_agent_2d := $NavigationAgent2D
+@onready var collision_shape_2d = $CollisionShape2D
 
 func _ready():
 	speed = BASE_SPEED
@@ -21,4 +23,9 @@ func _on_nav_timer_timeout():
 
 func _on_navigation_agent_2d_velocity_computed(safe_velocity):
 	velocity = safe_velocity
-	move_and_slide()
+	if !intangible:
+		move_and_slide()
+
+func set_intangible(b : bool):
+	intangible = true
+	collision_shape_2d.call_deferred("set_disabled", b)

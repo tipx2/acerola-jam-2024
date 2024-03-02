@@ -9,8 +9,10 @@ var bullet_scene : PackedScene = preload("res://scenes/basic_bullet.tscn")
 var speed : float
 var bullet_speed : float
 var bullet_spread : float
+var intangible = false 
 
 @onready var shotpoint = $shotpoint
+@onready var collision_shape_2d = $CollisionShape2D
 
 func _ready():
 	speed = BASE_SPEED
@@ -18,6 +20,8 @@ func _ready():
 	bullet_spread = BASE_BULLET_SPREAD
 
 func _physics_process(_delta):
+	if intangible:
+		return
 	var direction = Input.get_vector("move_left", "move_right", "move_up", "move_down")
 	velocity = direction.normalized() * speed
 	
@@ -32,3 +36,7 @@ func shoot():
 	var new_bullet = bullet_scene.instantiate()
 	add_child(new_bullet.initialise(bullet_dir, shotpoint.global_transform.origin, bullet_speed))
 	new_bullet.set_as_top_level(true)
+
+func set_intangible(b : bool):
+	intangible = b
+	collision_shape_2d.call_deferred("set_disabled", b)

@@ -1,9 +1,149 @@
-[gd_scene load_steps=5 format=3 uid="uid://bqbk4qjsfcv20"]
+[gd_scene load_steps=16 format=3 uid="uid://bqbk4qjsfcv20"]
 
 [ext_resource type="Script" path="res://scripts/world.gd" id="1_wjo8l"]
 [ext_resource type="PackedScene" uid="uid://dx5x5ljxp22fg" path="res://scenes/square_room.tscn" id="2_04yut"]
 [ext_resource type="PackedScene" uid="uid://cggixt2rmuqrk" path="res://scenes/player.tscn" id="3_gr6f7"]
 [ext_resource type="PackedScene" uid="uid://bvka4v8r5qjnb" path="res://scenes/end_portal.tscn" id="4_072hb"]
+[ext_resource type="PackedScene" uid="uid://c0hnp5n85ngx0" path="res://scenes/shop_screen.tscn" id="5_u2q0g"]
+[ext_resource type="Texture2D" uid="uid://bgcxc026klhjd" path="res://assets/visuals/1x1white.png" id="6_d4sod"]
+[ext_resource type="Shader" path="res://assets/shaders/warp.gdshader" id="6_fem7q"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_jkme2"]
+shader = ExtResource("6_fem7q")
+shader_parameter/intensity = 1.202
+shader_parameter/radius = 0.735
+
+[sub_resource type="Gradient" id="Gradient_1ijtv"]
+offsets = PackedFloat32Array(0.0740741, 0.145763, 0.261017, 0.359322, 0.477966, 0.583051, 0.684746, 0.79661, 0.918644)
+colors = PackedColorArray(0.438471, 0.286389, 0.992214, 1, 0.552941, 0.0352941, 0.866667, 1, 0.431373, 0.301961, 1, 1, 0.215686, 0.0980392, 0.909804, 1, 0.101957, 0.0330053, 0.328648, 1, 0.0937607, 0.0283182, 0.286763, 1, 0.39242, 0.0727494, 0.478069, 1, 0.457452, 0.425812, 0.90736, 1, 0.162226, 0.000109353, 0.515643, 1)
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_htflq"]
+noise_type = 3
+domain_warp_enabled = true
+domain_warp_type = 2
+domain_warp_fractal_type = 0
+metadata/_preview_in_3d_space_ = true
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_fkelk"]
+in_3d_space = true
+seamless = true
+color_ramp = SubResource("Gradient_1ijtv")
+noise = SubResource("FastNoiseLite_htflq")
+
+[sub_resource type="Animation" id="Animation_64qfl"]
+resource_name = "cover"
+tracks/0/type = "bezier"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("TextureRect:size:y")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"handle_modes": PackedInt32Array(0, 0),
+"points": PackedFloat32Array(1, -0.25, 0, 0.25, 0, 1080, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0, 1)
+}
+tracks/1/type = "bezier"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("TextureRect2:size:y")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"handle_modes": PackedInt32Array(0, 0),
+"points": PackedFloat32Array(1, -0.25, 0, 0.25, 0, 1080, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0, 1)
+}
+tracks/2/type = "bezier"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("TextureRect2:position:y")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"handle_modes": PackedInt32Array(0, 0),
+"points": PackedFloat32Array(1079, -0.25, 0, 0.25, 0, 0, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0, 1)
+}
+
+[sub_resource type="Animation" id="Animation_v82hm"]
+length = 0.001
+tracks/0/type = "bezier"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("TextureRect:size:y")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(1, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0)
+}
+tracks/1/type = "bezier"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("TextureRect2:size:y")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(1, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0)
+}
+tracks/2/type = "bezier"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("TextureRect2:position:y")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(1079, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0)
+}
+
+[sub_resource type="Animation" id="Animation_opvmd"]
+resource_name = "uncover"
+tracks/0/type = "bezier"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("TextureRect:size:y")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"handle_modes": PackedInt32Array(0, 0),
+"points": PackedFloat32Array(540.5, -0.25, 0, 0.25, 0, 1, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0, 1)
+}
+tracks/1/type = "bezier"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("TextureRect2:size:y")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"handle_modes": PackedInt32Array(0, 0),
+"points": PackedFloat32Array(540.5, -0.25, 0, 0.25, 0, 1, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0, 1)
+}
+tracks/2/type = "bezier"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("TextureRect2:position:y")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"handle_modes": PackedInt32Array(0, 0),
+"points": PackedFloat32Array(539.5, -0.25, 0, 0.25, 0, 1079, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0, 1)
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_qhe4e"]
+_data = {
+"RESET": SubResource("Animation_v82hm"),
+"cover": SubResource("Animation_64qfl"),
+"uncover": SubResource("Animation_opvmd")
+}
 
 [node name="world" type="Node2D"]
 script = ExtResource("1_wjo8l")
@@ -12,7 +152,17 @@ script = ExtResource("1_wjo8l")
 
 [node name="player" parent="." instance=ExtResource("3_gr6f7")]
 
-[node name="Control" type="Control" parent="player"]
+[node name="Camera2D2" type="Camera2D" parent="player"]
+zoom = Vector2(2, 2)
+
+[node name="EndPortal" parent="." instance=ExtResource("4_072hb")]
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+process_mode = 3
+
+[node name="portal_bg" type="Control" parent="CanvasLayer"]
+unique_name_in_owner = true
+visible = false
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -20,28 +170,82 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="debugui" type="Control" parent="player/Control"]
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-grow_horizontal = 2
-grow_vertical = 2
-
-[node name="Label" type="Label" parent="player/Control/debugui"]
-visible = false
+[node name="TextureRect" type="TextureRect" parent="CanvasLayer/portal_bg"]
+material = SubResource("ShaderMaterial_jkme2")
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_font_sizes/font_size = 15
-text = "YOU ENDED!! YAHOO"
+texture = SubResource("NoiseTexture2D_fkelk")
 
-[node name="EndPortal" parent="." instance=ExtResource("4_072hb")]
+[node name="ColorRect2" type="ColorRect" parent="CanvasLayer/portal_bg"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.0745098, 0.0156863, 0.14902, 0.905882)
+
+[node name="ShopScreen" parent="CanvasLayer" instance=ExtResource("5_u2q0g")]
+unique_name_in_owner = true
+visible = false
+
+[node name="transition" type="Control" parent="CanvasLayer"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="TextureRect" type="TextureRect" parent="CanvasLayer/transition"]
+modulate = Color(0, 0, 0, 1)
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_right = 1920.0
+offset_bottom = 1.0
+grow_horizontal = 2
+texture = ExtResource("6_d4sod")
+
+[node name="TextureRect2" type="TextureRect" parent="CanvasLayer/transition"]
+modulate = Color(0, 0, 0, 1)
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = 1079.0
+offset_right = 1920.0
+offset_bottom = 1080.0
+grow_horizontal = 2
+grow_vertical = 0
+texture = ExtResource("6_d4sod")
+
+[node name="transition_animation" type="AnimationPlayer" parent="CanvasLayer/transition"]
+unique_name_in_owner = true
+libraries = {
+"": SubResource("AnimationLibrary_qhe4e")
+}
+
+[node name="continue_button" type="Button" parent="CanvasLayer"]
+unique_name_in_owner = true
+visible = false
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -401.0
+offset_top = -145.0
+grow_horizontal = 0
+grow_vertical = 0
+theme_override_font_sizes/font_size = 96
+text = ">>>"
 
 [connection signal="map_generated" from="SquareRoom" to="." method="_on_square_room_map_generated"]
 [connection signal="level_ended" from="EndPortal" to="." method="_on_end_portal_level_ended"]

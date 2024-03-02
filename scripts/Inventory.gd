@@ -6,6 +6,8 @@ extends Control
 @onready var scroll_container = $MarginContainer/VBoxContainer/ScrollContainer
 @onready var column_count = grid_container.columns
 
+@onready var tooltip = $tooltip
+
 var grid_array := []
 var item_held = null
 var current_slot = null
@@ -25,6 +27,11 @@ func _process(delta):
 	elif Input.is_action_just_pressed("shoot"):
 		if scroll_container.get_global_rect().has_point(get_global_mouse_position()):
 			pick_item()
+	
+	if tooltip.visible:
+		tooltip.global_position = lerp(tooltip.global_position, get_global_mouse_position(), 20 * delta)
+		if !grid_container.get_global_rect().has_point(get_global_mouse_position()):
+			tooltip.visible = false
 
 func create_slot():
 	var new_slot = slot_scene.instantiate()
@@ -40,6 +47,15 @@ func _on_slot_mouse_entered(a_Slot):
 	if item_held:
 		check_slot_availability(current_slot)
 		set_grids.call_deferred(current_slot)
+	
+	elif a_Slot.item_stored:
+		tooltip.visible = true
+		var tooltip_info = DataHandler.item_data[str(a_Slot.item_stored.item_ID)]
+		tooltip.set_title(tooltip_info["DisplayName"])
+		tooltip.set_description(tooltip_info["Description"])
+		tooltip.set_type(tooltip_info["Type"])
+	else:
+		tooltip.visible = false
 
 func _on_slot_mouse_exited(a_Slot):
 	clear_grid()
@@ -68,13 +84,14 @@ func set_grids(a_Slot):
 		if line_switch_check < 0 or line_switch_check >= column_count:
 			continue
 		
-		if can_place:
-			grid_array[grid_to_check].set_color(grid_array[grid_to_check].States.FREE)
-			
-			if grid[1] < icon_anchor.x: icon_anchor.x = grid[1]
-			if grid[0] < icon_anchor.y: icon_anchor.y = grid[0]
-		else:
-			grid_array[grid_to_check].set_color(grid_array[grid_to_check].States.TAKEN)
+		if grid_container.get_global_rect().has_point(get_global_mouse_position()):
+			if can_place:
+				grid_array[grid_to_check].set_color(grid_array[grid_to_check].States.FREE)
+				
+				if grid[1] < icon_anchor.x: icon_anchor.x = grid[1]
+				if grid[0] < icon_anchor.y: icon_anchor.y = grid[0]
+			else:
+				grid_array[grid_to_check].set_color(grid_array[grid_to_check].States.TAKEN)
 
 func clear_grid():
 	for grid in grid_array:
@@ -118,6 +135,8 @@ func pick_item():
 	add_child(item_held)
 	item_held.global_position = get_global_mouse_position()
 	
+	tooltip.visible = false
+	
 	for grid in item_held.item_grids:
 		var grid_to_check = item_held.grid_anchor.slot_ID + grid[0] + grid[1] * column_count
 		grid_array[grid_to_check].state = grid_array[grid_to_check].States.FREE
@@ -127,9 +146,11 @@ func pick_item():
 	set_grids.call_deferred(current_slot)
 
 func _on_button_spawner_pressed():
+	if item_held:
+		return
 	var new_item = item_scene.instantiate()
 	add_child(new_item)
-	new_item.load_item(randi_range(1, 4))
+	new_item.load_item(randi_range(1, 6))
 	# new_item.load_item(1)
 	new_item.selected = true
 	item_held = new_item

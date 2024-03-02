@@ -14,7 +14,8 @@ func _process(delta : float) -> void:
 		global_position = lerp(global_position, get_global_mouse_position(), LERP_SPEED * delta)
 
 func load_item(a_ItemID : int) -> void:
-	var Icon_path = "res://assets/visuals/inventory/%s.png" %  DataHandler.item_data[str(a_ItemID)]["Name"]
+	item_ID = a_ItemID
+	var Icon_path = "res://assets/visuals/inventory/%s.png" %  DataHandler.item_data[str(a_ItemID)]["ImageName"]
 	sprite_2d.texture = load(Icon_path)
 	for grid in DataHandler.item_grid_data[str(a_ItemID)]:
 		item_grids.push_back([int(grid[0]), int(grid[1])])

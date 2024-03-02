@@ -1,76 +1,17 @@
-[gd_scene load_steps=7 format=3 uid="uid://c0hnp5n85ngx0"]
+[gd_scene load_steps=3 format=3 uid="uid://c0hnp5n85ngx0"]
 
-[ext_resource type="Shader" path="res://assets/shaders/warp.gdshader" id="1_lmfmi"]
 [ext_resource type="Script" path="res://scripts/Inventory.gd" id="2_lin4v"]
+[ext_resource type="PackedScene" uid="uid://b2bs04605fxq0" path="res://scenes/tooltip.tscn" id="5_dpofu"]
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_jl44o"]
-shader = ExtResource("1_lmfmi")
-shader_parameter/intensity = 1.202
-shader_parameter/radius = 0.735
-
-[sub_resource type="Gradient" id="Gradient_1ijtv"]
-offsets = PackedFloat32Array(0.0740741, 0.145763, 0.261017, 0.359322, 0.477966, 0.583051, 0.684746, 0.79661, 0.918644)
-colors = PackedColorArray(0.438471, 0.286389, 0.992214, 1, 0.552941, 0.0352941, 0.866667, 1, 0.431373, 0.301961, 1, 1, 0.215686, 0.0980392, 0.909804, 1, 0.101957, 0.0330053, 0.328648, 1, 0.0937607, 0.0283182, 0.286763, 1, 0.39242, 0.0727494, 0.478069, 1, 0.457452, 0.425812, 0.90736, 1, 0.162226, 0.000109353, 0.515643, 1)
-
-[sub_resource type="FastNoiseLite" id="FastNoiseLite_htflq"]
-noise_type = 3
-domain_warp_enabled = true
-domain_warp_type = 2
-domain_warp_fractal_type = 0
-metadata/_preview_in_3d_space_ = true
-
-[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_bxm5o"]
-in_3d_space = true
-seamless = true
-color_ramp = SubResource("Gradient_1ijtv")
-noise = SubResource("FastNoiseLite_htflq")
-
-[node name="ShopScreen" type="Control"]
-layout_mode = 3
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-
-[node name="bg" type="Control" parent="."]
-visible = false
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-
-[node name="TextureRect" type="TextureRect" parent="bg"]
-material = SubResource("ShaderMaterial_jl44o")
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-texture = SubResource("NoiseTexture2D_bxm5o")
-
-[node name="ColorRect2" type="ColorRect" parent="bg"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-color = Color(0.0745098, 0.0156863, 0.14902, 0.905882)
-
-[node name="Inventory" type="ColorRect" parent="."]
-layout_mode = 1
+[node name="Inventory" type="ColorRect"]
 offset_left = 146.0
 offset_top = 164.0
-offset_right = 899.0
+offset_right = 846.0
 offset_bottom = 932.0
 color = Color(0.243137, 0.141176, 0.0666667, 1)
 script = ExtResource("2_lin4v")
 
-[node name="MarginContainer" type="MarginContainer" parent="Inventory"]
+[node name="MarginContainer" type="MarginContainer" parent="."]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -78,28 +19,36 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="VBoxContainer" type="VBoxContainer" parent="Inventory/MarginContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
 layout_mode = 2
 
-[node name="Header" type="HBoxContainer" parent="Inventory/MarginContainer/VBoxContainer"]
+[node name="Header" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
 custom_minimum_size = Vector2(0, 100)
 layout_mode = 2
 
-[node name="Button_Spawner" type="Button" parent="Inventory/MarginContainer/VBoxContainer/Header"]
+[node name="Button_Spawner" type="Button" parent="MarginContainer/VBoxContainer/Header"]
 custom_minimum_size = Vector2(300, 70)
 layout_mode = 2
 size_flags_horizontal = 6
 size_flags_vertical = 4
 text = "Spawn"
 
-[node name="ScrollContainer" type="ScrollContainer" parent="Inventory/MarginContainer/VBoxContainer"]
+[node name="ScrollContainer" type="ScrollContainer" parent="MarginContainer/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="GridContainer" type="GridContainer" parent="Inventory/MarginContainer/VBoxContainer/ScrollContainer"]
+[node name="GridContainer" type="GridContainer" parent="MarginContainer/VBoxContainer/ScrollContainer"]
 layout_mode = 2
 theme_override_constants/h_separation = 0
 theme_override_constants/v_separation = 0
 columns = 7
 
-[connection signal="pressed" from="Inventory/MarginContainer/VBoxContainer/Header/Button_Spawner" to="Inventory" method="_on_button_spawner_pressed"]
+[node name="tooltip" parent="." instance=ExtResource("5_dpofu")]
+visible = false
+layout_mode = 0
+offset_left = -146.0
+offset_top = -164.0
+offset_right = 64.0
+offset_bottom = -36.0
+
+[connection signal="pressed" from="MarginContainer/VBoxContainer/Header/Button_Spawner" to="." method="_on_button_spawner_pressed"]

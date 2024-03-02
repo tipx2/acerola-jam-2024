@@ -73,8 +73,17 @@ func spawn_enemy_pos_random(enemy_scene : PackedScene) -> void:
 	var enemy_instance = enemy_scene.instantiate()
 	call_deferred("add_child", enemy_instance)
 	enemy_instance.set_as_top_level(true)
+	# TODO: the center of some tiles included in the path are outside of the actual play area, since the hitboxes are facing inwards. need to prune the map array given so that we're only selecting from internal tiles 
 	enemy_instance.global_position = get_tile_global_pos(tile_list_ref.pick_random())
 
 
 func _on_end_portal_level_ended():
-	square_room.generate_level()
+	Globals.player.set_intangible(true)
+	get_tree().call_group("enemy", "set_intangible", true)
+	%transition_animation.play("cover")
+	await %transition_animation.animation_finished
+	%ShopScreen.visible = true
+	%portal_bg.visible = true
+	%continue_button.visible = true
+	%transition_animation.play("uncover")
+	
