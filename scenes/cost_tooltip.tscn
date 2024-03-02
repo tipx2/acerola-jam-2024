@@ -1,10 +1,13 @@
-[gd_scene format=3 uid="uid://cpmhvdq5c7act"]
+[gd_scene load_steps=3 format=3 uid="uid://cpmhvdq5c7act"]
+
+[ext_resource type="Script" path="res://scripts/cost_tooltip.gd" id="1_uoj6p"]
+[ext_resource type="FontFile" uid="uid://tpd5pc8oxjmq" path="res://assets/fonts/ArchivoBlack-Regular.ttf" id="2_87p4h"]
 
 [node name="cost_tooltip" type="PanelContainer"]
-visible = false
 offset_right = 104.0
 offset_bottom = 60.0
 mouse_filter = 2
+script = ExtResource("1_uoj6p")
 
 [node name="MarginContainer" type="MarginContainer" parent="."]
 layout_mode = 2
@@ -21,5 +24,6 @@ mouse_filter = 2
 [node name="price_label" type="Label" parent="MarginContainer/CenterContainer"]
 unique_name_in_owner = true
 layout_mode = 2
+theme_override_fonts/font = ExtResource("2_87p4h")
 theme_override_font_sizes/font_size = 36
 text = "£5.00"

@@ -17,6 +17,7 @@ var icon_anchor : Vector2
 func _ready():
 	for i in range(42):
 		create_slot()
+	clear_grid()
 
 func _process(delta):
 	if item_held:
@@ -145,12 +146,18 @@ func pick_item():
 	check_slot_availability(current_slot)
 	set_grids.call_deferred(current_slot)
 
-func _on_button_spawner_pressed():
+func hold_new_item(item_ID : int) -> bool:
 	if item_held:
-		return
+		# TODO make this clear with visuals
+		print("already holding item")
+		return false
 	var new_item = item_scene.instantiate()
 	add_child(new_item)
-	new_item.load_item(randi_range(1, 6))
-	# new_item.load_item(1)
+	new_item.global_position = get_global_mouse_position()
+	new_item.load_item(item_ID)
 	new_item.selected = true
 	item_held = new_item
+	return true
+
+func _on_button_spawner_pressed():
+	hold_new_item(randi_range(1, 6))

@@ -9,6 +9,10 @@ var item_grids := []
 var selected = false
 var grid_anchor = null
 
+# it's like python __repr__
+func _to_string() -> String:
+	return str(DataHandler.item_data[str(item_ID)])
+
 func _process(delta : float) -> void:
 	if selected:
 		global_position = lerp(global_position, get_global_mouse_position(), LERP_SPEED * delta)
