@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=3 uid="uid://bqbk4qjsfcv20"]
+[gd_scene load_steps=18 format=3 uid="uid://bqbk4qjsfcv20"]
 
 [ext_resource type="Script" path="res://scripts/world.gd" id="1_wjo8l"]
 [ext_resource type="PackedScene" uid="uid://dx5x5ljxp22fg" path="res://scenes/square_room.tscn" id="2_04yut"]
@@ -30,6 +30,9 @@ in_3d_space = true
 seamless = true
 color_ramp = SubResource("Gradient_1ijtv")
 noise = SubResource("FastNoiseLite_htflq")
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_6ssra"]
+bg_color = Color(0, 0, 0, 1)
 
 [sub_resource type="Animation" id="Animation_v82hm"]
 length = 0.001
@@ -210,9 +213,11 @@ grow_horizontal = 2
 grow_vertical = 0
 theme_override_fonts/font = ExtResource("8_8o0vw")
 theme_override_font_sizes/font_size = 80
+theme_override_styles/normal = SubResource("StyleBoxFlat_6ssra")
 text = "Done"
 
 [node name="transition" type="Control" parent="CanvasLayer"]
+z_index = 3
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -226,7 +231,7 @@ modulate = Color(0, 0, 0, 1)
 layout_mode = 1
 anchors_preset = 10
 anchor_right = 1.0
-offset_right = 17280.0
+offset_right = 26880.0
 offset_bottom = 1.0
 grow_horizontal = 2
 texture = ExtResource("6_d4sod")
@@ -238,9 +243,8 @@ anchors_preset = 12
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_top = 1079.0
-offset_right = 17280.0
-offset_bottom = 1080.0
+offset_top = -1.0
+offset_right = 26880.0
 grow_horizontal = 2
 grow_vertical = 0
 texture = ExtResource("6_d4sod")

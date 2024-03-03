@@ -30,7 +30,7 @@ func _process(delta : float) -> void:
 		global_position = lerp(global_position, get_global_mouse_position(), LERP_SPEED * delta)
 	
 	if !selected and moused_on:
-		var vector_to_mouse = global_position.direction_to(get_global_mouse_position()).normalized() * TILT_AMOUNT
+		var vector_to_mouse = get_corrected_tilt_target(global_position.direction_to(get_global_mouse_position()).normalized() * TILT_AMOUNT)
 		sprite_2d.material.set_shader_parameter("y_rot", lerp(curr_y_rot, vector_to_mouse.x, TILT_LERP_SPEED * delta))
 		sprite_2d.material.set_shader_parameter("x_rot", lerp(curr_x_rot, -vector_to_mouse.y, TILT_LERP_SPEED * delta))
 	else:
@@ -58,6 +58,22 @@ func rotate_item():
 	rotation_degrees += 90
 	if rotation_degrees == 360:
 		rotation_degrees = 0
+
+# probably an easy elegent maths way of doing this...
+func get_corrected_tilt_target(vector_to_mouse : Vector2) -> Vector2:
+	if rotation_degrees == 90 or rotation_degrees == 270:
+		var tempx = vector_to_mouse.x
+		vector_to_mouse.x = vector_to_mouse.y
+		vector_to_mouse.y = tempx
+		if rotation_degrees == 90:
+			vector_to_mouse.y = -vector_to_mouse.y
+		elif rotation_degrees == 270:
+			vector_to_mouse.x = -vector_to_mouse.x
+	elif rotation_degrees == 180:
+		vector_to_mouse.x = -vector_to_mouse.x
+		vector_to_mouse.y = -vector_to_mouse.y
+	
+	return vector_to_mouse
 
 func _snap_to(dest : Vector2):
 	var tween = get_tree().create_tween()

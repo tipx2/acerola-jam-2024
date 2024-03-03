@@ -5,6 +5,7 @@ extends Control
 @onready var item_scene = preload("res://scenes/item.tscn")
 @onready var scroll_container = $MarginContainer/VBoxContainer/ScrollContainer
 @onready var column_count = grid_container.columns
+@onready var shop = $"../Shop"
 
 @onready var tooltip = $tooltip
 
@@ -14,8 +15,10 @@ var current_slot = null
 var can_place := false
 var icon_anchor : Vector2
 
+var in_round = true
+
 func _ready():
-	for i in range(42):
+	for i in range(49):
 		create_slot()
 	clear_grid()
 
@@ -133,6 +136,9 @@ func place_item():
 	clear_grid()
 
 func pick_item():
+	if !in_round:
+		return
+	
 	if not current_slot or not current_slot.item_stored:
 		return
 	
@@ -165,6 +171,21 @@ func hold_new_item(item_ID : int) -> bool:
 	new_item.selected = true
 	item_held = new_item
 	return true
+
+func sell_item():
+	if !item_held:
+		return
+	
+	var tooltip_info = DataHandler.item_data[str(item_held.item_ID)]
+	Globals.money += tooltip_info["Sell_price"]
+	
+	item_held.queue_free.call_deferred()
+	item_held = null
+	
+	# very lazy code area - do not think about
+	shop.update_money_label()
+	shop.random_pitch_money_sounds()
+	shop.money_label.get_node("AnimationPlayer").play("item_sell")
 
 func _on_button_spawner_pressed():
 	hold_new_item(randi_range(1, 6))

@@ -1,4 +1,4 @@
-[gd_scene load_steps=33 format=3 uid="uid://c0hnp5n85ngx0"]
+[gd_scene load_steps=26 format=3 uid="uid://c0hnp5n85ngx0"]
 
 [ext_resource type="Script" path="res://scripts/shop_screen.gd" id="1_rdggk"]
 [ext_resource type="Script" path="res://scripts/Shop.gd" id="2_cvtyw"]
@@ -13,11 +13,9 @@
 [ext_resource type="AudioStream" uid="uid://cg0me8gbpmp6" path="res://assets/audio/sfx/item_sell.wav" id="6_fgxc5"]
 [ext_resource type="Texture2D" uid="uid://k31lj441fjq5" path="res://assets/visuals/fabric_6312_9059_Small.png" id="11_86h4t"]
 [ext_resource type="AudioStream" uid="uid://duddx3sag8lma" path="res://assets/audio/music/shop_music.wav" id="11_klcfw"]
+[ext_resource type="Texture2D" uid="uid://cvy3jnwb6ubrs" path="res://assets/visuals/sell_bin.png" id="13_f2q3x"]
 [ext_resource type="Script" path="res://scripts/Selling_window.gd" id="13_ka7xn"]
-[ext_resource type="Texture2D" uid="uid://bmnfg1sk1kn5w" path="res://assets/visuals/sell_bin_grey.png" id="14_44n7a"]
-[ext_resource type="Texture2D" uid="uid://dfsf187bdnu0u" path="res://assets/visuals/sell_lid_grey.png" id="15_17fd6"]
-[ext_resource type="AudioStream" uid="uid://cql740fn4l0bp" path="res://assets/audio/sfx/Bin_open.wav" id="16_87klg"]
-[ext_resource type="AudioStream" uid="uid://cb3wk7kklwvny" path="res://assets/audio/sfx/Bin_close.wav" id="17_0k745"]
+[ext_resource type="Texture2D" uid="uid://c5u88j3e26hc3" path="res://assets/visuals/sell_bin_lid.png" id="14_5fv4i"]
 
 [sub_resource type="Animation" id="Animation_xt4id"]
 length = 0.001
@@ -125,19 +123,9 @@ _data = {
 "item_sell": SubResource("Animation_pr24m")
 }
 
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_f1eu0"]
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_arwq8"]
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_qp050"]
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_lyt8j"]
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_jiskw"]
-
 [sub_resource type="Animation" id="Animation_m2uvk"]
 resource_name = "open"
-length = 0.15
+length = 0.6
 step = 0.05
 tracks/0/type = "value"
 tracks/0/imported = false
@@ -146,7 +134,7 @@ tracks/0/path = NodePath("HBoxContainer/VBoxContainer/Control/bin_lid:position")
 tracks/0/interp = 2
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.1, 0.15),
+"times": PackedFloat32Array(0, 0.45, 0.6),
 "transitions": PackedFloat32Array(2, 0.3, 1),
 "update": 0,
 "values": [Vector2(0, -195), Vector2(-50, -259), Vector2(-41, -256)]
@@ -158,7 +146,7 @@ tracks/1/path = NodePath("HBoxContainer/VBoxContainer/Control/bin_lid:rotation")
 tracks/1/interp = 2
 tracks/1/loop_wrap = true
 tracks/1/keys = {
-"times": PackedFloat32Array(0, 0.1, 0.15),
+"times": PackedFloat32Array(0, 0.45, 0.6),
 "transitions": PackedFloat32Array(2.07053, 0.3, 1),
 "update": 0,
 "values": [0.0, -0.401426, -0.349066]
@@ -166,7 +154,7 @@ tracks/1/keys = {
 
 [sub_resource type="Animation" id="Animation_nhek1"]
 resource_name = "RESET"
-length = 0.01
+length = 0.6
 step = 0.05
 tracks/0/type = "value"
 tracks/0/imported = false
@@ -195,7 +183,7 @@ tracks/1/keys = {
 
 [sub_resource type="Animation" id="Animation_347bl"]
 resource_name = "close"
-length = 0.15
+length = 0.6
 step = 0.05
 tracks/0/type = "value"
 tracks/0/imported = false
@@ -204,7 +192,7 @@ tracks/0/path = NodePath("HBoxContainer/VBoxContainer/Control/bin_lid:position")
 tracks/0/interp = 2
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.1, 0.15),
+"times": PackedFloat32Array(0, 0.45, 0.6),
 "transitions": PackedFloat32Array(2, 0.3, 1),
 "update": 0,
 "values": [Vector2(-41, -256), Vector2(-50, -259), Vector2(0, -195)]
@@ -216,7 +204,7 @@ tracks/1/path = NodePath("HBoxContainer/VBoxContainer/Control/bin_lid:rotation")
 tracks/1/interp = 2
 tracks/1/loop_wrap = true
 tracks/1/keys = {
-"times": PackedFloat32Array(0, 0.1, 0.15),
+"times": PackedFloat32Array(0, 0.45, 0.6),
 "transitions": PackedFloat32Array(2, 0.3, 1),
 "update": 0,
 "values": [-0.349066, -0.401426, 0.0]
@@ -411,12 +399,10 @@ offset_top = -200.0
 offset_right = 720.0
 offset_bottom = 145.0
 grow_vertical = 0
-mouse_filter = 2
 script = ExtResource("13_ka7xn")
 
 [node name="HBoxContainer" type="HBoxContainer" parent="Selling_window"]
 layout_mode = 2
-mouse_filter = 2
 
 [node name="VBoxContainer" type="VBoxContainer" parent="Selling_window/HBoxContainer"]
 layout_mode = 2
@@ -425,43 +411,24 @@ theme_override_constants/separation = -5
 [node name="bin_base" type="TextureRect" parent="Selling_window/HBoxContainer/VBoxContainer"]
 custom_minimum_size = Vector2(200, 200)
 layout_mode = 2
-texture = ExtResource("14_44n7a")
+texture = ExtResource("13_f2q3x")
 expand_mode = 1
-
-[node name="sell_button" type="Button" parent="Selling_window/HBoxContainer/VBoxContainer/bin_base"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_styles/normal = SubResource("StyleBoxEmpty_f1eu0")
-theme_override_styles/hover = SubResource("StyleBoxEmpty_arwq8")
-theme_override_styles/pressed = SubResource("StyleBoxEmpty_qp050")
-theme_override_styles/disabled = SubResource("StyleBoxEmpty_lyt8j")
-theme_override_styles/focus = SubResource("StyleBoxEmpty_jiskw")
 
 [node name="Control" type="Control" parent="Selling_window/HBoxContainer/VBoxContainer"]
 layout_mode = 2
-mouse_filter = 2
 
 [node name="bin_lid" type="TextureRect" parent="Selling_window/HBoxContainer/VBoxContainer/Control"]
 z_index = 2
 custom_minimum_size = Vector2(200, 200)
 layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -100.0
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
 offset_top = -195.0
-offset_right = 100.0
 offset_bottom = 5.0
 grow_horizontal = 2
 grow_vertical = 2
-mouse_filter = 2
-texture = ExtResource("15_17fd6")
+texture = ExtResource("14_5fv4i")
 expand_mode = 1
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="Selling_window/HBoxContainer/VBoxContainer"]
@@ -473,17 +440,10 @@ libraries = {
 [node name="RichTextLabel" type="RichTextLabel" parent="Selling_window/HBoxContainer"]
 custom_minimum_size = Vector2(300, 0)
 layout_mode = 2
-mouse_filter = 1
 theme_override_fonts/normal_font = ExtResource("3_5pc7a")
 theme_override_font_sizes/normal_font_size = 96
 bbcode_enabled = true
 text = "[center][wave amp=20.0 freq=10.0 connected=1]Sell[/wave][/center]"
-
-[node name="bin_open" type="AudioStreamPlayer" parent="Selling_window"]
-stream = ExtResource("16_87klg")
-
-[node name="bin_close" type="AudioStreamPlayer" parent="Selling_window"]
-stream = ExtResource("17_0k745")
 
 [node name="shop_music" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("11_klcfw")
@@ -510,6 +470,5 @@ bus = &"music"
 [connection signal="mouse_exited" from="Shop/MarginContainer/HBoxContainer/ShopContainer/ShopSlot6" to="Shop" method="_on_slot_mouse_exited"]
 [connection signal="passed_mouse" from="Shop/MarginContainer/HBoxContainer/ShopContainer/ShopSlot6" to="Shop" method="_on_slot_mouse_entered"]
 [connection signal="pressed" from="Inventory/MarginContainer/VBoxContainer/Header/Button_Spawner" to="Inventory" method="_on_button_spawner_pressed"]
-[connection signal="mouse_entered" from="Selling_window/HBoxContainer/VBoxContainer/bin_base/sell_button" to="Selling_window" method="_on_mouse_entered"]
-[connection signal="mouse_exited" from="Selling_window/HBoxContainer/VBoxContainer/bin_base/sell_button" to="Selling_window" method="_on_mouse_exited"]
-[connection signal="pressed" from="Selling_window/HBoxContainer/VBoxContainer/bin_base/sell_button" to="Selling_window" method="_on_sell_button_pressed"]
+[connection signal="mouse_entered" from="Selling_window" to="Selling_window" method="_on_mouse_entered"]
+[connection signal="mouse_exited" from="Selling_window" to="Selling_window" method="_on_mouse_exited"]

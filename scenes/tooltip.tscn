@@ -7,6 +7,7 @@
 bg_color = Color(0.709804, 0.709804, 0.709804, 1)
 
 [node name="tooltip" type="PanelContainer"]
+z_index = 2
 offset_right = 244.0
 offset_bottom = 168.0
 mouse_filter = 2

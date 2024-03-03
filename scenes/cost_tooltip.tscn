@@ -4,6 +4,7 @@
 [ext_resource type="FontFile" uid="uid://tpd5pc8oxjmq" path="res://assets/fonts/ArchivoBlack-Regular.ttf" id="2_87p4h"]
 
 [node name="cost_tooltip" type="PanelContainer"]
+z_index = 2
 offset_right = 104.0
 offset_bottom = 60.0
 mouse_filter = 2

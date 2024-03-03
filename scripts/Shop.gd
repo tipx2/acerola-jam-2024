@@ -58,6 +58,8 @@ func _on_slot_mouse_exited():
 	cost_tooltip.visible = false
 
 func buy_button_pressed(s):
+	tooltip.visible = false
+	cost_tooltip.visible = false
 	var item_held_id = held_items[str(s.get_index())]
 	var tooltip_info = DataHandler.item_data[str(item_held_id)]
 	if Globals.money < tooltip_info["Buy_price"]:
