@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://c0hnp5n85ngx0"]
+[gd_scene load_steps=16 format=3 uid="uid://c0hnp5n85ngx0"]
 
 [ext_resource type="Script" path="res://scripts/Shop.gd" id="2_cvtyw"]
 [ext_resource type="Script" path="res://scripts/Inventory.gd" id="2_lin4v"]
@@ -7,10 +7,12 @@
 [ext_resource type="PackedScene" uid="uid://cw41o3trm62b3" path="res://scenes/shop_slot.tscn" id="3_uuijo"]
 [ext_resource type="PackedScene" uid="uid://cpmhvdq5c7act" path="res://scenes/cost_tooltip.tscn" id="4_7ctcr"]
 [ext_resource type="AudioStream" uid="uid://buqj7suo1kr8x" path="res://assets/audio/sfx/buzzer_fadeout_eqd.wav" id="4_8sk1u"]
+[ext_resource type="AudioStream" uid="uid://b1ov4o0da7h0x" path="res://assets/audio/sfx/item_buy.wav" id="5_8tvee"]
 [ext_resource type="PackedScene" uid="uid://b2bs04605fxq0" path="res://scenes/tooltip.tscn" id="5_dpofu"]
+[ext_resource type="AudioStream" uid="uid://cg0me8gbpmp6" path="res://assets/audio/sfx/item_sell.wav" id="6_fgxc5"]
 
 [sub_resource type="Animation" id="Animation_k8rjw"]
-resource_name = "flash"
+resource_name = "cant_afford"
 length = 0.65
 step = 0.05
 tracks/0/type = "value"
@@ -28,7 +30,7 @@ tracks/0/keys = {
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("AudioStreamPlayer:playing")
+tracks/1/path = NodePath("cant_afford:playing")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
@@ -38,9 +40,81 @@ tracks/1/keys = {
 "values": [true]
 }
 
+[sub_resource type="Animation" id="Animation_4g4wa"]
+resource_name = "item_buy"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:self_modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.6, 1),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(0.823529, 0.815686, 0, 1), Color(0.87395, 0.868347, 0.285714, 1), Color(1, 1, 1, 1)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("item_buy:playing")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+
+[sub_resource type="Animation" id="Animation_xt4id"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:self_modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_pr24m"]
+resource_name = "item_sell"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("item_sell:playing")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:self_modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.4, 0.8, 1),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(0.113725, 1, 1, 1), Color(0.113725, 1, 1, 1), Color(1, 1, 1, 1)]
+}
+
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_1q6o2"]
 _data = {
-"flash": SubResource("Animation_k8rjw")
+"RESET": SubResource("Animation_xt4id"),
+"cant_afford": SubResource("Animation_k8rjw"),
+"item_buy": SubResource("Animation_4g4wa"),
+"item_sell": SubResource("Animation_pr24m")
 }
 
 [node name="ShopScreen" type="Control"]
@@ -69,13 +143,15 @@ script = ExtResource("2_cvtyw")
 
 [node name="MoneyLabel" type="RichTextLabel" parent="Shop"]
 layout_mode = 1
-anchors_preset = 5
-anchor_left = 0.5
-anchor_right = 0.5
-offset_left = -963.0
-offset_top = -127.0
-offset_right = 146.0
-offset_bottom = -50.0
+anchors_preset = -1
+anchor_left = -0.084
+anchor_top = -0.222
+anchor_right = -0.084
+anchor_bottom = -0.222
+offset_left = -554.2
+offset_top = 43.496
+offset_right = 554.8
+offset_bottom = 120.496
 grow_horizontal = 2
 theme_override_fonts/normal_font = ExtResource("3_5pc7a")
 theme_override_font_sizes/normal_font_size = 70
@@ -87,8 +163,14 @@ libraries = {
 "": SubResource("AnimationLibrary_1q6o2")
 }
 
-[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="Shop/MoneyLabel"]
+[node name="cant_afford" type="AudioStreamPlayer" parent="Shop/MoneyLabel"]
 stream = ExtResource("4_8sk1u")
+
+[node name="item_buy" type="AudioStreamPlayer" parent="Shop/MoneyLabel"]
+stream = ExtResource("5_8tvee")
+
+[node name="item_sell" type="AudioStreamPlayer" parent="Shop/MoneyLabel"]
+stream = ExtResource("6_fgxc5")
 
 [node name="MarginContainer" type="MarginContainer" parent="Shop"]
 layout_mode = 1
@@ -120,12 +202,10 @@ layout_mode = 2
 mouse_filter = 0
 
 [node name="ShopSlot2" parent="Shop/MarginContainer/HBoxContainer/ShopContainer" instance=ExtResource("3_uuijo")]
-visible = false
 layout_mode = 2
 mouse_filter = 0
 
 [node name="ShopSlot3" parent="Shop/MarginContainer/HBoxContainer/ShopContainer" instance=ExtResource("3_uuijo")]
-visible = false
 layout_mode = 2
 mouse_filter = 0
 
@@ -156,9 +236,9 @@ offset_bottom = -36.0
 [node name="Inventory" type="ColorRect" parent="."]
 layout_mode = 0
 offset_left = 146.0
-offset_top = 164.0
+offset_top = 245.0
 offset_right = 846.0
-offset_bottom = 932.0
+offset_bottom = 851.0
 color = Color(0.243137, 0.141176, 0.0666667, 1)
 script = ExtResource("2_lin4v")
 
@@ -174,10 +254,12 @@ grow_vertical = 2
 layout_mode = 2
 
 [node name="Header" type="HBoxContainer" parent="Inventory/MarginContainer/VBoxContainer"]
+visible = false
 custom_minimum_size = Vector2(0, 100)
 layout_mode = 2
 
 [node name="Button_Spawner" type="Button" parent="Inventory/MarginContainer/VBoxContainer/Header"]
+visible = false
 custom_minimum_size = Vector2(300, 70)
 layout_mode = 2
 size_flags_horizontal = 6

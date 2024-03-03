@@ -43,7 +43,7 @@
 	"5": {
 		"ImageName": "Acerola",
 		"DisplayName": "Acerola",
-		"Description": "[i]Stop moving data from [shake rate=10.0 level=5]CPU[/shake] to [shake rate=10.0 level=5]GPU[/shake]![/i]",
+		"Description": "Stop moving data from [shake rate=10.0 level=5]CPU[/shake] to [shake rate=10.0 level=5]GPU[/shake]!",
 		"Buy_price": 50,
 		"Sell_price": 30,
 		"Type": "[color=red]Youtuber[/color]",

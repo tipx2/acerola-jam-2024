@@ -51,15 +51,18 @@ func _on_slot_mouse_entered(a_Slot):
 	
 	elif a_Slot.item_stored:
 		tooltip.visible = true
-		var tooltip_info = DataHandler.item_data[str(a_Slot.item_stored.item_ID)]
-		tooltip.set_title(tooltip_info["DisplayName"])
-		tooltip.set_description(tooltip_info["Description"])
-		tooltip.set_type(tooltip_info["Type"])
+		fill_tooltip(a_Slot.item_stored.item_ID)
 	else:
 		tooltip.visible = false
 
 func _on_slot_mouse_exited(a_Slot):
 	clear_grid()
+
+func fill_tooltip(id : int):
+	var tooltip_info = DataHandler.item_data[str(id)]
+	tooltip.set_title(tooltip_info["DisplayName"])
+	tooltip.set_description(tooltip_info["Description"])
+	tooltip.set_type(tooltip_info["Type"])
 
 func check_slot_availability(a_Slot) -> void:
 	for grid in item_held.item_grids:
@@ -121,7 +124,11 @@ func place_item():
 		var grid_to_check = current_slot.slot_ID + grid[0] + grid[1] * column_count
 		grid_array[grid_to_check].state = grid_array[grid_to_check].States.TAKEN
 		grid_array[grid_to_check].item_stored = item_held
+		
+	tooltip.visible = true
+	fill_tooltip(item_held.item_ID)
 	
+	item_held.selected = false
 	item_held = null
 	clear_grid()
 

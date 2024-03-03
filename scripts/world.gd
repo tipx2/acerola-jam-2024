@@ -85,5 +85,16 @@ func _on_end_portal_level_ended():
 	%ShopScreen.visible = true
 	%portal_bg.visible = true
 	%continue_button.visible = true
+	%ShopScreen.get_node("Shop").load_items() # cheeky
 	%transition_animation.play("uncover")
-	
+	get_tree().call_group("enemy", "queue_free")
+
+func _on_continue_button_pressed():
+	square_room.generate_level()
+	Globals.player.set_intangible(false)
+	%transition_animation.play("cover")
+	await %transition_animation.animation_finished
+	%ShopScreen.visible = false
+	%portal_bg.visible = false
+	%continue_button.visible = false
+	%transition_animation.play("uncover")

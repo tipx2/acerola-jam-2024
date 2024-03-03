@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3 uid="uid://bqbk4qjsfcv20"]
+[gd_scene load_steps=17 format=3 uid="uid://bqbk4qjsfcv20"]
 
 [ext_resource type="Script" path="res://scripts/world.gd" id="1_wjo8l"]
 [ext_resource type="PackedScene" uid="uid://dx5x5ljxp22fg" path="res://scenes/square_room.tscn" id="2_04yut"]
@@ -7,6 +7,7 @@
 [ext_resource type="PackedScene" uid="uid://c0hnp5n85ngx0" path="res://scenes/shop_screen.tscn" id="5_u2q0g"]
 [ext_resource type="Texture2D" uid="uid://bgcxc026klhjd" path="res://assets/visuals/1x1white.png" id="6_d4sod"]
 [ext_resource type="Shader" path="res://assets/shaders/warp.gdshader" id="6_fem7q"]
+[ext_resource type="FontFile" uid="uid://tpd5pc8oxjmq" path="res://assets/fonts/ArchivoBlack-Regular.ttf" id="8_8o0vw"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_jkme2"]
 shader = ExtResource("6_fem7q")
@@ -193,6 +194,24 @@ color = Color(0.0745098, 0.0156863, 0.14902, 0.905882)
 unique_name_in_owner = true
 visible = false
 
+[node name="continue_button" type="Button" parent="CanvasLayer"]
+unique_name_in_owner = true
+visible = false
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -150.0
+offset_top = -128.02
+offset_right = 151.0
+offset_bottom = -32.0197
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_fonts/font = ExtResource("8_8o0vw")
+theme_override_font_sizes/font_size = 80
+text = "Done"
+
 [node name="transition" type="Control" parent="CanvasLayer"]
 layout_mode = 3
 anchors_preset = 15
@@ -207,7 +226,7 @@ modulate = Color(0, 0, 0, 1)
 layout_mode = 1
 anchors_preset = 10
 anchor_right = 1.0
-offset_right = 3840.0
+offset_right = 11520.0
 offset_bottom = 1.0
 grow_horizontal = 2
 texture = ExtResource("6_d4sod")
@@ -220,7 +239,7 @@ anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
 offset_top = 1079.0
-offset_right = 3840.0
+offset_right = 11520.0
 offset_bottom = 1080.0
 grow_horizontal = 2
 grow_vertical = 0
@@ -232,20 +251,6 @@ libraries = {
 "": SubResource("AnimationLibrary_qhe4e")
 }
 
-[node name="continue_button" type="Button" parent="CanvasLayer"]
-unique_name_in_owner = true
-visible = false
-anchors_preset = 3
-anchor_left = 1.0
-anchor_top = 1.0
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = -401.0
-offset_top = -145.0
-grow_horizontal = 0
-grow_vertical = 0
-theme_override_font_sizes/font_size = 96
-text = ">>>"
-
 [connection signal="map_generated" from="SquareRoom" to="." method="_on_square_room_map_generated"]
 [connection signal="level_ended" from="EndPortal" to="." method="_on_end_portal_level_ended"]
+[connection signal="pressed" from="CanvasLayer/continue_button" to="." method="_on_continue_button_pressed"]

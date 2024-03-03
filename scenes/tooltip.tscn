@@ -7,8 +7,8 @@
 bg_color = Color(0.709804, 0.709804, 0.709804, 1)
 
 [node name="tooltip" type="PanelContainer"]
-offset_right = 200.0
-offset_bottom = 128.0
+offset_right = 244.0
+offset_bottom = 168.0
 mouse_filter = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_yt2yi")
 script = ExtResource("1_dosja")
@@ -16,9 +16,9 @@ script = ExtResource("1_dosja")
 [node name="MarginContainer" type="MarginContainer" parent="."]
 layout_mode = 2
 mouse_filter = 2
-theme_override_constants/margin_left = 5
+theme_override_constants/margin_left = 10
 theme_override_constants/margin_top = 10
-theme_override_constants/margin_right = 5
+theme_override_constants/margin_right = 10
 theme_override_constants/margin_bottom = 10
 
 [node name="CenterContainer" type="CenterContainer" parent="MarginContainer"]
@@ -39,7 +39,7 @@ layout_mode = 2
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_constants/outline_size = 10
 theme_override_fonts/font = ExtResource("2_2rdtw")
-theme_override_font_sizes/font_size = 28
+theme_override_font_sizes/font_size = 45
 text = "Silly Item"
 
 [node name="ColorRect" type="ColorRect" parent="MarginContainer/CenterContainer/VBoxContainer"]
@@ -63,7 +63,7 @@ theme_override_constants/shadow_offset_y = 3
 theme_override_constants/shadow_outline_size = -80
 theme_override_constants/outline_size = 5
 theme_override_fonts/normal_font = ExtResource("2_2rdtw")
-theme_override_font_sizes/normal_font_size = 12
+theme_override_font_sizes/normal_font_size = 20
 bbcode_enabled = true
 text = "[center][color=green]informative[/color] [color=red]item[/color] [shake rate=20.0 level=5 connected=1]description[/shake][/center]"
 fit_content = true
@@ -85,6 +85,6 @@ layout_mode = 2
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_constants/outline_size = 5
 theme_override_fonts/normal_font = ExtResource("2_2rdtw")
-theme_override_font_sizes/normal_font_size = 11
+theme_override_font_sizes/normal_font_size = 15
 bbcode_enabled = true
 text = "[center]Type: [/center]"
