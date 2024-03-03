@@ -30,6 +30,10 @@ func load_items():
 		if shop_slot.get_node("Control").get_child_count() >= 1:
 			shop_slot.get_node("Control").get_child(0).queue_free.call_deferred()
 		shop_slot.get_node("Control").add_child(new_item)
+		
+		new_item.connect("buy_button_pressed", shop_slot._on_buy_button_pressed)
+		new_item.connect("item_mouse_entered", shop_slot._on_mouse_entered)
+		
 		var item_held_id = randi_range(1, 6)
 		new_item.load_item(item_held_id)
 		held_items[str(slot_n)] = item_held_id

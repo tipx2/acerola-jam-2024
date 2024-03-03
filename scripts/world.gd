@@ -85,7 +85,8 @@ func _on_end_portal_level_ended():
 	%ShopScreen.visible = true
 	%portal_bg.visible = true
 	%continue_button.visible = true
-	%ShopScreen.get_node("Shop").load_items() # cheeky
+	%ShopScreen.load_items()
+	%ShopScreen.tween_music_volume(0, 0.5)
 	%transition_animation.play("uncover")
 	get_tree().call_group("enemy", "queue_free")
 
@@ -95,6 +96,7 @@ func _on_continue_button_pressed():
 	%transition_animation.play("cover")
 	await %transition_animation.animation_finished
 	%ShopScreen.visible = false
+	%ShopScreen.tween_music_volume(-80, 0.2)
 	%portal_bg.visible = false
 	%continue_button.visible = false
 	%transition_animation.play("uncover")

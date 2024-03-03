@@ -1,10 +1,60 @@
-[gd_scene load_steps=2 format=3 uid="uid://btf8cy81nfkdl"]
+[gd_scene load_steps=9 format=3 uid="uid://btf8cy81nfkdl"]
 
 [ext_resource type="Script" path="res://scripts/Item.gd" id="1_7dg5a"]
+[ext_resource type="Shader" path="res://assets/shaders/perspective.gdshader" id="2_nrcui"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_qhsws"]
+resource_local_to_scene = true
+shader = ExtResource("2_nrcui")
+shader_parameter/fov = 90.0
+shader_parameter/cull_back = true
+shader_parameter/y_rot = 0.0
+shader_parameter/x_rot = 0.0
+shader_parameter/inset = 0.0
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_iev61"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_6klw5"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_mviou"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_lwd1m"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_0opjy"]
 
 [node name="Item" type="Node2D"]
 process_mode = 3
 script = ExtResource("1_7dg5a")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
+material = SubResource("ShaderMaterial_qhsws")
 scale = Vector2(2, 2)
+
+[node name="ColorRect" type="ColorRect" parent="."]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 1
+color = Color(0.211765, 0.211765, 0.211765, 0)
+
+[node name="buy_button" type="Button" parent="ColorRect"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 1
+theme_override_styles/normal = SubResource("StyleBoxEmpty_iev61")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_6klw5")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_mviou")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_lwd1m")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_0opjy")
+
+[connection signal="mouse_entered" from="ColorRect" to="." method="_on_mouse_entered"]
+[connection signal="mouse_exited" from="ColorRect" to="." method="_on_mouse_exited"]
+[connection signal="pressed" from="ColorRect/buy_button" to="." method="_on_buy_button_pressed"]
