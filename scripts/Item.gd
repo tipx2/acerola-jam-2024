@@ -13,6 +13,7 @@ const LERP_SPEED = 20
 
 var item_ID : int
 var item_grids := []
+var item_adj_grids := []
 var selected = false
 var grid_anchor = null
 
@@ -49,15 +50,25 @@ func load_item(a_ItemID : int) -> void:
 	
 	for grid in DataHandler.item_grid_data[str(a_ItemID)]:
 		item_grids.push_back([int(grid[0]), int(grid[1])])
+	
+	for grid in DataHandler.item_grid_data[str(a_ItemID)]:
+		item_adj_grids.push_back([int(grid[0]), int(grid[1])])
 
 func rotate_item():
 	for grid in item_grids:
 		var temp_y = grid[0]
 		grid[0] = -grid[1]
 		grid[1] = temp_y
+		
+	for grid in item_adj_grids:
+		var temp_y = grid[0]
+		grid[0] = -grid[1]
+		grid[1] = temp_y
+		
 	rotation_degrees += 90
 	if rotation_degrees == 360:
 		rotation_degrees = 0
+
 
 # probably an easy elegent maths way of doing this...
 func get_corrected_tilt_target(vector_to_mouse : Vector2) -> Vector2:

@@ -1,7 +1,8 @@
-[gd_scene load_steps=3 format=3 uid="uid://bhq8majgngh3v"]
+[gd_scene load_steps=4 format=3 uid="uid://bhq8majgngh3v"]
 
 [ext_resource type="Texture2D" uid="uid://x300l00lw3tp" path="res://assets/visuals/inventory_texture(1).png" id="1_fy48s"]
 [ext_resource type="Script" path="res://scripts/slot.gd" id="2_2ihmy"]
+[ext_resource type="Texture2D" uid="uid://k31lj441fjq5" path="res://assets/visuals/fabric_6312_9059_Small.png" id="3_3hm1i"]
 
 [node name="Slot" type="TextureRect"]
 process_mode = 3
@@ -18,3 +19,15 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
+color = Color(1, 1, 1, 0)
+
+[node name="LockScreen" type="TextureRect" parent="."]
+self_modulate = Color(0.34902, 0.184314, 0.0784314, 0)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("3_3hm1i")
+expand_mode = 1

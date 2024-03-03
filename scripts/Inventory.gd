@@ -44,6 +44,8 @@ func create_slot():
 	grid_container.add_child(new_slot)
 	new_slot.slot_entered.connect(_on_slot_mouse_entered)
 	new_slot.slot_exited.connect(_on_slot_mouse_exited)
+	
+	new_slot.lock_slot()
 
 func _on_slot_mouse_entered(a_Slot):
 	icon_anchor = Vector2(10000, 10000)

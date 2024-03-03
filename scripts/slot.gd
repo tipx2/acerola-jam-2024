@@ -4,12 +4,15 @@ signal slot_entered(slot)
 signal slot_exited(slot)
 
 @onready var status_filter := $StatusFilter as ColorRect
+@onready var lock_screen = $LockScreen
 
 var slot_ID
 var is_hovering := false
 enum States {DEFAULT, TAKEN, FREE}
 var state := States.DEFAULT
 var item_stored = null
+
+var locked = false
 
 func set_color(a_state = States.DEFAULT) -> void:
 	match a_state:
@@ -28,3 +31,17 @@ func _process(delta):
 	elif is_hovering:
 		is_hovering = false
 		slot_exited.emit(self)
+
+
+# **********************************************************
+# TODO: ADD LOCK FUNCTIONALITY!! ADD FUNCTIONALITY FOR LOCKING AND UNLOCKING SLOTS!!
+# TODO: ADD ABILITY TO BUY SLOTS!! ADD ABIILTY TO BUY SLOTS!!!
+# **********************************************************
+
+func lock_slot():
+	lock_screen.self_modulate = Color("#592f14FF")
+	locked = true
+
+func unlock_slot():
+	lock_screen.self_modulate = Color("#592f1400")
+	locked = false
