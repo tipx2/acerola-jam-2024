@@ -11,8 +11,8 @@
 [ext_resource type="AudioStream" uid="uid://b1ov4o0da7h0x" path="res://assets/audio/sfx/item_buy.wav" id="5_8tvee"]
 [ext_resource type="PackedScene" uid="uid://b2bs04605fxq0" path="res://scenes/tooltip.tscn" id="5_dpofu"]
 [ext_resource type="AudioStream" uid="uid://cg0me8gbpmp6" path="res://assets/audio/sfx/item_sell.wav" id="6_fgxc5"]
-[ext_resource type="Texture2D" uid="uid://k31lj441fjq5" path="res://assets/visuals/fabric_6312_9059_Small.png" id="11_86h4t"]
 [ext_resource type="AudioStream" uid="uid://duddx3sag8lma" path="res://assets/audio/music/shop_music.wav" id="11_klcfw"]
+[ext_resource type="Texture2D" uid="uid://cvppvc6armqm1" path="res://assets/visuals/seamlessed_leather.png" id="12_tvpjl"]
 [ext_resource type="Script" path="res://scripts/Selling_window.gd" id="13_ka7xn"]
 [ext_resource type="Texture2D" uid="uid://bmnfg1sk1kn5w" path="res://assets/visuals/sell_bin_grey.png" id="14_44n7a"]
 [ext_resource type="Texture2D" uid="uid://dfsf187bdnu0u" path="res://assets/visuals/sell_lid_grey.png" id="15_17fd6"]
@@ -367,8 +367,9 @@ script = ExtResource("2_lin4v")
 layout_mode = 2
 
 [node name="TextureRect" type="TextureRect" parent="Inventory/MarginContainer"]
+self_modulate = Color(0.243137, 0.133333, 0.0588235, 1)
 layout_mode = 2
-texture = ExtResource("11_86h4t")
+texture = ExtResource("12_tvpjl")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="Inventory/MarginContainer"]
 layout_mode = 2
@@ -449,15 +450,11 @@ mouse_filter = 2
 z_index = 2
 custom_minimum_size = Vector2(200, 200)
 layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
+anchors_preset = 9
+anchor_bottom = 1.0
 offset_top = -195.0
 offset_right = 200.0
 offset_bottom = 5.0
-grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 texture = ExtResource("15_17fd6")

@@ -64,17 +64,12 @@ func buy_button_pressed(s):
 	var tooltip_info = DataHandler.item_data[str(item_held_id)]
 	if Globals.money < tooltip_info["Buy_price"]:
 		
-		if !money_label.get_node("AnimationPlayer").is_playing():
-			random_pitch_money_sounds()
-		money_label.get_node("AnimationPlayer").play("cant_afford")
+		money_animation("cant_afford")
 		
 	else:
 		if inventory.hold_new_item(item_held_id):
 			Globals.money -= tooltip_info["Buy_price"]
-			
-			random_pitch_money_sounds()
-			money_label.get_node("AnimationPlayer").play("item_buy")
-			
+			money_animation("item_buy")
 			s.visible = false
 	update_money_label()
 
@@ -87,7 +82,12 @@ func random_pitch_money_sounds():
 		else:
 			for x in range(randi_range(0, 2)):
 				money_label.get_node(audio).pitch_scale /= 1.059463
-	
 
 func update_money_label():
 	money_label.text = "[center][wave amp=20.0 freq=5.0 connected=0]Cash Money: £%d[/wave][/center]" % Globals.money
+
+func money_animation(name : String):
+	update_money_label()
+	if !money_label.get_node("AnimationPlayer").is_playing:
+		random_pitch_money_sounds()
+	money_label.get_node("AnimationPlayer").play(name)

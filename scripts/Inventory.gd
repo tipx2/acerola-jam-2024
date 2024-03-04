@@ -16,10 +16,13 @@ var can_place := false
 var icon_anchor : Vector2
 
 var in_round = true
+var slot_cost = 10
 
 func _ready():
 	for i in range(49):
-		create_slot()
+		# locks: left column, right column, first two rows, last two rows
+		create_slot(!(i % 7 && (i+1) % 7) || i < 14 || i > 35)
+	get_tree().call_group("inv_slot", "update_money_label", slot_cost)
 	clear_grid()
 
 func _process(delta):
@@ -37,15 +40,28 @@ func _process(delta):
 		if !grid_container.get_global_rect().has_point(get_global_mouse_position()):
 			tooltip.visible = false
 
-func create_slot():
+func create_slot(lock : bool):
 	var new_slot = slot_scene.instantiate()
 	new_slot.slot_ID = grid_array.size()
 	grid_array.push_back(new_slot)
 	grid_container.add_child(new_slot)
 	new_slot.slot_entered.connect(_on_slot_mouse_entered)
 	new_slot.slot_exited.connect(_on_slot_mouse_exited)
+	new_slot.try_unlock_slot.connect(_try_unlock_slot)
 	
-	new_slot.lock_slot()
+	if lock:
+		new_slot.lock_slot()
+
+func _try_unlock_slot(a_Slot):
+	if Globals.money > slot_cost:
+		a_Slot.unlock_slot()
+		Globals.money -= slot_cost
+		slot_cost += 1
+		get_tree().call_group("inv_slot", "update_money_label", slot_cost)
+		
+		shop.money_animation("item_buy")
+	else:
+		shop.money_animation("cant_afford")
 
 func _on_slot_mouse_entered(a_Slot):
 	icon_anchor = Vector2(10000, 10000)
@@ -80,6 +96,9 @@ func check_slot_availability(a_Slot) -> void:
 			can_place = false
 			return
 		if grid_array[grid_to_check].state == grid_array[grid_to_check].States.TAKEN:
+			can_place = false
+			return
+		if grid_array[grid_to_check].locked:
 			can_place = false
 			return
 	can_place = true
@@ -184,10 +203,7 @@ func sell_item():
 	item_held.queue_free.call_deferred()
 	item_held = null
 	
-	# very lazy code area - do not think about
-	shop.update_money_label()
-	shop.random_pitch_money_sounds()
-	shop.money_label.get_node("AnimationPlayer").play("item_sell")
+	shop.money_animation("item_sell")
 
 func _on_button_spawner_pressed():
 	hold_new_item(randi_range(1, 6))

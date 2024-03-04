@@ -1,10 +1,21 @@
-[gd_scene load_steps=4 format=3 uid="uid://bhq8majgngh3v"]
+[gd_scene load_steps=10 format=3 uid="uid://bhq8majgngh3v"]
 
 [ext_resource type="Texture2D" uid="uid://x300l00lw3tp" path="res://assets/visuals/inventory_texture(1).png" id="1_fy48s"]
 [ext_resource type="Script" path="res://scripts/slot.gd" id="2_2ihmy"]
-[ext_resource type="Texture2D" uid="uid://k31lj441fjq5" path="res://assets/visuals/fabric_6312_9059_Small.png" id="3_3hm1i"]
+[ext_resource type="Texture2D" uid="uid://cvppvc6armqm1" path="res://assets/visuals/seamlessed_leather.png" id="3_ujrde"]
+[ext_resource type="FontFile" uid="uid://tpd5pc8oxjmq" path="res://assets/fonts/ArchivoBlack-Regular.ttf" id="4_thiq8"]
 
-[node name="Slot" type="TextureRect"]
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_1yn77"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_tkknu"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_jftxx"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_ep1t3"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_od32q"]
+
+[node name="Slot" type="TextureRect" groups=["inv_slot"]]
 process_mode = 3
 custom_minimum_size = Vector2(100, 100)
 texture = ExtResource("1_fy48s")
@@ -29,5 +40,34 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-texture = ExtResource("3_3hm1i")
+texture = ExtResource("3_ujrde")
 expand_mode = 1
+
+[node name="unlock_button" type="Button" parent="LockScreen"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/normal = SubResource("StyleBoxEmpty_1yn77")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_tkknu")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_jftxx")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_ep1t3")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_od32q")
+
+[node name="money_label" type="Label" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_fonts/font = ExtResource("4_thiq8")
+theme_override_font_sizes/font_size = 41
+text = "£25"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[connection signal="pressed" from="LockScreen/unlock_button" to="." method="_on_unlock_button_pressed"]

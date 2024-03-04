@@ -3,8 +3,12 @@ extends TextureRect
 signal slot_entered(slot)
 signal slot_exited(slot)
 
+signal try_unlock_slot(slot)
+
 @onready var status_filter := $StatusFilter as ColorRect
 @onready var lock_screen = $LockScreen
+@onready var money_label = $money_label
+@onready var unlock_button = $LockScreen/unlock_button
 
 var slot_ID
 var is_hovering := false
@@ -33,15 +37,20 @@ func _process(delta):
 		slot_exited.emit(self)
 
 
-# **********************************************************
-# TODO: ADD LOCK FUNCTIONALITY!! ADD FUNCTIONALITY FOR LOCKING AND UNLOCKING SLOTS!!
-# TODO: ADD ABILITY TO BUY SLOTS!! ADD ABIILTY TO BUY SLOTS!!!
-# **********************************************************
+func update_money_label(value : int):
+	money_label.text = "£%d" % value
 
 func lock_slot():
+	unlock_button.disabled = false
 	lock_screen.self_modulate = Color("#592f14FF")
+	money_label.visible = true
 	locked = true
 
 func unlock_slot():
+	unlock_button.disabled = true
 	lock_screen.self_modulate = Color("#592f1400")
+	money_label.visible = false
 	locked = false
+
+func _on_unlock_button_pressed():
+	try_unlock_slot.emit(self)
