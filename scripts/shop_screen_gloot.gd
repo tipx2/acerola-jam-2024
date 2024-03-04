@@ -17,10 +17,6 @@ var trans_shop_to_inv = false
 var trans_inv_to_shop = false
 var trans_snapback = false
 
-# TODO: TEMP, remove this V
-func _ready():
-	open_shop()
-
 func open_shop():
 	update_money_label()
 	

@@ -6,16 +6,20 @@ signal item_mouse_exited
 
 @onready var sprite_2d := $Sprite2D as Sprite2D
 @onready var color_rect = $ColorRect
+@onready var grid_container = $Grids/GridContainer
 
 const TILT_AMOUNT = 12
 const TILT_LERP_SPEED = 10
 const LERP_SPEED = 20
+
+var slot_debug := preload("res://scenes/slot_debug_square.tscn")
 
 var item_ID : int
 var item_grids := []
 var item_adj_grids := []
 var selected = false
 var grid_anchor = null
+var sprite_size : Vector2
 
 var moused_on = false
 
@@ -24,6 +28,7 @@ func _to_string() -> String:
 	return str(DataHandler.item_data[str(item_ID)])
 
 func _process(delta : float) -> void:
+	
 	var curr_y_rot = sprite_2d.material.get_shader_parameter("y_rot")
 	var curr_x_rot = sprite_2d.material.get_shader_parameter("x_rot")
 	
@@ -44,15 +49,57 @@ func load_item(a_ItemID : int) -> void:
 	sprite_2d.texture = load(Icon_path)
 	
 	# scale mouse_over color rect to fit
-	var sprite_size = sprite_2d.texture.get_size() * sprite_2d.scale.x
+	sprite_size = sprite_2d.texture.get_size() * sprite_2d.scale.x
 	color_rect.size = sprite_size
 	color_rect.position = -sprite_size/2
 	
-	for grid in DataHandler.item_grid_data[str(a_ItemID)]:
-		item_grids.push_back([int(grid[0]), int(grid[1])])
+	var max_x = 0
+	var max_y = 0
+	
+	var min_x = 99999999999999999
+	var min_y = 99999999999999999
 	
 	for grid in DataHandler.item_grid_data[str(a_ItemID)]:
-		item_adj_grids.push_back([int(grid[0]), int(grid[1])])
+		var inted_x = int(grid[0])
+		var inted_y = int(grid[1])
+		if inted_x > max_x: max_x = inted_x
+		if inted_y > max_y: max_y = inted_y
+		
+		if inted_x < min_x: min_x = inted_x
+		if inted_y < min_y: min_y = inted_y
+		item_grids.push_back([inted_x, inted_y])
+	
+	for grid in DataHandler.item_adj_grid_data[str(a_ItemID)]:
+		var inted_x = int(grid[0])
+		var inted_y = int(grid[1])
+		# TODO: ALLOW ACCOUNTING FOR ADJ GRID SO STARS CAN BE DISPLAYED ON CORRECT COORDS
+		# IF CAN'T DO THIS EASILY, NEED TO MOVE ON TO ITEM EFFECTS!!!
+		# KEEP WORKING ON THE ACTUAL REAL TIME GAMEPLAY AND THEN COME BACK TO THIS
+		#if inted_x > max_x: max_x = inted_x
+		#if inted_y > max_y: max_y = inted_y
+		#
+		#if inted_x < min_x: min_x = inted_x
+		#if inted_y < min_y: min_y = inted_y
+		item_adj_grids.push_back([inted_x, inted_y])
+	
+	var x_diff = abs(min_x - 1 - max_x)
+	var y_diff = abs(min_y - 1 - max_y)
+	
+	#print("id: %d" % item_ID)
+	#print("min_x: ", min_x)
+	#print("max_x: ", max_x)
+	#print("x_diff: ", x_diff)
+	#
+	#print("min_y: ", min_y)
+	#print("max_y: ", max_y)
+	#print("y_diff: ", y_diff)
+	#print()
+	
+	# configure debug grid
+	grid_container.columns = x_diff
+	for x in range(x_diff * y_diff):
+		var db_inst = slot_debug.instantiate()
+		grid_container.add_child(db_inst)
 
 func rotate_item():
 	for grid in item_grids:
@@ -68,7 +115,6 @@ func rotate_item():
 	rotation_degrees += 90
 	if rotation_degrees == 360:
 		rotation_degrees = 0
-
 
 # probably an easy elegent maths way of doing this...
 func get_corrected_tilt_target(vector_to_mouse : Vector2) -> Vector2:

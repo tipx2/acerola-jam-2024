@@ -48,7 +48,7 @@
 		"Sell_price": 30,
 		"Type": "[color=red]Youtuber[/color]",
 		"Grid": "0,0/1,1/1,0/0,1",
-		"Adj_grid": ""
+		"Adj_grid": "2,0"
 	},
 	"6": {
 		"ImageName": "FunnyShape",
@@ -58,7 +58,7 @@
 		"Sell_price": 30,
 		"Type": "[color=purple]Funniness[/color]",
 		"Grid": "0,0/1,1",
-		"Adj_grid": ""
+		"Adj_grid": "2,0"
 	}
   }
 }
