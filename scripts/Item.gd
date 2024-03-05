@@ -164,6 +164,8 @@ func _snap_to(dest : Vector2):
 	selected = false
 
 func update_adjacent_items(items : Array):
+	# TODO warning: this could have dupes in it. this might matter depending on item
+	# but likely you will want to filter them for counting stuff
 	adjacent_items = items
 
 func _on_buy_button_pressed():
