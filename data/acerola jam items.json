@@ -7,8 +7,8 @@
 	  "Buy_price": 50,
 	  "Sell_price": 30,
 	  "Type": "Silly",
-	  "Grid": "0,0/0,1/-1,0",
-	  "Adj_grid": "-2,0/-1,1/0,2"
+	  "Grid": "0,0/1,1/1,0",
+	  "Adj_grid": "2,0/0,-1"
 	},
 	"2": {
 	  "ImageName": "Item2",

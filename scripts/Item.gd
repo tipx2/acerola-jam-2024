@@ -12,9 +12,11 @@ const TILT_AMOUNT = 12
 const TILT_LERP_SPEED = 10
 const LERP_SPEED = 20
 
-var slot_debug := preload("res://scenes/slot_debug_square.tscn")
+var adj_visual := preload("res://scenes/adj_visual_square.tscn")
 
 var item_ID : int
+var item_type : String
+
 var item_grids := []
 var item_adj_grids := []
 var selected = false
@@ -22,6 +24,8 @@ var grid_anchor = null
 var sprite_size : Vector2
 
 var moused_on = false
+
+var adjacent_items := []
 
 # it's like python __repr__
 func _to_string() -> String:
@@ -45,6 +49,7 @@ func _process(delta : float) -> void:
 
 func load_item(a_ItemID : int) -> void:
 	item_ID = a_ItemID
+	item_type = DataHandler.item_data[str(a_ItemID)]["Type"]
 	var Icon_path = "res://assets/visuals/inventory/%s.png" %  DataHandler.item_data[str(a_ItemID)]["ImageName"]
 	sprite_2d.texture = load(Icon_path)
 	
@@ -69,37 +74,52 @@ func load_item(a_ItemID : int) -> void:
 		if inted_y < min_y: min_y = inted_y
 		item_grids.push_back([inted_x, inted_y])
 	
+	var grid_max_x = max_x
+	var grid_max_y = max_y
+	
 	for grid in DataHandler.item_adj_grid_data[str(a_ItemID)]:
 		var inted_x = int(grid[0])
 		var inted_y = int(grid[1])
-		# TODO: ALLOW ACCOUNTING FOR ADJ GRID SO STARS CAN BE DISPLAYED ON CORRECT COORDS
-		# IF CAN'T DO THIS EASILY, NEED TO MOVE ON TO ITEM EFFECTS!!!
-		# KEEP WORKING ON THE ACTUAL REAL TIME GAMEPLAY AND THEN COME BACK TO THIS
-		#if inted_x > max_x: max_x = inted_x
-		#if inted_y > max_y: max_y = inted_y
-		#
-		#if inted_x < min_x: min_x = inted_x
-		#if inted_y < min_y: min_y = inted_y
+		
+		if inted_x > max_x: max_x = inted_x
+		if inted_y > max_y: max_y = inted_y
+		
+		if inted_x < min_x: min_x = inted_x
+		if inted_y < min_y: min_y = inted_y
 		item_adj_grids.push_back([inted_x, inted_y])
 	
 	var x_diff = abs(min_x - 1 - max_x)
 	var y_diff = abs(min_y - 1 - max_y)
 	
-	#print("id: %d" % item_ID)
-	#print("min_x: ", min_x)
-	#print("max_x: ", max_x)
-	#print("x_diff: ", x_diff)
-	#
-	#print("min_y: ", min_y)
-	#print("max_y: ", max_y)
-	#print("y_diff: ", y_diff)
+	if x_diff % 2 == grid_max_x % 2:
+		x_diff += 1
+	
+	if y_diff % 2 == grid_max_y % 2:
+		y_diff += 1
+	
+
+	#print(y_diff)
+	#print(grid_max_y)
+	#print()
+	#print(x_diff)
+	#print(grid_max_x)
+	#print()
 	#print()
 	
-	# configure debug grid
+	# to convert from old -> new coords, simply add the diff (I think)
+	# rol, col -> row * column_num + col
+	
+	# configure visualisation grid
 	grid_container.columns = x_diff
 	for x in range(x_diff * y_diff):
-		var db_inst = slot_debug.instantiate()
+		var db_inst = adj_visual.instantiate()
 		grid_container.add_child(db_inst)
+		
+		# TODO: FIX THIS!!
+		#for grid in item_adj_grids:
+			#if x == (x_diff * (grid[0] + x_diff) + (grid[1] + y_diff)):
+				#db_inst.modulate = Color("FF0000")
+				#break
 
 func rotate_item():
 	for grid in item_grids:
@@ -143,6 +163,8 @@ func _snap_to(dest : Vector2):
 	tween.tween_property(self, "global_position", dest, 0.2).set_trans(Tween.TRANS_EXPO)
 	selected = false
 
+func update_adjacent_items(items : Array):
+	adjacent_items = items
 
 func _on_buy_button_pressed():
 	buy_button_pressed.emit()

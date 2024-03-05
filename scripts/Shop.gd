@@ -14,7 +14,7 @@ var held_items := {}
 func _process(delta):
 	if tooltip.visible:
 		tooltip.global_position = lerp(tooltip.global_position, get_global_mouse_position(), 20 * delta)
-		cost_tooltip.global_position = lerp(cost_tooltip.global_position, get_global_mouse_position() + Vector2(0, -64), 20 * delta)
+		cost_tooltip.global_position = lerp(cost_tooltip.global_position, get_global_mouse_position() + Vector2(0, 170), 20 * delta)
 		if !margin_container.get_global_rect().has_point(get_global_mouse_position()):
 			tooltip.visible = false
 
@@ -51,7 +51,7 @@ func _on_slot_mouse_entered(s):
 		tooltip.set_description(tooltip_info["Description"])
 		tooltip.set_type(tooltip_info["Type"])
 		
-		cost_tooltip.set_price(int(tooltip_info["Buy_price"]))
+		cost_tooltip.set_price_buy(int(tooltip_info["Buy_price"]))
 
 func _on_slot_mouse_exited():
 	tooltip.visible = false
@@ -86,8 +86,8 @@ func random_pitch_money_sounds():
 func update_money_label():
 	money_label.text = "[center][wave amp=20.0 freq=5.0 connected=0]Cash Money: £%d[/wave][/center]" % Globals.money
 
-func money_animation(name : String):
+func money_animation(_name : String):
 	update_money_label()
 	if !money_label.get_node("AnimationPlayer").is_playing:
 		random_pitch_money_sounds()
-	money_label.get_node("AnimationPlayer").play(name)
+	money_label.get_node("AnimationPlayer").play(_name)

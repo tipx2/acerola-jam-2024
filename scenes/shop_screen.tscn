@@ -337,17 +337,12 @@ mouse_filter = 0
 layout_mode = 2
 mouse_filter = 0
 
+[node name="tooltip" parent="Shop" instance=ExtResource("5_dpofu")]
+layout_mode = 0
+
 [node name="cost_tooltip" parent="Shop" instance=ExtResource("4_7ctcr")]
 visible = false
 layout_mode = 0
-
-[node name="tooltip" parent="Shop" instance=ExtResource("5_dpofu")]
-visible = false
-layout_mode = 0
-offset_left = -1020.0
-offset_top = -164.0
-offset_right = -810.0
-offset_bottom = -36.0
 
 [node name="Inventory" type="Container" parent="."]
 self_modulate = Color(0.337255, 0.2, 0.0941176, 1)
@@ -400,6 +395,9 @@ theme_override_constants/v_separation = 0
 columns = 7
 
 [node name="tooltip" parent="Inventory" instance=ExtResource("5_dpofu")]
+layout_mode = 2
+
+[node name="cost_tooltip" parent="Inventory" instance=ExtResource("4_7ctcr")]
 visible = false
 layout_mode = 2
 
