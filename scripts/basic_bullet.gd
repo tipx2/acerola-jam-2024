@@ -1,6 +1,7 @@
 extends CharacterBody2D
 class_name BasicBullet
 
+var BULLET_DAMAGE := 1
 var initial_dir : Vector2
 var speed : float
 
@@ -19,6 +20,7 @@ func _physics_process(_delta):
 		var col = move_and_collide(velocity)
 		
 		if col:
-			print(col.get_collider())
+			if col.get_collider().is_in_group("enemy"):
+				col.get_collider().damage(BULLET_DAMAGE)
 			moving = false
 			queue_free()

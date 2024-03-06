@@ -54,9 +54,11 @@ func create_slot(lock : bool):
 	
 	if lock:
 		new_slot.lock_slot()
+	else:
+		new_slot.unlock_slot()
 
 func _try_unlock_slot(a_Slot):
-	if Globals.money > slot_cost:
+	if Globals.money >= slot_cost:
 		a_Slot.unlock_slot()
 		Globals.money -= slot_cost
 		slot_cost += 1

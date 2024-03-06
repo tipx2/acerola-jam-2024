@@ -1,0 +1,33 @@
+{
+	"Sheet1": {
+		"1": {
+			"ImageName": "",
+			"Script_path": "",
+			
+			"DisplayName": "Bowl of Cereal",
+			"Description": "+1 [color=#8B0000]Max HP[/color]",
+			"Type": "Food",
+			
+			"Buy_price": 5,
+			"Sell_price": 0,
+			
+			"Grid": "0,0/1,0",
+			"Adj_grid": ""
+		},
+		"2": {
+			"ImageName": "",
+			"Script_path": "",
+			
+			"DisplayName": "",
+			"Description": "",
+			"Type": "",
+			
+			"Buy_price":0,
+			"Sell_price":0,
+			
+			
+			"Grid": "",
+			"Adj_grid": ""
+		}
+	}
+}

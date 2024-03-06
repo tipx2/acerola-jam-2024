@@ -3,6 +3,8 @@ extends Node2D
 var basic_enemy_scene = preload("res://scenes/basic_enemy.tscn")
 @onready var square_room = $SquareRoom
 
+var ENEMY_DISTANCE := 500.0
+
 var tile_map_ref : TileMap
 var tile_list_ref : Array
 var player_ref : Node2D
@@ -20,6 +22,8 @@ var corresponding_directions = [RIGHT, LEFT, TOP, BOTTOM]
 
 var debug_names = ["left", "right", "bottom", "top"]
 
+var taken_enemy_spots := []
+
 func _on_square_room_map_generated(tile_list, tile_map) -> void:
 	tile_map_ref = tile_map
 	tile_list_ref = tile_list
@@ -36,10 +40,15 @@ func round_start() -> void:
 	# move portal
 	var corresponding_direction = corresponding_directions[round_direction]
 	portal_ref.global_position = get_tile_global_pos(get_superlative_tile(corresponding_direction))
+	portal_ref.visible = false
 	
 	# spawn enemies
+	taken_enemy_spots = []
 	for _x in range(5):
-		spawn_enemy_pos_random(basic_enemy_scene)
+		taken_enemy_spots.append(spawn_enemy_pos_random(basic_enemy_scene))
+
+func get_tile_map_pos(tile : Vector2) -> Vector2:
+	return tile_map_ref.local_to_map(tile_map_ref.to_local(tile))
 
 func get_tile_global_pos(tile : Vector2) -> Vector2:
 	return tile_map_ref.to_global(tile_map_ref.map_to_local(tile))
@@ -69,13 +78,27 @@ func get_superlative_tile(round_direction):
 		elif round_direction == RIGHT:
 			return sorted_tile_list[-1]
 
-func spawn_enemy_pos_random(enemy_scene : PackedScene) -> void:
+func spawn_enemy_pos_random(enemy_scene : PackedScene) -> Vector2:
 	var enemy_instance = enemy_scene.instantiate()
 	call_deferred("add_child", enemy_instance)
 	enemy_instance.set_as_top_level(true)
-	# TODO: the center of some tiles included in the path are outside of the actual play area, since the hitboxes are facing inwards. need to prune the map array given so that we're only selecting from internal tiles 
-	enemy_instance.global_position = get_tile_global_pos(tile_list_ref.pick_random())
-
+	
+	# in case by chance it's a small map
+	var loop_count = 0
+	
+	var picked_tile = tile_list_ref.pick_random()
+	while picked_tile in taken_enemy_spots or get_tile_global_pos(picked_tile).distance_to(player_ref.global_position) < ENEMY_DISTANCE:
+		picked_tile = tile_list_ref.pick_random()
+		loop_count += 1
+		if loop_count > 5000:
+			break
+	
+	enemy_instance.global_position = get_tile_global_pos(picked_tile)
+	
+	enemy_instance.enemy_died.connect(_on_enemy_died)
+	
+	return picked_tile
+	# print(enemy_instance," ", get_tile_map_pos(enemy_instance.global_position))
 
 func _on_end_portal_level_ended():
 	Globals.player.set_intangible(true)
@@ -101,3 +124,9 @@ func _on_continue_button_pressed():
 	%portal_bg.visible = false
 	%continue_button.visible = false
 	%transition_animation.play("uncover")
+
+func _on_enemy_died(e : Node):
+	Globals.money += e.reward
+	print(len(get_tree().get_nodes_in_group("enemy")))
+	if len(get_tree().get_nodes_in_group("enemy")) == 1:
+		portal_ref.visible = true

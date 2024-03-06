@@ -17,7 +17,7 @@ func _init(starting_pos : Vector2, new_borders : Rect2):
 
 func walk(steps) -> Array:
 	for _s in steps:
-		if randf() <= 0.25 or steps_since_turn >= 1:
+		if randf() <= 0.25 or steps_since_turn >= 2:
 			change_direction()
 		
 		if step():

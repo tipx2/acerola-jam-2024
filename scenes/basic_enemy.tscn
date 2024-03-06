@@ -4,7 +4,7 @@
 [ext_resource type="Texture2D" uid="uid://d2364eea61iml" path="res://assets/visuals/channels4_profile.jpg" id="1_y1nnj"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_wva6n"]
-radius = 14.0
+radius = 12.0
 
 [node name="BasicEnemy" type="CharacterBody2D" groups=["enemy"]]
 collision_layer = 3
@@ -13,7 +13,7 @@ script = ExtResource("1_nyi3f")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 modulate = Color(0.670588, 0, 0.0156863, 1)
-scale = Vector2(0.0311111, 0.0311111)
+scale = Vector2(0.0266667, 0.0266667)
 texture = ExtResource("1_y1nnj")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
@@ -21,13 +21,35 @@ shape = SubResource("CircleShape2D_wva6n")
 
 [node name="NavigationAgent2D" type="NavigationAgent2D" parent="."]
 avoidance_enabled = true
-radius = 30.0
-debug_enabled = true
+radius = 20.0
 debug_path_custom_color = Color(0.815686, 0, 0, 1)
 
 [node name="NavTimer" type="Timer" parent="."]
 wait_time = 0.2
 autostart = true
 
+[node name="shottimer" type="Timer" parent="."]
+wait_time = 0.2
+one_shot = true
+
+[node name="RaycastView" type="RayCast2D" parent="."]
+collide_with_areas = true
+
+[node name="healthbar" type="ProgressBar" parent="."]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -13.0
+offset_top = -21.0
+offset_right = 13.0
+offset_bottom = -16.0
+grow_horizontal = 2
+grow_vertical = 2
+step = 1.0
+show_percentage = false
+
 [connection signal="velocity_computed" from="NavigationAgent2D" to="." method="_on_navigation_agent_2d_velocity_computed"]
 [connection signal="timeout" from="NavTimer" to="." method="_on_nav_timer_timeout"]
+[connection signal="timeout" from="shottimer" to="." method="_on_shottimer_timeout"]
