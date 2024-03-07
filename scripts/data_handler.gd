@@ -4,7 +4,7 @@ var item_data := {}
 var item_grid_data := {}
 var item_adj_grid_data := {}
 
-@onready var item_data_path = "res://data/acerola jam items.json"
+@onready var item_data_path = "res://data/backpack_items.json"
 
 func _ready() -> void:
 	load_data(item_data_path)
@@ -29,6 +29,9 @@ func set_grid_data():
 
 func set_adj_grid_data():
 	for item in item_data.keys():
+		if item_data[item]["Adj_grid"] == "":
+			item_adj_grid_data[item] = []
+			continue
 		var temp_grid_array := []
 		for point in item_data[item]["Adj_grid"].split("/"):
 			temp_grid_array.push_back(point.split(","))

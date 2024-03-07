@@ -50,7 +50,7 @@ func _process(delta : float) -> void:
 func load_item(a_ItemID : int) -> void:
 	item_ID = a_ItemID
 	item_type = DataHandler.item_data[str(a_ItemID)]["Type"]
-	var Icon_path = "res://assets/visuals/inventory/%s.png" %  DataHandler.item_data[str(a_ItemID)]["ImageName"]
+	var Icon_path = "res://assets/visuals/backpack_inventory/%s" %  DataHandler.item_data[str(a_ItemID)]["ImageName"]
 	sprite_2d.texture = load(Icon_path)
 	
 	# scale mouse_over color rect to fit

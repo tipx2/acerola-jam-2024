@@ -1,11 +1,11 @@
 {
 	"Sheet1": {
 		"1": {
-			"ImageName": "",
+			"ImageName": "cereal_bowl.png",
 			"Script_path": "",
 			
 			"DisplayName": "Bowl of Cereal",
-			"Description": "+1 [color=#8B0000]Max HP[/color]",
+			"Description": "+1 [color=#C20000]Max HP[/color]",
 			"Type": "Food",
 			
 			"Buy_price": 5,
@@ -14,20 +14,35 @@
 			"Grid": "0,0/1,0",
 			"Adj_grid": ""
 		},
+		
 		"2": {
-			"ImageName": "",
+			"ImageName": "pasta_bowl.png",
 			"Script_path": "",
 			
-			"DisplayName": "",
-			"Description": "",
-			"Type": "",
+			"DisplayName": "Bowl of Pasta",
+			"Description": "+2 [color=#C20000]Max HP[/color]",
+			"Type": "Food",
 			
-			"Buy_price":0,
-			"Sell_price":0,
+			"Buy_price": 15,
+			"Sell_price": 5,
 			
-			
-			"Grid": "",
+			"Grid": "0,0/1,0",
 			"Adj_grid": ""
-		}
+		},
+		
+		"3": {
+			"ImageName": "chicken_soup_bowl.png",
+			"Script_path": "",
+			
+			"DisplayName": "Bowl of Chicken Soup",
+			"Description": "+3 [color=#C20000]Max HP[/color]",
+			"Type": "Food",
+			
+			"Buy_price": 25,
+			"Sell_price": 10,
+			
+			"Grid": "0,0/1,0",
+			"Adj_grid": ""
+		},
 	}
 }
