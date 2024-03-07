@@ -338,6 +338,7 @@ layout_mode = 2
 mouse_filter = 0
 
 [node name="tooltip" parent="Shop" instance=ExtResource("5_dpofu")]
+visible = false
 layout_mode = 0
 
 [node name="cost_tooltip" parent="Shop" instance=ExtResource("4_7ctcr")]
@@ -395,6 +396,7 @@ theme_override_constants/v_separation = 0
 columns = 7
 
 [node name="tooltip" parent="Inventory" instance=ExtResource("5_dpofu")]
+visible = false
 layout_mode = 2
 
 [node name="cost_tooltip" parent="Inventory" instance=ExtResource("4_7ctcr")]

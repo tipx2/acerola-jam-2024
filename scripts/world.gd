@@ -102,6 +102,7 @@ func spawn_enemy_pos_random(enemy_scene : PackedScene) -> Vector2:
 
 func _on_end_portal_level_ended():
 	Globals.player.set_intangible(true)
+	Globals.player.hud_visible(false)
 	get_tree().call_group("enemy", "set_intangible", true)
 	%transition_animation.play("cover")
 	await %transition_animation.animation_finished
@@ -114,8 +115,10 @@ func _on_end_portal_level_ended():
 	get_tree().call_group("enemy", "queue_free")
 
 func _on_continue_button_pressed():
+	aggregate_static_effects()
 	square_room.generate_level()
 	Globals.player.set_intangible(false)
+	Globals.player.hud_visible(true)
 	%transition_animation.play("cover")
 	await %transition_animation.animation_finished
 	%ShopScreen.visible = false
@@ -125,8 +128,14 @@ func _on_continue_button_pressed():
 	%continue_button.visible = false
 	%transition_animation.play("uncover")
 
+func aggregate_static_effects():
+	for node in get_tree().get_nodes_in_group("effect"):
+		print(node)
+		# TODO SORT
+
 func _on_enemy_died(e : Node):
 	Globals.money += e.reward
-	print(len(get_tree().get_nodes_in_group("enemy")))
+	# print(len(get_tree().get_nodes_in_group("enemy")))
 	if len(get_tree().get_nodes_in_group("enemy")) == 1:
+		portal_ref.enabled = true
 		portal_ref.visible = true

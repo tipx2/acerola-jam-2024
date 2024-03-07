@@ -2,7 +2,7 @@
 	"Sheet1": {
 		"1": {
 			"ImageName": "cereal_bowl.png",
-			"Script_path": "",
+			"Script_path": "bowl_of_cereal.gd",
 			
 			"DisplayName": "Bowl of Cereal",
 			"Description": "+1 [color=#C20000]Max HP[/color]",

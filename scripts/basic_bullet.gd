@@ -7,9 +7,10 @@ var speed : float
 
 var moving = true
 
-func initialise(start_dir : Vector2, start_pos : Vector2, s : float ) -> BasicBullet:
+func initialise(start_dir : Vector2, start_pos : Vector2, s : float, damage : int ) -> BasicBullet:
 	self.initial_dir = start_dir
 	self.speed = s
+	self.BULLET_DAMAGE = damage
 	self.global_transform.origin = start_pos
 	return self
 
