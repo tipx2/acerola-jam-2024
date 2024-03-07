@@ -9,6 +9,8 @@ func start_shop():
 	inventory.in_round = true
 
 func stop_shop():
+	shop.unload_items()
+	# inventory.update_adj_all()
 	inventory.in_round = false
 
 func load_items():

@@ -38,10 +38,11 @@ func _process(delta):
 	
 	if tooltip.visible:
 		tooltip.global_position = lerp(tooltip.global_position, get_global_mouse_position(), 20 * delta)
-		cost_tooltip.global_position = lerp(cost_tooltip.global_position, get_global_mouse_position() + Vector2(0, 170), 20 * delta)
+		cost_tooltip.global_position = lerp(cost_tooltip.global_position, get_global_mouse_position() + Vector2(0, tooltip.size.y), 20 * delta)
 		if !grid_container.get_global_rect().has_point(get_global_mouse_position()):
 			tooltip.visible = false
 			cost_tooltip.visible = false
+			
 
 func create_slot(lock : bool):
 	var new_slot = slot_scene.instantiate()
@@ -83,7 +84,7 @@ func _on_slot_mouse_entered(a_Slot):
 		tooltip.visible = false
 		cost_tooltip.visible = false
 
-func _on_slot_mouse_exited(a_Slot):
+func _on_slot_mouse_exited(_a_Slot):
 	clear_grid()
 
 func fill_tooltip(id : int):
@@ -91,6 +92,7 @@ func fill_tooltip(id : int):
 	tooltip.set_title(tooltip_info["DisplayName"])
 	tooltip.set_description(tooltip_info["Description"])
 	tooltip.set_type(tooltip_info["Type"])
+	tooltip.size = Vector2(0,0)
 	cost_tooltip.set_price_sell(int(tooltip_info["Sell_price"]))
 
 func check_slot_availability(a_Slot) -> void:
@@ -157,21 +159,31 @@ func place_item():
 		grid_array[grid_to_check].state = grid_array[grid_to_check].States.TAKEN
 		grid_array[grid_to_check].item_stored = item_held
 	
-	var adj_items_temp := []
-	for grid in item_held.item_adj_grids:
-		var grid_to_check = current_slot.slot_ID + grid[0] + grid[1] * column_count
-		if grid_array[grid_to_check].item_stored != null:
-			adj_items_temp.push_back(grid_array[grid_to_check].item_stored)
-	
-	item_held.update_adjacent_items(adj_items_temp)
+	update_adj_all()
 	
 	tooltip.visible = true
 	cost_tooltip.visible = true
 	fill_tooltip(item_held.item_ID)
 	
+	
 	item_held.selected = false
 	item_held = null
 	clear_grid()
+
+func update_adj_all():
+	for item in get_tree().get_nodes_in_group("item"):
+		if item.in_shop:
+			continue
+		
+		var adj_items_temp := []
+		for grid in item.item_adj_grids:
+			var grid_to_check = item.grid_anchor.slot_ID + grid[0] + grid[1] * column_count
+			if grid_array[grid_to_check].item_stored != null:
+				adj_items_temp.push_back(grid_array[grid_to_check].item_stored)
+		
+		item.update_adjacent_items(adj_items_temp)
+		
+		print(item.adjacent_items)
 
 func pick_item():
 	if !in_round:
@@ -208,6 +220,7 @@ func hold_new_item(item_ID : int) -> bool:
 	new_item.global_position = get_global_mouse_position()
 	new_item.load_item(item_ID)
 	new_item.selected = true
+	new_item.in_shop = false
 	item_held = new_item
 	return true
 

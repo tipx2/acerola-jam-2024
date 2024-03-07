@@ -7,6 +7,9 @@ signal item_mouse_exited
 @onready var sprite_2d := $Sprite2D as Sprite2D
 @onready var color_rect = $ColorRect
 @onready var grid_container = $Grids/GridContainer
+@onready var effect_holder = $effect_holder
+@onready var stars_animation = $stars_holder/AnimationPlayer
+@onready var stars_holder = $stars_holder
 
 const TILT_AMOUNT = 12
 const TILT_LERP_SPEED = 10
@@ -16,6 +19,7 @@ var adj_visual := preload("res://scenes/adj_visual_square.tscn")
 
 var item_ID : int
 var item_type : String
+var stars_config : String
 
 var item_grids := []
 var item_adj_grids := []
@@ -24,6 +28,8 @@ var grid_anchor = null
 var sprite_size : Vector2
 
 var moused_on = false
+var showing_stars = false
+var in_shop = true
 
 var adjacent_items := []
 
@@ -38,20 +44,32 @@ func _process(delta : float) -> void:
 	
 	if selected:
 		global_position = lerp(global_position, get_global_mouse_position(), LERP_SPEED * delta)
+		if !showing_stars:
+			stars_animation.play("fade_in")
+			showing_stars = true
 	
 	if !selected and moused_on:
 		var vector_to_mouse = get_corrected_tilt_target(global_position.direction_to(get_global_mouse_position()).normalized() * TILT_AMOUNT)
 		sprite_2d.material.set_shader_parameter("y_rot", lerp(curr_y_rot, vector_to_mouse.x, TILT_LERP_SPEED * delta))
 		sprite_2d.material.set_shader_parameter("x_rot", lerp(curr_x_rot, -vector_to_mouse.y, TILT_LERP_SPEED * delta))
+		if !showing_stars:
+			stars_animation.play("fade_in")
+			showing_stars = true
 	else:
 		sprite_2d.material.set_shader_parameter("y_rot", lerp(curr_y_rot, 0.0, TILT_LERP_SPEED * delta))
 		sprite_2d.material.set_shader_parameter("x_rot", lerp(curr_x_rot, 0.0, TILT_LERP_SPEED * delta))
+		if showing_stars:
+			stars_animation.play("fade_out")
+			showing_stars = false
 
 func load_item(a_ItemID : int) -> void:
 	item_ID = a_ItemID
 	item_type = DataHandler.item_data[str(a_ItemID)]["Type"]
 	var Icon_path = "res://assets/visuals/backpack_inventory/%s" %  DataHandler.item_data[str(a_ItemID)]["ImageName"]
-	sprite_2d.texture = load(Icon_path)
+	if FileAccess.file_exists(Icon_path):
+		sprite_2d.texture = load(Icon_path)
+	else:
+		push_error("Image not found for item " + DataHandler.item_data[str(a_ItemID)]["DisplayName"])
 	
 	# scale mouse_over color rect to fit
 	sprite_size = sprite_2d.texture.get_size() * sprite_2d.scale.x
@@ -74,52 +92,22 @@ func load_item(a_ItemID : int) -> void:
 		if inted_y < min_y: min_y = inted_y
 		item_grids.push_back([inted_x, inted_y])
 	
-	var grid_max_x = max_x
-	var grid_max_y = max_y
-	
 	for grid in DataHandler.item_adj_grid_data[str(a_ItemID)]:
 		var inted_x = int(grid[0])
 		var inted_y = int(grid[1])
-		
-		if inted_x > max_x: max_x = inted_x
-		if inted_y > max_y: max_y = inted_y
-		
-		if inted_x < min_x: min_x = inted_x
-		if inted_y < min_y: min_y = inted_y
 		item_adj_grids.push_back([inted_x, inted_y])
 	
-	var x_diff = abs(min_x - 1 - max_x)
-	var y_diff = abs(min_y - 1 - max_y)
+	#var x_diff = abs(min_x - 1 - max_x)
+	#var y_diff = abs(min_y - 1 - max_y)
 	
-	if x_diff % 2 == grid_max_x % 2:
-		x_diff += 1
+	stars_config = DataHandler.item_data[str(a_ItemID)]["Stars_config"]
+	stars_holder.get_node(stars_config).visible = true
 	
-	if y_diff % 2 == grid_max_y % 2:
-		y_diff += 1
-	
-
-	#print(y_diff)
-	#print(grid_max_y)
-	#print()
-	#print(x_diff)
-	#print(grid_max_x)
-	#print()
-	#print()
-	
-	# to convert from old -> new coords, simply add the diff (I think)
-	# rol, col -> row * column_num + col
-	
-	# configure visualisation grid
-	grid_container.columns = x_diff
-	for x in range(x_diff * y_diff):
-		var db_inst = adj_visual.instantiate()
-		grid_container.add_child(db_inst)
-		
-		# TODO: FIX THIS!!
-		#for grid in item_adj_grids:
-			#if x == (x_diff * (grid[0] + x_diff) + (grid[1] + y_diff)):
-				#db_inst.modulate = Color("FF0000")
-				#break
+	var script_path = "res://scripts/backpack_scripts/%s" % DataHandler.item_data[str(a_ItemID)]["Script_path"]
+	if FileAccess.file_exists(script_path):
+		effect_holder.set_script(load(script_path))
+	else:
+		push_error("Script not found for item " + DataHandler.item_data[str(a_ItemID)]["DisplayName"])
 
 func rotate_item():
 	for grid in item_grids:
@@ -164,9 +152,12 @@ func _snap_to(dest : Vector2):
 	selected = false
 
 func update_adjacent_items(items : Array):
-	# TODO warning: this could have dupes in it. this might matter depending on item
-	# but likely you will want to filter them for counting stuff
-	adjacent_items = items
+	adjacent_items = []
+	# eliminating dupes
+	for item in items:
+		if not adjacent_items.has(item):
+			adjacent_items.push_back(item)
+	# print(adjacent_items)
 
 func _on_buy_button_pressed():
 	buy_button_pressed.emit()
@@ -180,4 +171,3 @@ func _on_mouse_entered():
 func _on_mouse_exited():
 	item_mouse_exited.emit()
 	moused_on = false
-

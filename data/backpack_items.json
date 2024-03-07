@@ -12,12 +12,13 @@
 			"Sell_price": 0,
 			
 			"Grid": "0,0/1,0",
-			"Adj_grid": ""
+			"Adj_grid": "",
+			"Stars_config": "none"
 		},
 		
 		"2": {
 			"ImageName": "pasta_bowl.png",
-			"Script_path": "",
+			"Script_path": "bowl_of_pasta.gd",
 			
 			"DisplayName": "Bowl of Pasta",
 			"Description": "+2 [color=#C20000]Max HP[/color]",
@@ -27,12 +28,13 @@
 			"Sell_price": 5,
 			
 			"Grid": "0,0/1,0",
-			"Adj_grid": ""
+			"Adj_grid": "",
+			"Stars_config": "none"
 		},
 		
 		"3": {
 			"ImageName": "chicken_soup_bowl.png",
-			"Script_path": "",
+			"Script_path": "bowl_of_chicken_soup.gd",
 			
 			"DisplayName": "Bowl of Chicken Soup",
 			"Description": "+3 [color=#C20000]Max HP[/color]",
@@ -42,7 +44,56 @@
 			"Sell_price": 10,
 			
 			"Grid": "0,0/1,0",
-			"Adj_grid": ""
+			"Adj_grid": "",
+			"Stars_config": "none"
 		},
+		
+		"4": {
+			"ImageName": "red_velvet_cake.png",
+			"Script_path": "red_velvet_cake.gd",
+			
+			"DisplayName": "Red Velvet Cake",
+			"Description": "+1 [color=#C20000]Max HP[/color] for each [color=yellow]Fighting ✦[/color]",
+			"Type": "Food",
+			
+			"Buy_price": 5,
+			"Sell_price": 0,
+			
+			"Grid": "0,0/1,0",
+			"Adj_grid": "-1,0/2,0",
+			"Stars_config": "cake"
+		},
+		
+		"5": {
+			"ImageName": "carrot_cake.png",
+			"Script_path": "carrot_cake.gd",
+			
+			"DisplayName": "Carrot Cake",
+			"Description": "+1 [color=#C20000]Max HP[/color] for each [color=yellow]Casino ✦[/color]",
+			"Type": "Food",
+			
+			"Buy_price": 5,
+			"Sell_price": 0,
+			
+			"Grid": "0,0/1,0",
+			"Adj_grid": "-1,0/2,0",
+			"Stars_config": "cake"
+		},
+		
+		"6": {
+			"ImageName": "fruit_cake.png",
+			"Script_path": "fruit_cake.gd",
+			
+			"DisplayName": "Fruit Cake",
+			"Description": "+1 [color=#C20000]Max HP[/color] for each [color=yellow]Food ✦[/color]",
+			"Type": "Food",
+			
+			"Buy_price": 5,
+			"Sell_price": 0,
+			
+			"Grid": "0,0/1,0",
+			"Adj_grid": "-1,0/2,0",
+			"Stars_config": "cake"
+		}
 	}
 }

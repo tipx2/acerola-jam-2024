@@ -37,7 +37,7 @@ var extra_crit_chance := 0.0
 @onready var canvas_player = $CanvasLayer/AnimationPlayer
 @onready var money_value = $CanvasLayer/PanelContainer/MarginContainer/HBoxContainer/CenterContainer2/VBoxContainer/CenterContainer/HBoxContainer/money_value
 @onready var hp_bar = $CanvasLayer/PanelContainer/MarginContainer/HBoxContainer/CenterContainer/VBoxContainer/hp_bar
-
+@onready var health_number = $CanvasLayer/PanelContainer/MarginContainer/HBoxContainer/CenterContainer/VBoxContainer/health_number
 
 func _ready():
 	shottimer.wait_time = SHOT_TIME / (1.0 + extra_attack_speed)
@@ -82,7 +82,10 @@ func damage(amount : int):
 	# TODO update health bar etc. here
 	current_hp -= amount
 	
+	get_tree().call_group("effect", "_on_player_damage", amount)
+	
 	hp_bar.value = current_hp
+	update_text_hp()
 	
 	hp_debug.text = str(current_hp)
 	
@@ -100,10 +103,14 @@ func set_intangible(b : bool):
 func initialise_static_buffs():
 	shottimer.wait_time = SHOT_TIME / (1.0 + extra_attack_speed)
 
-func set_extra_max_hp(amount : int):
-	extra_max_hp = amount
-	# healthbar.value = MAX_HP + extra_max_hp
-	# TODO update health bar
+func update_max_hp():
+	hp_bar.max_value = MAX_HP + extra_max_hp
+	if current_hp > MAX_HP + extra_max_hp:
+		current_hp = MAX_HP + extra_max_hp
+	update_text_hp()
+
+func update_text_hp():
+	health_number.text = str(current_hp) + "/" + str(MAX_HP + extra_max_hp)
 
 func update_money():
 	money_value.text = "£%d" % Globals.money

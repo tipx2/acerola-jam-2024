@@ -41,6 +41,7 @@ func round_start() -> void:
 	var corresponding_direction = corresponding_directions[round_direction]
 	portal_ref.global_position = get_tile_global_pos(get_superlative_tile(corresponding_direction))
 	portal_ref.visible = false
+	portal_ref.enabled = false
 	
 	# spawn enemies
 	taken_enemy_spots = []
@@ -129,13 +130,28 @@ func _on_continue_button_pressed():
 	%transition_animation.play("uncover")
 
 func aggregate_static_effects():
+	Globals.player.extra_max_hp = 0
+	Globals.player.extra_attack_damage = 0
+	Globals.player.extra_attack_speed = 0
+	Globals.player.extra_move_speed = 0
+	Globals.player.extra_crit_chance = 0
+	
 	for node in get_tree().get_nodes_in_group("effect"):
-		print(node)
-		# TODO SORT
+		node.backpack_prepass()
+		node._on_backpack_compile()
+		Globals.player.extra_max_hp += node.extra_max_hp
+		print(node.extra_max_hp)
+		Globals.player.extra_attack_damage += node.extra_attack_damage
+		Globals.player.extra_attack_speed += node.extra_attack_speed
+		Globals.player.extra_move_speed += node.extra_move_speed
+		Globals.player.extra_crit_chance += node.extra_crit_chance
+	
+	Globals.player.update_max_hp()
 
 func _on_enemy_died(e : Node):
 	Globals.money += e.reward
 	# print(len(get_tree().get_nodes_in_group("enemy")))
+	get_tree().call_group("effect", "_on_enemy_died", e)
 	if len(get_tree().get_nodes_in_group("enemy")) == 1:
 		portal_ref.enabled = true
 		portal_ref.visible = true

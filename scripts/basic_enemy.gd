@@ -3,11 +3,11 @@ class_name BasicEnemy
 
 signal enemy_died(e)
 
-var reward = 10
+@export var reward = 5
 
 @export var MAX_HP := 5
 
-@export var BULLET_SPREAD := 0.1
+@export var BULLET_SPREAD := 0.3
 @export var BULLET_SPEED := 5.0
 @export var DESIRED_DISTANCE := 200.0
 @export var BASE_SPEED := 150.0
