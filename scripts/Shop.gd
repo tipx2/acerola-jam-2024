@@ -31,7 +31,8 @@ func load_items():
 		new_item.connect("buy_button_pressed", shop_slot._on_buy_button_pressed)
 		new_item.connect("item_mouse_entered", shop_slot._on_mouse_entered)
 		
-		var item_held_id = randi_range(1, 6)
+		# TODO: ITEM WEIGHTING!!
+		var item_held_id = randi_range(1, 7)
 		new_item.load_item(item_held_id)
 		held_items[str(slot_n)] = item_held_id
 		slot_n += 1

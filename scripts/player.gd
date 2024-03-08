@@ -45,10 +45,12 @@ func _ready():
 	hp_debug.text = str(current_hp)
 	hp_bar.max_value = MAX_HP + extra_max_hp
 	hp_bar.value = current_hp
+	update_money()
 	
 	speed = BASE_SPEED
 	bullet_speed = BASE_BULLET_SPEED
 	bullet_spread = BASE_BULLET_SPREAD
+
 
 func _physics_process(_delta):
 	if intangible:

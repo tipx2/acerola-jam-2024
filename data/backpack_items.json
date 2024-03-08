@@ -94,6 +94,22 @@
 			"Grid": "0,0/1,0",
 			"Adj_grid": "-1,0/2,0",
 			"Stars_config": "cake"
+		},
+		"7": {
+			"ImageName": "roulette_wheel.png",
+			"Script_path": "roulette_wheel.gd",
+			
+			"DisplayName": "Roulette Wheel",
+			"Description": "When you kill an enemy,\n 5% chance to gain [color=yellow]5 coins[/color] for each [color=yellow]Card ✦[/color]",
+			"Type": "Money",
+			
+			"Buy_price": 15,
+			"Sell_price": 3,
+			
+			"Grid": "0,0/1,0/1,1/0,1",
+			"Adj_grid": "0,2/1,2",
+			"Stars_config": "roulette_wheel"
 		}
+		
 	}
 }

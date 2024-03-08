@@ -140,7 +140,6 @@ func aggregate_static_effects():
 		node.backpack_prepass()
 		node._on_backpack_compile()
 		Globals.player.extra_max_hp += node.extra_max_hp
-		print(node.extra_max_hp)
 		Globals.player.extra_attack_damage += node.extra_attack_damage
 		Globals.player.extra_attack_speed += node.extra_attack_speed
 		Globals.player.extra_move_speed += node.extra_move_speed
@@ -151,7 +150,7 @@ func aggregate_static_effects():
 func _on_enemy_died(e : Node):
 	Globals.money += e.reward
 	# print(len(get_tree().get_nodes_in_group("enemy")))
-	get_tree().call_group("effect", "_on_enemy_died", e)
+	get_tree().call_group("effect", "_on_enemy_killed", e)
 	if len(get_tree().get_nodes_in_group("enemy")) == 1:
 		portal_ref.enabled = true
 		portal_ref.visible = true

@@ -41,7 +41,7 @@ theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_constants/outline_size = 10
 theme_override_fonts/font = ExtResource("2_2rdtw")
 theme_override_font_sizes/font_size = 45
-text = "Silly Item"
+text = "Silly Item long name"
 
 [node name="ColorRect" type="ColorRect" parent="MarginContainer/CenterContainer/VBoxContainer"]
 custom_minimum_size = Vector2(0, 3)
@@ -51,11 +51,11 @@ color = Color(0.843137, 0.843137, 0.843137, 1)
 
 [node name="CenterContainer2" type="CenterContainer" parent="MarginContainer/CenterContainer/VBoxContainer"]
 layout_mode = 2
+size_flags_vertical = 3
 mouse_filter = 2
 
 [node name="tooltip_description" type="RichTextLabel" parent="MarginContainer/CenterContainer/VBoxContainer/CenterContainer2"]
 unique_name_in_owner = true
-custom_minimum_size = Vector2(200, 0)
 layout_mode = 2
 mouse_filter = 2
 theme_override_colors/font_shadow_color = Color(0.207843, 0.207843, 0.207843, 0.243137)
@@ -66,8 +66,11 @@ theme_override_constants/outline_size = 5
 theme_override_fonts/normal_font = ExtResource("2_2rdtw")
 theme_override_font_sizes/normal_font_size = 20
 bbcode_enabled = true
-text = "[center][color=green]informative[/color] [color=red]item[/color] [shake rate=20.0 level=5 connected=1]description[/shake][/center]"
+text = "[center]blachalfjaelkajkajdsklfjaekjaklejfkalejioajfioajfioaejfioaejioajifo
+eajefo
+iajioajio[/center]"
 fit_content = true
+autowrap_mode = 0
 
 [node name="ColorRect2" type="ColorRect" parent="MarginContainer/CenterContainer/VBoxContainer"]
 custom_minimum_size = Vector2(0, 3)
