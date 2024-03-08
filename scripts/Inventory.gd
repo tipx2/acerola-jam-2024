@@ -70,6 +70,11 @@ func _try_unlock_slot(a_Slot):
 		shop.money_animation("cant_afford")
 
 func _on_slot_mouse_entered(a_Slot):
+	
+	# TODO: CHECK IF TOOLTIP GOES OFF SCREEN, AND CHANGE
+	# THE ORIGIN IF SO, DON'T NEED TO DO THIS IN SHOP AS IT'S ON THE
+	# LEFT
+	
 	icon_anchor = Vector2(10000, 10000)
 	current_slot = a_Slot
 	if item_held:

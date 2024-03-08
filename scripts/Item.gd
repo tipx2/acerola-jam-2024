@@ -76,20 +76,9 @@ func load_item(a_ItemID : int) -> void:
 	color_rect.size = sprite_size
 	color_rect.position = -sprite_size/2
 	
-	var max_x = 0
-	var max_y = 0
-	
-	var min_x = 99999999999999999
-	var min_y = 99999999999999999
-	
 	for grid in DataHandler.item_grid_data[str(a_ItemID)]:
 		var inted_x = int(grid[0])
 		var inted_y = int(grid[1])
-		if inted_x > max_x: max_x = inted_x
-		if inted_y > max_y: max_y = inted_y
-		
-		if inted_x < min_x: min_x = inted_x
-		if inted_y < min_y: min_y = inted_y
 		item_grids.push_back([inted_x, inted_y])
 	
 	for grid in DataHandler.item_adj_grid_data[str(a_ItemID)]:
@@ -97,8 +86,12 @@ func load_item(a_ItemID : int) -> void:
 		var inted_y = int(grid[1])
 		item_adj_grids.push_back([inted_x, inted_y])
 	
-	#var x_diff = abs(min_x - 1 - max_x)
-	#var y_diff = abs(min_y - 1 - max_y)
+	
+	# hide all first
+	for config in stars_holder.get_children():
+		if config is AnimationPlayer:
+			continue
+		config.visible = false
 	
 	stars_config = DataHandler.item_data[str(a_ItemID)]["Stars_config"]
 	stars_holder.get_node(stars_config).visible = true
