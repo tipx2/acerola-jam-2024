@@ -132,9 +132,10 @@ func _on_continue_button_pressed():
 func aggregate_static_effects():
 	Globals.player.extra_max_hp = 0
 	Globals.player.extra_attack_damage = 0
-	Globals.player.extra_attack_speed = 0
-	Globals.player.extra_move_speed = 0
-	Globals.player.extra_crit_chance = 0
+	Globals.player.extra_attack_speed = 0.0
+	Globals.player.extra_move_speed = 0.0
+	Globals.player.extra_crit_chance = 0.0
+	Globals.player.extra_bullet_speed = 0.0
 	
 	for node in get_tree().get_nodes_in_group("effect"):
 		node.backpack_prepass()
@@ -144,6 +145,7 @@ func aggregate_static_effects():
 		Globals.player.extra_attack_speed += node.extra_attack_speed
 		Globals.player.extra_move_speed += node.extra_move_speed
 		Globals.player.extra_crit_chance += node.extra_crit_chance
+		Globals.player.extra_bullet_speed += node.extra_bullet_speed
 	
 	Globals.player.update_max_hp()
 

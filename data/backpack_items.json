@@ -101,7 +101,7 @@
 			
 			"DisplayName": "Roulette Wheel",
 			"Description": "When you kill an enemy,\n 5% chance to gain [color=yellow]£5[/color] for each [color=yellow]Card ✦[/color]",
-			"Type": "Money",
+			"Type": "Casino",
 			
 			"Buy_price": 15,
 			"Sell_price": 3,
@@ -116,7 +116,7 @@
 			
 			"DisplayName": "Fruit Machine",
 			"Description": "When you kill an enemy,\n (5% for each [color=yellow]Card ✦[/color]) chance to gain [color=yellow]£5[/color]",
-			"Type": "Money",
+			"Type": "Casino",
 			
 			"Buy_price": 15,
 			"Sell_price": 3,
@@ -124,7 +124,195 @@
 			"Grid": "0,0/1,0/1,1/0,1",
 			"Adj_grid": "0,2/1,2/2,1/-1,1",
 			"Stars_config": "fruit_machine"
-		}
+		},
 		
+		"9": {
+			"ImageName": "bingo_card.png",
+			"Script_path": "bingo_card.gd",
+			
+			"DisplayName": "Bingo Grid",
+			"Description": "Every time you kill 15 enemies\n, gain [color=yellow]£20[/color] (count not reset between rounds)",
+			"Type": "Casino",
+			
+			"Buy_price": 20,
+			"Sell_price": 7,
+			
+			"Grid": "0,0/0,1",
+			"Adj_grid": "",
+			"Stars_config": "none"
+		},
+		
+		"10": {
+			"ImageName": "red_chip.png",
+			"Script_path": "red_chip.gd",
+			
+			"DisplayName": "Red Chip",
+			"Description": "Whenever you gain money\n from any [color=yellow]✦[/color] (except Chips),\ngain an extra [color=yellow]£2[/color]",
+			"Type": "Casino",
+			
+			"Buy_price": 8,
+			"Sell_price": 2,
+			
+			"Grid": "0,0",
+			"Adj_grid": "0,-1/0,1",
+			"Stars_config": "chip"
+		},
+		"11": {
+			"ImageName": "blue_chip.png",
+			"Script_path": "blue_chip.gd",
+			
+			"DisplayName": "Blue Chip",
+			"Description": "Whenever you gain money\n from any [color=yellow]✦[/color] (except Chips),\ngain an extra [color=yellow]£5[/color]",
+			"Type": "Casino",
+			
+			"Buy_price": 25,
+			"Sell_price": 5,
+			
+			"Grid": "0,0",
+			"Adj_grid": "0,-1/0,1",
+			"Stars_config": "chip"
+		},
+		"12": {
+			"ImageName": "yellow_chip.png",
+			"Script_path": "yellow_chip.gd",
+			
+			"DisplayName": "Yellow Chip",
+			"Description": "Whenever you gain money\n from any [color=yellow]✦[/color] (except Chips),\ngain an extra [color=yellow]£10[/color]",
+			"Type": "Casino",
+			
+			"Buy_price": 70,
+			"Sell_price": 25,
+			
+			"Grid": "0,0",
+			"Adj_grid": "0,-1/0,1",
+			"Stars_config": "chip"
+		},
+		
+		"13": {
+			"ImageName": "ace_of_spades.png",
+			"Script_path": "ace_of_spades.gd",
+			
+			"DisplayName": "Ace of Spades",
+			"Description": "Whenever you take damage, gain [color=yellow]£1[/color]",
+			"Type": "Card",
+			
+			"Buy_price": 11,
+			"Sell_price": 1,
+			
+			"Grid": "0,0/0,1",
+			"Adj_grid": "",
+			"Stars_config": "none"
+		},
+		"14": {
+			"ImageName": "queen_of_hearts.png",
+			"Script_path": "queen_of_hearts.gd",
+			
+			"DisplayName": "Queen of Hearts",
+			"Description": "Whenever you heal, gain [color=yellow]£1[/color]",
+			"Type": "Card",
+			
+			"Buy_price": 12,
+			"Sell_price": 2,
+			
+			"Grid": "0,0/0,1",
+			"Adj_grid": "",
+			"Stars_config": "none"
+		},
+		
+		"15": {
+			"ImageName": "joker.png",
+			"Script_path": "joker.gd",
+			
+			"DisplayName": "Joker",
+			"Description": "Whenever you sell an item (including self), gain [color=yellow]£1[/color]",
+			"Type": "Card",
+			
+			"Buy_price": 13,
+			"Sell_price": 3,
+			
+			"Grid": "0,0/0,1",
+			"Adj_grid": "",
+			"Stars_config": "none"
+		},
+		
+		"16": {
+			"ImageName": "poker_die.png",
+			"Script_path": "poker_die.gd",
+			
+			"DisplayName": "Poker Die",
+			"Description": "Whenever you sell an item (including self), heal, or take damage,\n10% chance to gain [color=yellow]£1[/color]",
+			"Type": "Card",
+			
+			"Buy_price": 20,
+			"Sell_price": 8,
+			
+			"Grid": "0,0",
+			"Adj_grid": "",
+			"Stars_config": "none"
+		},
+		
+		"17": {
+			"ImageName": "whetstone.png",
+			"Script_path": "whetstone.gd",
+			
+			"DisplayName": "Whetstone",
+			"Description": "Your bullets deal +1 [color=red]Damage[/color] if [color=yellow]✦[/color] is [color=yellow] Combat[/color]",
+			"Type": "Combat",
+			
+			"Buy_price": 25,
+			"Sell_price": 5,
+			
+			"Grid": "0,0",
+			"Adj_grid": "1,0",
+			"Stars_config": "whetstone"
+		},
+		
+		"18": {
+			"ImageName": "money_stone.png",
+			"Script_path": "money_stone.gd",
+			
+			"DisplayName": "Moneystone",
+			"Description": "Your bullets deal +1 [color=red]Damage[/color] if [color=yellow]✦[/color] is [color=yellow] Casino[/color]",
+			"Type": "Combat",
+			
+			"Buy_price": 20,
+			"Sell_price": 5,
+			
+			"Grid": "0,0",
+			"Adj_grid": "1,0",
+			"Stars_config": "whetstone"
+		},
+		
+		"19": {
+			"ImageName": "card_box.png",
+			"Script_path": "card_box.gd",
+			
+			"DisplayName": "Camo Card Box",
+			"Description": "Gain +5% [color=orange]Bullet Speed[/color] for each [color=yellow]Card ✦[/color]",
+			"Type": "Combat",
+			
+			"Buy_price": 15,
+			"Sell_price": 5,
+			
+			"Grid": "0,0/0,1",
+			"Adj_grid": "0,-1/0,2",
+			"Stars_config": "card_box"
+		},
+		
+		"20": {
+			"ImageName": "GPU.png",
+			"Script_path": "GPU.gd",
+			
+			"DisplayName": "GPU",
+			"Description": "Gain +5% [color=blue]Attack Speed[/color] for each [color=yellow]Computer ✦[/color]",
+			"Type": "Computer",
+			
+			"Buy_price": 30,
+			"Sell_price": 10,
+			
+			"Grid": "0,0/1,0",
+			"Adj_grid": "-1,0/2,0",
+			"Stars_config": "cake"
+		},
 	}
 }

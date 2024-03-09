@@ -69,19 +69,20 @@ func shoot():
 	if shottimer.time_left > 0:
 		return
 	
-	var adjusted_b_spread := bullet_spread * (1.0 * extra_bullet_spread)
+	var adjusted_b_spread := bullet_spread * (1.0 + extra_bullet_spread)
 	var spread_offset := Vector2(randf_range(-adjusted_b_spread, adjusted_b_spread), randf_range(-adjusted_b_spread, adjusted_b_spread))
 	var bullet_dir := global_transform.origin.direction_to(get_global_mouse_position()) + spread_offset
 	var new_bullet = bullet_scene.instantiate()
+	print(extra_bullet_speed)
 	add_child(new_bullet.initialise(bullet_dir, shotpoint.global_transform.origin, bullet_speed * (1.0 + extra_bullet_speed), BASE_BULLET_DAMAGE + extra_attack_damage))
 	new_bullet.set_as_top_level(true)
+	
+	get_tree().call_group("effect", "_on_player_attack", new_bullet)
 	
 	shottimer.start()
 
 func damage(amount : int):
 	# TODO play hurt animation etc. here
-	
-	# TODO update health bar etc. here
 	current_hp -= amount
 	
 	get_tree().call_group("effect", "_on_player_damage", amount)
@@ -94,6 +95,20 @@ func damage(amount : int):
 	if current_hp <= 0:
 		die()
 
+func heal(amount : int):
+	# TODO play heal animation here
+	current_hp += amount
+	
+	if current_hp + amount > MAX_HP + extra_max_hp:
+		get_tree().call_group("effect", "_on_player_heal", MAX_HP + extra_max_hp - current_hp)
+		current_hp = MAX_HP + extra_max_hp
+	else:
+		get_tree().call_group("effect", "_on_player_heal", amount)
+	
+	hp_bar.value = current_hp
+	update_text_hp()
+
+
 func die():
 	# TODO do something here
 	print("you died 💀💀💀💀💀")
@@ -102,7 +117,7 @@ func set_intangible(b : bool):
 	intangible = b
 	collision_shape_2d.call_deferred("set_disabled", b)
 
-func initialise_static_buffs():
+func config_attack_speed():
 	shottimer.wait_time = SHOT_TIME / (1.0 + extra_attack_speed)
 
 func update_max_hp():

@@ -8,3 +8,4 @@ func _on_enemy_killed(_e : Node):
 	
 	if randf() <= 0.05:
 		Globals.money += 5 * adj_cards
+		_on_self_money_gain()

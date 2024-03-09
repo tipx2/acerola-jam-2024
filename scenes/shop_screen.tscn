@@ -239,7 +239,7 @@ grow_vertical = 2
 mouse_filter = 1
 script = ExtResource("1_rdggk")
 
-[node name="Shop" type="TextureRect" parent="."]
+[node name="Shop" type="TextureRect" parent="." groups=["shop"]]
 self_modulate = Color(0.360784, 0.333333, 0.301961, 1)
 layout_mode = 1
 anchors_preset = 1

@@ -170,6 +170,9 @@ func place_item():
 	cost_tooltip.visible = true
 	fill_tooltip(item_held.item_ID)
 	
+	# TODO make aberration happen to random item every so often
+	# TODO show aberration in tooltip
+	# item_held.set_aberrated(true)
 	
 	item_held.selected = false
 	item_held = null
@@ -195,6 +198,9 @@ func pick_item():
 		return
 	
 	if not current_slot or not current_slot.item_stored:
+		return
+	
+	if current_slot.item_stored.aberrated:
 		return
 	
 	item_held = current_slot.item_stored
@@ -239,6 +245,7 @@ func sell_item():
 	item_held.queue_free.call_deferred()
 	item_held = null
 	
+	get_tree().call_group("effect", "_on_item_sold", item_held)
 	shop.money_animation("item_sell")
 
 func _on_button_spawner_pressed():

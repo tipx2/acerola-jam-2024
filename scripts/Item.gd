@@ -5,6 +5,8 @@ signal item_mouse_entered
 signal item_mouse_exited
 
 @onready var sprite_2d := $Sprite2D as Sprite2D
+@onready var aberration_particles = $GPUParticles2D
+
 @onready var color_rect = $ColorRect
 @onready var grid_container = $Grids/GridContainer
 @onready var effect_holder = $effect_holder
@@ -30,6 +32,7 @@ var sprite_size : Vector2
 var moused_on = false
 var showing_stars = false
 var in_shop = true
+var aberrated = false
 
 var adjacent_items := []
 
@@ -151,6 +154,10 @@ func update_adjacent_items(items : Array):
 		if not adjacent_items.has(item):
 			adjacent_items.push_back(item)
 	# print(adjacent_items)
+
+func set_aberrated(shown : bool):
+	aberrated = shown
+	aberration_particles.emitting = true
 
 func _on_buy_button_pressed():
 	buy_button_pressed.emit()
