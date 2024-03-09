@@ -17,7 +17,7 @@ var extra_crit_chance := 0.0
 func _enter_tree():
 	self.add_to_group("effect")
 
-func _on_player_attack(bullet : Node):
+func _on_player_attack(_bullet : Node):
 	pass
 
 func _on_enemy_killed(_e : Node):

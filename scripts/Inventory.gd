@@ -185,7 +185,16 @@ func update_adj_all():
 		
 		var adj_items_temp := []
 		for grid in item.item_adj_grids:
-			var grid_to_check = item.grid_anchor.slot_ID + grid[0] + grid[1] * column_count
+			
+			var grid_to_check = item.grid_anchor.slot_ID + grid[0] + grid[1] * column_count # maths to convert an x,y into an index for the array of slots
+			var line_switch_check = item.grid_anchor.slot_ID % column_count + grid[0] # checks for wraparound to ensure items can't be places over edges
+			
+			if line_switch_check < 0 or line_switch_check >= column_count:
+				continue
+				
+			if grid_to_check < 0 or grid_to_check >= grid_array.size():
+				continue
+			
 			if grid_array[grid_to_check].item_stored != null:
 				adj_items_temp.push_back(grid_array[grid_to_check].item_stored)
 		

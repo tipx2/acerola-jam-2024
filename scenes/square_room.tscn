@@ -1,11 +1,11 @@
 [gd_scene load_steps=7 format=3 uid="uid://dx5x5ljxp22fg"]
 
 [ext_resource type="Script" path="res://scripts/square_room.gd" id="1_x8mnt"]
-[ext_resource type="Texture2D" uid="uid://8rjmmlta2sf5" path="res://assets/visuals/RandomLevelGenTileset.png" id="2_mcgkj"]
 [ext_resource type="Texture2D" uid="uid://bgcxc026klhjd" path="res://assets/visuals/1x1white.png" id="3_8ho1n"]
+[ext_resource type="Texture2D" uid="uid://bcvy7yt5tv8jj" path="res://assets/visuals/tileset_4.png" id="3_j7jh0"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_pdmcx"]
-texture = ExtResource("2_mcgkj")
+texture = ExtResource("3_j7jh0")
 texture_region_size = Vector2i(32, 32)
 0:0/0 = 0
 0:0/0/terrain_set = 0
@@ -538,7 +538,7 @@ agent_radius = 20.0
 script = ExtResource("1_x8mnt")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-self_modulate = Color(0, 0, 0, 1)
+self_modulate = Color(0.180392, 0.117647, 0.054902, 1)
 scale = Vector2(40000, 40000)
 texture = ExtResource("3_8ho1n")
 

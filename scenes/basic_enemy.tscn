@@ -1,7 +1,9 @@
-[gd_scene load_steps=4 format=3 uid="uid://c5arod0gnflip"]
+[gd_scene load_steps=6 format=3 uid="uid://c5arod0gnflip"]
 
 [ext_resource type="Script" path="res://scripts/basic_enemy.gd" id="1_nyi3f"]
 [ext_resource type="Texture2D" uid="uid://d2364eea61iml" path="res://assets/visuals/channels4_profile.jpg" id="1_y1nnj"]
+[ext_resource type="Texture2D" uid="uid://yv5e0me3wtwk" path="res://assets/visuals/1x1 red.png" id="3_uvt8a"]
+[ext_resource type="Texture2D" uid="uid://fybw7abr4k1m" path="res://assets/visuals/1x1 green.png" id="4_ni5yu"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_wva6n"]
 radius = 12.0
@@ -35,7 +37,7 @@ one_shot = true
 [node name="RaycastView" type="RayCast2D" parent="."]
 collide_with_areas = true
 
-[node name="healthbar" type="ProgressBar" parent="."]
+[node name="healthbar" type="TextureProgressBar" parent="."]
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
@@ -47,8 +49,9 @@ offset_right = 13.0
 offset_bottom = -16.0
 grow_horizontal = 2
 grow_vertical = 2
-step = 1.0
-show_percentage = false
+nine_patch_stretch = true
+texture_under = ExtResource("3_uvt8a")
+texture_progress = ExtResource("4_ni5yu")
 
 [connection signal="velocity_computed" from="NavigationAgent2D" to="." method="_on_navigation_agent_2d_velocity_computed"]
 [connection signal="timeout" from="NavTimer" to="." method="_on_nav_timer_timeout"]

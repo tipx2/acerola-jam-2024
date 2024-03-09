@@ -266,6 +266,32 @@ position = Vector2(0, -150)
 scale = Vector2(2, 2)
 texture = ExtResource("4_km53r")
 
+[node name="ram" type="Node2D" parent="stars_holder"]
+visible = false
+
+[node name="Sprite2D2" type="Sprite2D" parent="stars_holder/ram"]
+position = Vector2(50, 100)
+scale = Vector2(2, 2)
+texture = ExtResource("4_km53r")
+
+[node name="Sprite2D3" type="Sprite2D" parent="stars_holder/ram"]
+position = Vector2(-50, -100)
+scale = Vector2(2, 2)
+texture = ExtResource("4_km53r")
+
+[node name="potion" type="Node2D" parent="stars_holder"]
+visible = false
+
+[node name="Sprite2D2" type="Sprite2D" parent="stars_holder/potion"]
+position = Vector2(-50, 50)
+scale = Vector2(2, 2)
+texture = ExtResource("4_km53r")
+
+[node name="Sprite2D3" type="Sprite2D" parent="stars_holder/potion"]
+position = Vector2(50, -50)
+scale = Vector2(2, 2)
+texture = ExtResource("4_km53r")
+
 [connection signal="mouse_entered" from="ColorRect" to="." method="_on_mouse_entered"]
 [connection signal="mouse_exited" from="ColorRect" to="." method="_on_mouse_exited"]
 [connection signal="pressed" from="ColorRect/buy_button" to="." method="_on_buy_button_pressed"]

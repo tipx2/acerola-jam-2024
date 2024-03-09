@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=3 uid="uid://bqbk4qjsfcv20"]
+[gd_scene load_steps=22 format=3 uid="uid://bqbk4qjsfcv20"]
 
 [ext_resource type="Script" path="res://scripts/world.gd" id="1_wjo8l"]
 [ext_resource type="PackedScene" uid="uid://dx5x5ljxp22fg" path="res://scenes/square_room.tscn" id="2_04yut"]
@@ -9,16 +9,70 @@
 [ext_resource type="Shader" path="res://assets/shaders/warp.gdshader" id="6_fem7q"]
 [ext_resource type="FontFile" uid="uid://tpd5pc8oxjmq" path="res://assets/fonts/ArchivoBlack-Regular.ttf" id="8_8o0vw"]
 
+[sub_resource type="Animation" id="Animation_0nyhr"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_mmwhh"]
+resource_name = "fade_in"
+length = 2.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5, 2),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1), Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_1oxvn"]
+resource_name = "fade_out"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_rl5mu"]
+_data = {
+"RESET": SubResource("Animation_0nyhr"),
+"fade_in": SubResource("Animation_mmwhh"),
+"fade_out": SubResource("Animation_1oxvn")
+}
+
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_jkme2"]
 shader = ExtResource("6_fem7q")
 shader_parameter/intensity = 1.202
 shader_parameter/radius = 0.735
 
-[sub_resource type="Gradient" id="Gradient_1ijtv"]
+[sub_resource type="Gradient" id="Gradient_lsap4"]
 offsets = PackedFloat32Array(0.0740741, 0.145763, 0.261017, 0.359322, 0.477966, 0.583051, 0.684746, 0.79661, 0.918644)
 colors = PackedColorArray(0.438471, 0.286389, 0.992214, 1, 0.552941, 0.0352941, 0.866667, 1, 0.431373, 0.301961, 1, 1, 0.215686, 0.0980392, 0.909804, 1, 0.101957, 0.0330053, 0.328648, 1, 0.0937607, 0.0283182, 0.286763, 1, 0.39242, 0.0727494, 0.478069, 1, 0.457452, 0.425812, 0.90736, 1, 0.162226, 0.000109353, 0.515643, 1)
 
-[sub_resource type="FastNoiseLite" id="FastNoiseLite_htflq"]
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_h5jho"]
 noise_type = 3
 domain_warp_enabled = true
 domain_warp_type = 2
@@ -28,8 +82,8 @@ metadata/_preview_in_3d_space_ = true
 [sub_resource type="NoiseTexture2D" id="NoiseTexture2D_fkelk"]
 in_3d_space = true
 seamless = true
-color_ramp = SubResource("Gradient_1ijtv")
-noise = SubResource("FastNoiseLite_htflq")
+color_ramp = SubResource("Gradient_lsap4")
+noise = SubResource("FastNoiseLite_h5jho")
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_6ssra"]
 bg_color = Color(0, 0, 0, 1)
@@ -157,12 +211,46 @@ script = ExtResource("1_wjo8l")
 [node name="player" parent="." instance=ExtResource("3_gr6f7")]
 
 [node name="Camera2D2" type="Camera2D" parent="player"]
-zoom = Vector2(2, 2)
+zoom = Vector2(3, 3)
 
 [node name="EndPortal" parent="." instance=ExtResource("4_072hb")]
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 process_mode = 3
+
+[node name="portal_notice" type="RichTextLabel" parent="CanvasLayer"]
+modulate = Color(1, 1, 1, 0)
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -370.0
+offset_top = -55.0
+offset_right = 370.0
+offset_bottom = 55.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_fonts/normal_font = ExtResource("8_8o0vw")
+theme_override_font_sizes/normal_font_size = 70
+bbcode_enabled = true
+text = "[center][wave amp=50.0 freq=5.0 connected=1]All enemies killed! Get to the [color=purple]portal[/color]![/wave][/center]"
+fit_content = true
+
+[node name="ColorRect" type="ColorRect" parent="CanvasLayer/portal_notice"]
+show_behind_parent = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.129412)
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="CanvasLayer/portal_notice"]
+libraries = {
+"": SubResource("AnimationLibrary_rl5mu")
+}
 
 [node name="portal_bg" type="Control" parent="CanvasLayer"]
 unique_name_in_owner = true
@@ -231,7 +319,7 @@ modulate = Color(0, 0, 0, 1)
 layout_mode = 1
 anchors_preset = 10
 anchor_right = 1.0
-offset_right = 72960.0
+offset_right = 84480.0
 offset_bottom = 1.0
 grow_horizontal = 2
 texture = ExtResource("6_d4sod")
@@ -244,7 +332,7 @@ anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
 offset_top = 1079.0
-offset_right = 72960.0
+offset_right = 84480.0
 offset_bottom = 1080.0
 grow_horizontal = 2
 grow_vertical = 0

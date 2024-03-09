@@ -13,8 +13,13 @@ var held_items := {}
 
 func _process(delta):
 	if tooltip.visible:
-		tooltip.global_position = lerp(tooltip.global_position, get_global_mouse_position(), 20 * delta)
-		cost_tooltip.global_position = lerp(cost_tooltip.global_position, get_global_mouse_position() + Vector2(0, tooltip.size.y), 20 * delta)
+		
+		var adjustment = Vector2(0, 0)
+		if !get_viewport_rect().has_point(get_global_mouse_position() + tooltip.size):
+			adjustment = Vector2(-tooltip.size.x, 0)
+		
+		tooltip.global_position = lerp(tooltip.global_position, get_global_mouse_position() + adjustment, 20 * delta)
+		cost_tooltip.global_position = lerp(cost_tooltip.global_position, get_global_mouse_position() + Vector2(0, tooltip.size.y) + adjustment, 20 * delta)
 		if !margin_container.get_global_rect().has_point(get_global_mouse_position()):
 			tooltip.visible = false
 
@@ -32,7 +37,7 @@ func load_items():
 		new_item.connect("item_mouse_entered", shop_slot._on_mouse_entered)
 		
 		# TODO: ITEM WEIGHTING!!
-		var item_held_id = 20
+		var item_held_id = 25
 		new_item.load_item(item_held_id)
 		
 		held_items[str(slot_n)] = item_held_id

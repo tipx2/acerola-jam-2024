@@ -2,6 +2,7 @@ extends Node2D
 
 var basic_enemy_scene = preload("res://scenes/basic_enemy.tscn")
 @onready var square_room = $SquareRoom
+@onready var portal_notice_anim = $CanvasLayer/portal_notice/AnimationPlayer
 
 var ENEMY_DISTANCE := 500.0
 
@@ -156,3 +157,7 @@ func _on_enemy_died(e : Node):
 	if len(get_tree().get_nodes_in_group("enemy")) == 1:
 		portal_ref.enabled = true
 		portal_ref.visible = true
+		portal_notice_anim.play("fade_in")
+		await portal_notice_anim.animation_finished
+		portal_notice_anim.play("fade_out")
+

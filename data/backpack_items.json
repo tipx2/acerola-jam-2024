@@ -131,7 +131,7 @@
 			"Script_path": "bingo_card.gd",
 			
 			"DisplayName": "Bingo Grid",
-			"Description": "Every time you kill 15 enemies\n, gain [color=yellow]£20[/color] (count not reset between rounds)",
+			"Description": "Every time you kill 15 enemies,\n gain [color=yellow]£20[/color] (count not reset between rounds)",
 			"Type": "Casino",
 			
 			"Buy_price": 20,
@@ -224,7 +224,7 @@
 			"Script_path": "joker.gd",
 			
 			"DisplayName": "Joker",
-			"Description": "Whenever you sell an item (including self), gain [color=yellow]£1[/color]",
+			"Description": "Whenever you sell an item (including self),\ngain an extra [color=yellow]£1[/color]",
 			"Type": "Card",
 			
 			"Buy_price": 13,
@@ -240,7 +240,7 @@
 			"Script_path": "poker_die.gd",
 			
 			"DisplayName": "Poker Die",
-			"Description": "Whenever you sell an item (including self), heal, or take damage,\n10% chance to gain [color=yellow]£1[/color]",
+			"Description": "Whenever you sell an item (including self),\n heal, or take damage, 10% chance to gain [color=yellow]£1[/color]",
 			"Type": "Card",
 			
 			"Buy_price": 20,
@@ -256,7 +256,7 @@
 			"Script_path": "whetstone.gd",
 			
 			"DisplayName": "Whetstone",
-			"Description": "Your bullets deal +1 [color=red]Damage[/color] if [color=yellow]✦[/color] is [color=yellow] Combat[/color]",
+			"Description": "Your bullets deal +1 [color=red]Damage[/color] if [color=yellow]✦[/color] is [color=yellow]Combat[/color]",
 			"Type": "Combat",
 			
 			"Buy_price": 25,
@@ -307,12 +307,138 @@
 			"Description": "Gain +5% [color=blue]Attack Speed[/color] for each [color=yellow]Computer ✦[/color]",
 			"Type": "Computer",
 			
-			"Buy_price": 30,
-			"Sell_price": 10,
+			"Buy_price": 20,
+			"Sell_price": 5,
 			
 			"Grid": "0,0/1,0",
 			"Adj_grid": "-1,0/2,0",
 			"Stars_config": "cake"
+		},
+		
+		"21": {
+			"ImageName": "ram.png",
+			"Script_path": "ram.gd",
+			
+			"DisplayName": "RAM Stick",
+			"Description": "If every [color=yellow]✦[/color] is [color=yellow]Computer[/color] (or empty),\ngain +10% [color=blue]Attack Speed[/color] for every [color=yellow]Computer ✦[/color]",
+			"Type": "Computer",
+			
+			"Buy_price": 15,
+			"Sell_price": 5,
+			
+			"Grid": "0,0/1,0",
+			"Adj_grid": "0,-1/1,1",
+			"Stars_config": "ram"
+		},
+		
+		"22": {
+			"ImageName": "cpu.png",
+			"Script_path": "cpu.gd",
+			
+			"DisplayName": "CPU",
+			"Description": "+5% [color=blue]Attack Speed[/color]",
+			"Type": "Computer",
+			
+			"Buy_price": 5,
+			"Sell_price": 0,
+			
+			"Grid": "0,0",
+			"Adj_grid": "",
+			"Stars_config": "none"
+		},
+	
+		"23": {
+			"ImageName": "motherboard.png",
+			"Script_path": "motherboard.gd",
+			
+			"DisplayName": "Motherboard",
+			"Description": "+100% [color=blue]Attack Speed[/color] if [color=yellow]✦[/color]points to at least\none of each: CPU, RAM Stick, and GPU",
+			"Type": "Computer",
+			
+			"Buy_price": 40,
+			"Sell_price": 15,
+			
+			"Grid": "0,0/1,0/1,1/0,1",
+			"Adj_grid": "0,2/1,2/2,1/-1,1",
+			"Stars_config": "fruit_machine"
+		},
+		
+		"24": {
+			"ImageName": "healing_pot.png",
+			"Script_path": "healing_pot.gd",
+			
+			"DisplayName": "Healing Potion",
+			"Description": "After you take damage, 8% chance to [color=green]Heal 1[/color]",
+			"Type": "Potion",
+			
+			"Buy_price": 12,
+			"Sell_price": 8,
+			
+			"Grid": "0,0/1,1",
+			"Adj_grid": "",
+			"Stars_config": "none"
+		},
+		
+		"25": {
+			"ImageName": "addict_pot.png",
+			"Script_path": "addict_pot.gd",
+			
+			"DisplayName": "Addict's Healing Potion",
+			"Description": "After you take damage, (8% for each [color=yellow]Casino ✦[/color]) chance to [color=green]Heal 1[/color]",
+			"Type": "Potion",
+			
+			"Buy_price": 15,
+			"Sell_price": 7,
+			
+			"Grid": "0,0/1,1",
+			"Adj_grid": "0,1/1,0",
+			"Stars_config": "potion"
+		},
+		"26": {
+			"ImageName": "camo_pot.png",
+			"Script_path": "camo_pot.gd",
+			
+			"DisplayName": "Camo Healing Potion",
+			"Description": "After you take damage, (8% for each [color=yellow]Combat ✦[/color]) chance to [color=green]Heal 1[/color]",
+			"Type": "Potion",
+			
+			"Buy_price": 15,
+			"Sell_price": 7,
+			
+			"Grid": "0,0/1,1",
+			"Adj_grid": "0,1/1,0",
+			"Stars_config": "potion"
+		},
+		"27": {
+			"ImageName": "hearty_pot.png",
+			"Script_path": "hearty_pot.gd",
+			
+			"DisplayName": "Hearty Healing Pot",
+			"Description": "When you take damage,\n[color=green]Heal 1[/color] for each [color=yellow]Food ✦[/color]",
+			"Type": "Potion",
+			
+			"Buy_price": 35,
+			"Sell_price": 15,
+			
+			"Grid": "0,0/1,1",
+			"Adj_grid": "0,1/1,0",
+			"Stars_config": "potion"
+		},
+		
+		"28": {
+			"ImageName": "",
+			"Script_path": "",
+			
+			"DisplayName": "Flash Fried Fish",
+			"Description": "Heal to full if you finish a floor in under 60 seconds",
+			"Type": "Food",
+			
+			"Buy_price": 60,
+			"Sell_price": 20,
+			
+			"Grid": "0,0/1,0",
+			"Adj_grid": "",
+			"Stars_config": "none"
 		},
 	}
 }

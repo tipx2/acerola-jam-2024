@@ -12,7 +12,7 @@ const BASE_SPEED := 200.0
 var extra_move_speed := 0.0
 
 const SHOT_TIME := 0.3
-var extra_attack_speed := 0.0
+var extra_attack_speed := 0.0 : set = config_attack_speed
 
 const BASE_BULLET_DAMAGE := 1
 var extra_attack_damage := 0
@@ -39,13 +39,18 @@ var extra_crit_chance := 0.0
 @onready var hp_bar = $CanvasLayer/PanelContainer/MarginContainer/HBoxContainer/CenterContainer/VBoxContainer/hp_bar
 @onready var health_number = $CanvasLayer/PanelContainer/MarginContainer/HBoxContainer/CenterContainer/VBoxContainer/health_number
 
+@onready var legsplayer = $legs/legsplayer
+@onready var legs = $legs
+
 func _ready():
+	
 	shottimer.wait_time = SHOT_TIME / (1.0 + extra_attack_speed)
 	
 	hp_debug.text = str(current_hp)
 	hp_bar.max_value = MAX_HP + extra_max_hp
 	hp_bar.value = current_hp
 	update_money()
+	update_text_hp()
 	
 	speed = BASE_SPEED
 	bullet_speed = BASE_BULLET_SPEED
@@ -58,7 +63,14 @@ func _physics_process(_delta):
 	var direction = Input.get_vector("move_left", "move_right", "move_up", "move_down")
 	velocity = direction.normalized() * speed * (1.0 + extra_move_speed)
 	
+	if velocity == Vector2.ZERO:
+		legsplayer.play("stopped")
+	else:
+		legsplayer.play("walk")
+	
 	look_at(get_global_mouse_position())
+	#legs.global_rotation_degrees = -rad_to_deg(velocity.angle()) - 90
+	
 	
 	if Input.is_action_pressed("shoot"):
 		shoot()
@@ -69,11 +81,13 @@ func shoot():
 	if shottimer.time_left > 0:
 		return
 	
+	print(shottimer.wait_time)
+	
 	var adjusted_b_spread := bullet_spread * (1.0 + extra_bullet_spread)
 	var spread_offset := Vector2(randf_range(-adjusted_b_spread, adjusted_b_spread), randf_range(-adjusted_b_spread, adjusted_b_spread))
 	var bullet_dir := global_transform.origin.direction_to(get_global_mouse_position()) + spread_offset
 	var new_bullet = bullet_scene.instantiate()
-	print(extra_bullet_speed)
+	# print(extra_bullet_speed)
 	add_child(new_bullet.initialise(bullet_dir, shotpoint.global_transform.origin, bullet_speed * (1.0 + extra_bullet_speed), BASE_BULLET_DAMAGE + extra_attack_damage))
 	new_bullet.set_as_top_level(true)
 	
@@ -117,8 +131,11 @@ func set_intangible(b : bool):
 	intangible = b
 	collision_shape_2d.call_deferred("set_disabled", b)
 
-func config_attack_speed():
+func config_attack_speed(e : float):
+	print(e, " ", "config'd at speed")
+	extra_attack_speed = e
 	shottimer.wait_time = SHOT_TIME / (1.0 + extra_attack_speed)
+	
 
 func update_max_hp():
 	hp_bar.max_value = MAX_HP + extra_max_hp
