@@ -1,5 +1,7 @@
 extends CharacterBody2D
 
+signal player_died
+
 var bullet_scene : PackedScene = preload("res://scenes/basic_bullet.tscn")
 
 const BASE_BULLET_SPREAD := 0.05
@@ -24,8 +26,9 @@ var current_hp := MAX_HP
 var speed : float
 var bullet_speed : float
 var bullet_spread : float
-var intangible = false
 
+var intangible = false
+var invunderable = false
 
 var extra_crit_chance := 0.0
 
@@ -41,6 +44,10 @@ var extra_crit_chance := 0.0
 
 @onready var legsplayer = $legs/legsplayer
 @onready var legs = $legs
+@onready var inv_flash_player = $inv_flash_player
+
+@onready var damage_sound = $damage_sound
+@onready var shot_sound = $shot_sound
 
 func _ready():
 	
@@ -81,6 +88,8 @@ func shoot():
 	if shottimer.time_left > 0:
 		return
 	
+	shot_sound.pitch_scale = randf_range(0.8, 1.3)
+	shot_sound.play()
 	#print(shottimer.wait_time)
 	
 	var adjusted_b_spread := bullet_spread * (1.0 + extra_bullet_spread)
@@ -97,7 +106,13 @@ func shoot():
 	shottimer.start()
 
 func damage(amount : int):
+	
+	if invunderable:
+		return
+	
 	# TODO play hurt animation etc. here
+	damage_sound.pitch_scale = randf_range(1.0, 1.3)
+	damage_sound.play()
 	current_hp -= amount
 	
 	get_tree().call_group("effect", "_on_player_damage", amount)
@@ -109,6 +124,11 @@ func damage(amount : int):
 	
 	if current_hp <= 0:
 		die()
+	
+	inv_flash_player.play("flash")
+
+func set_invunderable(inv : bool):
+	invunderable = inv
 
 func heal(amount : int):
 	# TODO play heal animation here
@@ -125,10 +145,11 @@ func heal(amount : int):
 
 
 func die():
-	# TODO do something here
-	print("you died 💀💀💀💀💀")
+	player_died.emit()
 
 func set_intangible(b : bool):
+	if b:
+		legsplayer.play("stopped")
 	intangible = b
 	collision_shape_2d.call_deferred("set_disabled", b)
 

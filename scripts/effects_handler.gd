@@ -45,6 +45,7 @@ func _on_level_ended():
 	pass
 
 func _on_self_money_gain():
+	item_parent = get_parent()
 	for item in get_tree().get_nodes_in_group("effect"):
 		item._on_other_item_gain_money(item_parent)
 

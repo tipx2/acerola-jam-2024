@@ -11,6 +11,8 @@ extends Control
 @onready var cost_tooltip = $cost_tooltip
 
 var grid_array := []
+var items_slots_held := []
+
 var item_held = null
 var current_slot = null
 var can_place := false
@@ -84,7 +86,7 @@ func _on_slot_mouse_entered(a_Slot):
 	elif a_Slot.item_stored:
 		tooltip.visible = true
 		cost_tooltip.visible = true
-		fill_tooltip(a_Slot.item_stored.item_ID)
+		fill_tooltip(a_Slot.item_stored)
 	else:
 		tooltip.visible = false
 		cost_tooltip.visible = false
@@ -92,13 +94,16 @@ func _on_slot_mouse_entered(a_Slot):
 func _on_slot_mouse_exited(_a_Slot):
 	clear_grid()
 
-func fill_tooltip(id : int):
+func fill_tooltip(item : Node):
+	var id = item.item_ID
 	var tooltip_info = DataHandler.item_data[str(id)]
 	tooltip.set_title(tooltip_info["DisplayName"])
 	tooltip.set_description(tooltip_info["Description"])
 	tooltip.set_type(tooltip_info["Type"])
 	tooltip.size = Vector2(0,0)
 	cost_tooltip.set_price_sell(int(tooltip_info["Sell_price"]))
+	
+	tooltip.set_aberrated(item.aberrated)
 
 func check_slot_availability(a_Slot) -> void:
 	for grid in item_held.item_grids:
@@ -168,9 +173,10 @@ func place_item():
 	
 	tooltip.visible = true
 	cost_tooltip.visible = true
-	fill_tooltip(item_held.item_ID)
+	fill_tooltip(item_held)
 	
-	# TODO make aberration happen to random item every so often
+	items_slots_held.append(item_held)
+	
 	# TODO show aberration in tooltip
 	# item_held.set_aberrated(true)
 	
@@ -219,6 +225,8 @@ func pick_item():
 	add_child(item_held)
 	item_held.global_position = get_global_mouse_position()
 	
+	items_slots_held.erase(item_held)
+	
 	tooltip.visible = false
 	cost_tooltip.visible = false
 	
@@ -256,6 +264,12 @@ func sell_item():
 	
 	get_tree().call_group("effect", "_on_item_sold", item_held)
 	shop.money_animation("item_sell")
+
+func aberrate_random():
+	print(items_slots_held)
+	if items_slots_held.size() == 0:
+		return
+	items_slots_held.pick_random().set_aberrated(true)
 
 func _on_button_spawner_pressed():
 	hold_new_item(randi_range(1, 6))

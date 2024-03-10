@@ -368,11 +368,11 @@
 			"Script_path": "healing_pot.gd",
 			
 			"DisplayName": "Healing Potion",
-			"Description": "After you take damage, 8% chance to [color=green]Heal 1[/color]",
+			"Description": "After you take damage, 10% chance to [color=green]Heal 1[/color]",
 			"Type": "Potion",
 			
-			"Buy_price": 12,
-			"Sell_price": 8,
+			"Buy_price": 20,
+			"Sell_price": 7,
 			
 			"Grid": "0,0/1,1",
 			"Adj_grid": "",
@@ -414,7 +414,7 @@
 			"Script_path": "hearty_pot.gd",
 			
 			"DisplayName": "Hearty Healing Pot",
-			"Description": "When you take damage,\n[color=green]Heal 1[/color] for each [color=yellow]Food ✦[/color]",
+			"Description": "When you take damage, 15% chance to\n[color=green]Heal 1[/color] for each [color=yellow]Food ✦[/color]",
 			"Type": "Potion",
 			
 			"Buy_price": 35,
@@ -464,12 +464,28 @@
 			"Description": "If every [color=yellow]✦[/color] is [color=yellow]Food[/color] (or empty),\nyour bullets deal [color=red]+3 Damage[/color]",
 			"Type": "Food",
 			
-			"Buy_price": 30,
+			"Buy_price": 50,
 			"Sell_price": 10,
 			
 			"Grid": "0,0/1,0/1,1/0,1",
 			"Adj_grid": "0,2/-1,0/1,-1",
 			"Stars_config": "recipe_book"
+		},
+		
+		"31": {
+			"ImageName": "horders_pot.png",
+			"Script_path": "hoarders_pot.gd",
+			
+			"DisplayName": "Hoarder's Healing Potion",
+			"Description": "When you kill an enemy, if you have [color=yellow]£50[/color] or more, [color=green]Heal 1[/color]",
+			"Type": "Potion",
+			
+			"Buy_price": 8,
+			"Sell_price": 3,
+			
+			"Grid": "0,0/1,1",
+			"Adj_grid": "",
+			"Stars_config": "none"
 		},
 	}
 }

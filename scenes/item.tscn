@@ -1,7 +1,9 @@
-[gd_scene load_steps=20 format=3 uid="uid://btf8cy81nfkdl"]
+[gd_scene load_steps=17 format=3 uid="uid://btf8cy81nfkdl"]
 
 [ext_resource type="Script" path="res://scripts/Item.gd" id="1_7dg5a"]
 [ext_resource type="Shader" path="res://assets/shaders/perspective.gdshader" id="2_nrcui"]
+[ext_resource type="Texture2D" uid="uid://cfjgrlmhghfi3" path="res://assets/visuals/backpack_inventory/bingo_card.png" id="3_kdwbh"]
+[ext_resource type="Material" uid="uid://bcou536fh1wqv" path="res://data/aberration_particles.tres" id="4_5e4ef"]
 [ext_resource type="Texture2D" uid="uid://dtj0fj1kanbay" path="res://assets/visuals/star.png" id="4_km53r"]
 [ext_resource type="Texture2D" uid="uid://citr5r02xxfdc" path="res://assets/visuals/magic_05.png" id="5_3csia"]
 
@@ -13,36 +15,6 @@ shader_parameter/cull_back = true
 shader_parameter/y_rot = 0.0
 shader_parameter/x_rot = 0.0
 shader_parameter/inset = 0.0
-
-[sub_resource type="Gradient" id="Gradient_6wqsx"]
-offsets = PackedFloat32Array(0.211712, 0.54955, 0.894144)
-colors = PackedColorArray(0.580392, 0.0862745, 0.584314, 0.709804, 0.247059, 0.0980392, 0.462745, 0.501961, 0, 0, 0, 0.164706)
-
-[sub_resource type="GradientTexture1D" id="GradientTexture1D_lq15d"]
-gradient = SubResource("Gradient_6wqsx")
-
-[sub_resource type="Curve" id="Curve_d3ai5"]
-max_value = 5.0
-_data = [Vector2(0, 0.802299), 0.0, 0.0, 0, 0, Vector2(1, 0.562094), 0.0, 0.0, 0, 0]
-point_count = 2
-
-[sub_resource type="CurveTexture" id="CurveTexture_jyr8m"]
-curve = SubResource("Curve_d3ai5")
-
-[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_vwfm5"]
-particle_flag_disable_z = true
-emission_shape_offset = Vector3(0, 20, 0)
-emission_shape_scale = Vector3(29.18, 1, 1)
-emission_shape = 3
-emission_box_extents = Vector3(3, 3, 3)
-gravity = Vector3(0, -98, 0)
-linear_accel_min = 3.38
-linear_accel_max = 24.6
-scale_min = 0.05
-scale_max = 0.2
-scale_curve = SubResource("CurveTexture_jyr8m")
-color_ramp = SubResource("GradientTexture1D_lq15d")
-turbulence_enabled = true
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_iev61"]
 
@@ -117,11 +89,12 @@ script = ExtResource("1_7dg5a")
 clip_children = 2
 material = SubResource("ShaderMaterial_aecng")
 scale = Vector2(2, 2)
+texture = ExtResource("3_kdwbh")
 
 [node name="GPUParticles2D" type="GPUParticles2D" parent="."]
 emitting = false
 amount = 50
-process_material = SubResource("ParticleProcessMaterial_vwfm5")
+process_material = ExtResource("4_5e4ef")
 texture = ExtResource("5_3csia")
 lifetime = 2.5
 

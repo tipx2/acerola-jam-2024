@@ -2,6 +2,7 @@ extends CharacterBody2D
 class_name EnemyBullet
 
 @export var BULLET_DAMAGE := 1
+@onready var collision_shape_2d = $CollisionShape2D
 
 var initial_dir : Vector2
 var speed : float
@@ -23,4 +24,7 @@ func _physics_process(delta):
 		if col:
 			if col.get_collider().is_in_group("player"):
 				col.get_collider().damage(BULLET_DAMAGE)
-			queue_free()
+			elif col.get_collider().is_in_group("bullet"):
+				return
+			collision_shape_2d.disabled = true
+			queue_free.call_deferred()

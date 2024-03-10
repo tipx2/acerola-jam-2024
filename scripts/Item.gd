@@ -79,6 +79,8 @@ func load_item(a_ItemID : int) -> void:
 	color_rect.size = sprite_size
 	color_rect.position = -sprite_size/2
 	
+	aberration_particles.process_material.emission_shape_scale = Vector3(sprite_size.x, sprite_size.y, 0)/4
+	
 	for grid in DataHandler.item_grid_data[str(a_ItemID)]:
 		var inted_x = int(grid[0])
 		var inted_y = int(grid[1])

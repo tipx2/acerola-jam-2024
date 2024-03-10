@@ -44,6 +44,19 @@ theme_override_fonts/font = ExtResource("2_2rdtw")
 theme_override_font_sizes/font_size = 45
 text = "Silly Item long name"
 
+[node name="ab_container" type="CenterContainer" parent="MarginContainer/CenterContainer/VBoxContainer"]
+visible = false
+layout_mode = 2
+mouse_filter = 2
+
+[node name="aberrated" type="Label" parent="MarginContainer/CenterContainer/VBoxContainer/ab_container"]
+layout_mode = 2
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 10
+theme_override_fonts/font = ExtResource("2_2rdtw")
+theme_override_font_sizes/font_size = 20
+text = "Aberrated!"
+
 [node name="ColorRect" type="ColorRect" parent="MarginContainer/CenterContainer/VBoxContainer"]
 custom_minimum_size = Vector2(0, 3)
 layout_mode = 2

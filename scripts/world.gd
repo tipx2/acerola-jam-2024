@@ -1,8 +1,21 @@
 extends Node2D
 
 var basic_enemy_scene = preload("res://scenes/basic_enemy.tscn")
+var turret_enemy_scene = preload("res://scenes/turret_enemy.tscn")
+var burst_enemy_scene = preload("res://scenes/burst_enemy.tscn")
+
 @onready var square_room = $SquareRoom
 @onready var portal_notice_anim = $CanvasLayer/portal_notice/AnimationPlayer
+
+@onready var camera_player = $player/camera_player
+
+@onready var win_screen = $CanvasLayer/win_screen
+@onready var confetti = $CanvasLayer/win_screen/confetti
+@onready var win_sound = $CanvasLayer/win_screen/win_sound
+
+@onready var lose_screen = $CanvasLayer/lose_screen
+
+@onready var battle_music_1 = $battle_music_1
 
 @onready var floor_timer = $floor_timer
 var timer_counter = 0
@@ -14,8 +27,12 @@ var tile_list_ref : Array
 var player_ref : Node2D
 var portal_ref : Node2D
 
-var walker_steps = 250
+var enemy_count = 2
+var step_count = 220
+var enemy_additional_health = 0
+
 var current_level = -1
+var percent_difficulty := 30.0
 
 enum {
 	LEFT,
@@ -39,6 +56,17 @@ func _on_square_room_map_generated(tile_list, tile_map) -> void:
 	round_start()
 
 func round_start() -> void:
+	# set difficulty
+	current_level += 1
+	
+	percent_difficulty += 20.0
+	if percent_difficulty >= 100.0:
+		percent_difficulty = 100.0
+	# print("level: ", current_level, " difficulty:", percent_difficulty)
+	enemy_count += 2
+	step_count += 30
+	enemy_additional_health += 1
+	
 	# move player
 	var round_direction = round_directions.pick_random()
 	player_ref.global_position = get_tile_global_pos(get_superlative_tile(round_direction))
@@ -52,8 +80,21 @@ func round_start() -> void:
 	
 	# spawn enemies
 	taken_enemy_spots = []
-	for _x in range(5):
-		taken_enemy_spots.append(spawn_enemy_pos_random(basic_enemy_scene))
+	for _x in range(enemy_count):
+		var r = randf() 
+		if r <= 0.3:
+			taken_enemy_spots.append(spawn_enemy_pos_random(turret_enemy_scene))
+		elif r > 0.3 && r <= 0.5:
+			taken_enemy_spots.append(spawn_enemy_pos_random(burst_enemy_scene))
+		else:
+			taken_enemy_spots.append(spawn_enemy_pos_random(basic_enemy_scene))
+
+func win_game():
+	%transition_animation.play("uncover")
+	win_sound.play()
+	win_screen.visible = true
+	for p in confetti.get_children():
+		p.emitting = true
 
 func get_tile_map_pos(tile : Vector2) -> Vector2:
 	return tile_map_ref.local_to_map(tile_map_ref.to_local(tile))
@@ -102,8 +143,8 @@ func spawn_enemy_pos_random(enemy_scene : PackedScene) -> Vector2:
 			break
 	
 	enemy_instance.global_position = get_tile_global_pos(picked_tile)
-	
 	enemy_instance.enemy_died.connect(_on_enemy_died)
+	enemy_instance.set_health(enemy_additional_health)
 	
 	return picked_tile
 	# print(enemy_instance," ", get_tile_map_pos(enemy_instance.global_position))
@@ -115,28 +156,41 @@ func _on_end_portal_level_ended():
 	Globals.player.set_intangible(true)
 	Globals.player.hud_visible(false)
 	get_tree().call_group("enemy", "set_intangible", true)
+	camera_player.play("zoom")
 	%transition_animation.play("cover")
 	await %transition_animation.animation_finished
+	
+	if current_level == 9:
+		win_game()
+		return
+	
+	camera_player.play("RESET")
 	%ShopScreen.visible = true
 	%portal_bg.visible = true
 	%continue_button.visible = true
 	%ShopScreen.start_shop()
+	tween_battle_music_volume(-80, 2, false)
 	%ShopScreen.tween_music_volume(0, 0.01, true)
 	%transition_animation.play("uncover")
 	get_tree().call_group("enemy", "queue_free")
 
 func _on_continue_button_pressed():
 	aggregate_static_effects()
-	square_room.generate_level(walker_steps)
-	current_level += 1
+	square_room.generate_level(step_count)
 	square_room.set_tilemap(current_level)
 	Globals.player.set_intangible(false)
 	Globals.player.hud_visible(true)
 	%transition_animation.play("cover")
 	await %transition_animation.animation_finished
+	
+	# aberration
+	if randf() <= percent_difficulty/100.0:
+		%ShopScreen.aberrate_random()
+	
 	%ShopScreen.visible = false
 	%ShopScreen.stop_shop()
 	%ShopScreen.tween_music_volume(-80, 2, false)
+	tween_battle_music_volume(0, 2, true)
 	%portal_bg.visible = false
 	%continue_button.visible = false
 	%transition_animation.play("uncover")
@@ -169,6 +223,7 @@ func _on_enemy_died(e : Node):
 	Globals.money += e.reward
 	# print(len(get_tree().get_nodes_in_group("enemy")))
 	get_tree().call_group("effect", "_on_enemy_killed", e)
+	print(len(get_tree().get_nodes_in_group("enemy")))
 	if len(get_tree().get_nodes_in_group("enemy")) == 1:
 		portal_ref.enabled = true
 		portal_ref.visible = true
@@ -179,3 +234,28 @@ func _on_enemy_died(e : Node):
 
 func _on_floor_timer_timeout():
 	timer_counter += 1
+
+func _on_again_pressed():
+	Globals.start_again()
+
+
+func _on_quit_pressed():
+	get_tree().change_scene_to_file("res://scenes/main_menu.tscn")
+
+
+func _on_player_player_died():
+	Globals.player.set_intangible(true)
+	Globals.player.hud_visible(false)
+	get_tree().call_group("enemy", "set_intangible", true)
+	camera_player.play("zoom")
+	%transition_animation.play("cover")
+	await %transition_animation.animation_finished
+	%transition_animation.play("uncover")
+	lose_screen.visible = true
+
+func tween_battle_music_volume(target : float, time : float, restart : bool):
+	if restart:
+		battle_music_1.playing = false
+		battle_music_1.playing = true
+	var tween = get_tree().create_tween()
+	tween.tween_property(battle_music_1, "volume_db", target, time).set_trans(Tween.TRANS_QUAD)

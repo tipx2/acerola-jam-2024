@@ -13,11 +13,11 @@ source_geometry_mode = 1
 source_geometry_group_name = &"navigation"
 agent_radius = 20.0
 
-[node name="SquareRoom" type="Node2D"]
+[node name="SquareRoom" type="Node2D" groups=["square_room"]]
 script = ExtResource("1_x8mnt")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-self_modulate = Color(0, 0, 0, 1)
+self_modulate = Color(0.521569, 0.372549, 0.223529, 1)
 scale = Vector2(40000, 40000)
 texture = ExtResource("3_8ho1n")
 

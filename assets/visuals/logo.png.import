@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://8rjmmlta2sf5"
-path="res://.godot/imported/RandomLevelGenTileset.png-a186922bf1d275703235938e4e7c0bfa.ctex"
+uid="uid://bh6fat0omfoff"
+path="res://.godot/imported/logo.png-eeac35a60fbd6e7a1990cf2f5f067fd9.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/visuals/RandomLevelGenTileset.png"
-dest_files=["res://.godot/imported/RandomLevelGenTileset.png-a186922bf1d275703235938e4e7c0bfa.ctex"]
+source_file="res://assets/visuals/logo.png"
+dest_files=["res://.godot/imported/logo.png-eeac35a60fbd6e7a1990cf2f5f067fd9.ctex"]
 
 [params]
 

@@ -477,9 +477,11 @@ text = "[center][wave amp=20.0 freq=10.0 connected=1]Sell[/wave][/center]"
 
 [node name="bin_open" type="AudioStreamPlayer" parent="Selling_window"]
 stream = ExtResource("16_87klg")
+bus = &"sfx"
 
 [node name="bin_close" type="AudioStreamPlayer" parent="Selling_window"]
 stream = ExtResource("17_0k745")
+bus = &"sfx"
 
 [node name="shop_music" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("11_klcfw")

@@ -7,4 +7,5 @@ func _on_player_damage(_amount : int):
 		if item.item_type == "Food":
 			heal_for += 1
 	
-	Globals.player.heal(heal_for)
+	if randf() <= 0.15:
+		Globals.player.heal(heal_for)

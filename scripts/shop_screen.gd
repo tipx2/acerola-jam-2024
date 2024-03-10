@@ -16,6 +16,9 @@ func stop_shop():
 func load_items():
 	shop.load_items()
 
+func aberrate_random():
+	inventory.aberrate_random()
+
 func tween_music_volume(target : float, time : float, restart : bool):
 	if restart:
 		shop_music.playing = false

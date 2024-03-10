@@ -1,0 +1,113 @@
+[gd_scene load_steps=9 format=3 uid="uid://cv87vfcv7pivl"]
+
+[ext_resource type="Script" path="res://scripts/main_menu.gd" id="1_5wlri"]
+[ext_resource type="Shader" path="res://assets/shaders/warp.gdshader" id="1_n12fk"]
+[ext_resource type="Texture2D" uid="uid://bh6fat0omfoff" path="res://assets/visuals/logo.png" id="2_qboyc"]
+[ext_resource type="FontFile" uid="uid://tpd5pc8oxjmq" path="res://assets/fonts/ArchivoBlack-Regular.ttf" id="3_5u8hg"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_gp0t8"]
+shader = ExtResource("1_n12fk")
+shader_parameter/intensity = 1.202
+shader_parameter/radius = 0.735
+
+[sub_resource type="Gradient" id="Gradient_lsap4"]
+offsets = PackedFloat32Array(0.0740741, 0.145763, 0.261017, 0.359322, 0.477966, 0.583051, 0.684746, 0.79661, 0.918644)
+colors = PackedColorArray(0.438471, 0.286389, 0.992214, 1, 0.552941, 0.0352941, 0.866667, 1, 0.431373, 0.301961, 1, 1, 0.215686, 0.0980392, 0.909804, 1, 0.101957, 0.0330053, 0.328648, 1, 0.0937607, 0.0283182, 0.286763, 1, 0.39242, 0.0727494, 0.478069, 1, 0.457452, 0.425812, 0.90736, 1, 0.162226, 0.000109353, 0.515643, 1)
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_h5jho"]
+noise_type = 3
+domain_warp_enabled = true
+domain_warp_type = 2
+domain_warp_fractal_type = 0
+metadata/_preview_in_3d_space_ = true
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_bt6og"]
+in_3d_space = true
+seamless = true
+color_ramp = SubResource("Gradient_lsap4")
+noise = SubResource("FastNoiseLite_h5jho")
+
+[node name="MainMenu" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_5wlri")
+
+[node name="portal_bg" type="Control" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="TextureRect" type="TextureRect" parent="portal_bg"]
+material = SubResource("ShaderMaterial_gp0t8")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = SubResource("NoiseTexture2D_bt6og")
+
+[node name="ColorRect2" type="ColorRect" parent="portal_bg"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.0745098, 0.0156863, 0.14902, 0.905882)
+
+[node name="Control" type="Control" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="CenterContainer" type="CenterContainer" parent="Control"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Control/CenterContainer"]
+layout_mode = 2
+theme_override_constants/separation = 40
+
+[node name="CenterContainer" type="CenterContainer" parent="Control/CenterContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="TextureRect" type="TextureRect" parent="Control/CenterContainer/VBoxContainer/CenterContainer"]
+custom_minimum_size = Vector2(626.667, 293.333)
+layout_mode = 2
+texture = ExtResource("2_qboyc")
+
+[node name="CenterContainer2" type="CenterContainer" parent="Control/CenterContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="play" type="Button" parent="Control/CenterContainer/VBoxContainer/CenterContainer2"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("3_5u8hg")
+theme_override_font_sizes/font_size = 110
+text = "Play"
+
+[node name="CenterContainer3" type="CenterContainer" parent="Control/CenterContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="options" type="Button" parent="Control/CenterContainer/VBoxContainer/CenterContainer3"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("3_5u8hg")
+theme_override_font_sizes/font_size = 110
+text = "Options"
+
+[connection signal="pressed" from="Control/CenterContainer/VBoxContainer/CenterContainer2/play" to="." method="_on_play_pressed"]
+[connection signal="pressed" from="Control/CenterContainer/VBoxContainer/CenterContainer3/options" to="." method="_on_options_pressed"]
