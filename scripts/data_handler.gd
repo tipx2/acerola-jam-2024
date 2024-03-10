@@ -12,8 +12,8 @@ func _ready() -> void:
 	set_adj_grid_data()
 
 func load_data(a_path) -> void:
-	if not FileAccess.file_exists(a_path):
-		print("item data file not found")
+	#if not FileAccess.file_exists(a_path):
+		#print("item data file not found")
 	var item_data_file = FileAccess.open(a_path, FileAccess.READ)
 	item_data = JSON.parse_string(item_data_file.get_as_text())["Sheet1"]
 	item_data_file.close()

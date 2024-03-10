@@ -10,11 +10,12 @@ config_version=5
 
 [application]
 
-config/name="Acerola Jam 2024"
+config/name="Backpack Blaster"
 run/main_scene="res://scenes/main_menu.tscn"
 config/features=PackedStringArray("4.2", "Forward Plus")
 run/max_fps=60
-config/icon="res://assets/visuals/channels4_profile.png"
+config/icon="res://assets/visuals/burst_tank.png"
+config/windows_native_icon="res://assets/visuals/tank.ico"
 
 [audio]
 

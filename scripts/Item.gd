@@ -69,10 +69,13 @@ func load_item(a_ItemID : int) -> void:
 	item_ID = a_ItemID
 	item_type = DataHandler.item_data[str(a_ItemID)]["Type"]
 	var Icon_path = "res://assets/visuals/backpack_inventory/%s" %  DataHandler.item_data[str(a_ItemID)]["ImageName"]
-	if FileAccess.file_exists(Icon_path):
-		sprite_2d.texture = load(Icon_path)
-	else:
-		push_error("Image not found for item " + DataHandler.item_data[str(a_ItemID)]["DisplayName"])
+	sprite_2d.texture = load(Icon_path)
+	
+	#if FileAccess.file_exists(Icon_path):
+		#sprite_2d.texture = load(Icon_path)
+	#else:
+		#push_error("Image not found for item " + DataHandler.item_data[str(a_ItemID)]["DisplayName"])
+	#
 	
 	# scale mouse_over color rect to fit
 	sprite_size = sprite_2d.texture.get_size() * sprite_2d.scale.x
@@ -102,10 +105,12 @@ func load_item(a_ItemID : int) -> void:
 	stars_holder.get_node(stars_config).visible = true
 	
 	var script_path = "res://scripts/backpack_scripts/%s" % DataHandler.item_data[str(a_ItemID)]["Script_path"]
-	if FileAccess.file_exists(script_path):
-		effect_holder.set_script(load(script_path))
-	else:
-		push_error("Script not found for item " + DataHandler.item_data[str(a_ItemID)]["DisplayName"])
+	
+	effect_holder.set_script(load(script_path))
+	#if FileAccess.file_exists(script_path):
+		#effect_holder.set_script(load(script_path))
+	#else:
+		#push_error("Script not found for item " + DataHandler.item_data[str(a_ItemID)]["DisplayName"])
 
 func rotate_item():
 	for grid in item_grids:

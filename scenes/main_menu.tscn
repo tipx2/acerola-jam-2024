@@ -1,9 +1,10 @@
-[gd_scene load_steps=9 format=3 uid="uid://cv87vfcv7pivl"]
+[gd_scene load_steps=10 format=3 uid="uid://cv87vfcv7pivl"]
 
 [ext_resource type="Script" path="res://scripts/main_menu.gd" id="1_5wlri"]
 [ext_resource type="Shader" path="res://assets/shaders/warp.gdshader" id="1_n12fk"]
 [ext_resource type="Texture2D" uid="uid://bh6fat0omfoff" path="res://assets/visuals/logo.png" id="2_qboyc"]
 [ext_resource type="FontFile" uid="uid://tpd5pc8oxjmq" path="res://assets/fonts/ArchivoBlack-Regular.ttf" id="3_5u8hg"]
+[ext_resource type="AudioStream" uid="uid://d00fwyd5yf16c" path="res://assets/audio/music/simple_song.wav" id="5_ie47m"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_gp0t8"]
 shader = ExtResource("1_n12fk")
@@ -108,6 +109,10 @@ layout_mode = 2
 theme_override_fonts/font = ExtResource("3_5u8hg")
 theme_override_font_sizes/font_size = 110
 text = "Options"
+
+[node name="menu_music" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("5_ie47m")
+autoplay = true
 
 [connection signal="pressed" from="Control/CenterContainer/VBoxContainer/CenterContainer2/play" to="." method="_on_play_pressed"]
 [connection signal="pressed" from="Control/CenterContainer/VBoxContainer/CenterContainer3/options" to="." method="_on_options_pressed"]

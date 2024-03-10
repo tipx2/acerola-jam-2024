@@ -1,8 +1,7 @@
-[gd_scene load_steps=17 format=3 uid="uid://btf8cy81nfkdl"]
+[gd_scene load_steps=16 format=3 uid="uid://btf8cy81nfkdl"]
 
 [ext_resource type="Script" path="res://scripts/Item.gd" id="1_7dg5a"]
 [ext_resource type="Shader" path="res://assets/shaders/perspective.gdshader" id="2_nrcui"]
-[ext_resource type="Texture2D" uid="uid://cfjgrlmhghfi3" path="res://assets/visuals/backpack_inventory/bingo_card.png" id="3_kdwbh"]
 [ext_resource type="Material" uid="uid://bcou536fh1wqv" path="res://data/aberration_particles.tres" id="4_5e4ef"]
 [ext_resource type="Texture2D" uid="uid://dtj0fj1kanbay" path="res://assets/visuals/star.png" id="4_km53r"]
 [ext_resource type="Texture2D" uid="uid://citr5r02xxfdc" path="res://assets/visuals/magic_05.png" id="5_3csia"]
@@ -89,7 +88,6 @@ script = ExtResource("1_7dg5a")
 clip_children = 2
 material = SubResource("ShaderMaterial_aecng")
 scale = Vector2(2, 2)
-texture = ExtResource("3_kdwbh")
 
 [node name="GPUParticles2D" type="GPUParticles2D" parent="."]
 emitting = false
