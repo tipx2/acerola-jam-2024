@@ -292,6 +292,24 @@ position = Vector2(50, -50)
 scale = Vector2(2, 2)
 texture = ExtResource("4_km53r")
 
+[node name="recipe_book" type="Node2D" parent="stars_holder"]
+visible = false
+
+[node name="Sprite2D2" type="Sprite2D" parent="stars_holder/recipe_book"]
+position = Vector2(-50, 150)
+scale = Vector2(2, 2)
+texture = ExtResource("4_km53r")
+
+[node name="Sprite2D3" type="Sprite2D" parent="stars_holder/recipe_book"]
+position = Vector2(-150, -50)
+scale = Vector2(2, 2)
+texture = ExtResource("4_km53r")
+
+[node name="Sprite2D4" type="Sprite2D" parent="stars_holder/recipe_book"]
+position = Vector2(50, -150)
+scale = Vector2(2, 2)
+texture = ExtResource("4_km53r")
+
 [connection signal="mouse_entered" from="ColorRect" to="." method="_on_mouse_entered"]
 [connection signal="mouse_exited" from="ColorRect" to="." method="_on_mouse_exited"]
 [connection signal="pressed" from="ColorRect/buy_button" to="." method="_on_buy_button_pressed"]

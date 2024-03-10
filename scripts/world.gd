@@ -4,12 +4,18 @@ var basic_enemy_scene = preload("res://scenes/basic_enemy.tscn")
 @onready var square_room = $SquareRoom
 @onready var portal_notice_anim = $CanvasLayer/portal_notice/AnimationPlayer
 
+@onready var floor_timer = $floor_timer
+var timer_counter = 0
+
 var ENEMY_DISTANCE := 500.0
 
 var tile_map_ref : TileMap
 var tile_list_ref : Array
 var player_ref : Node2D
 var portal_ref : Node2D
+
+var walker_steps = 250
+var current_level = -1
 
 enum {
 	LEFT,
@@ -103,6 +109,9 @@ func spawn_enemy_pos_random(enemy_scene : PackedScene) -> Vector2:
 	# print(enemy_instance," ", get_tile_map_pos(enemy_instance.global_position))
 
 func _on_end_portal_level_ended():
+	Globals.level_time = timer_counter * 0.05
+	get_tree().call_group("effect", "_on_level_ended")
+	
 	Globals.player.set_intangible(true)
 	Globals.player.hud_visible(false)
 	get_tree().call_group("enemy", "set_intangible", true)
@@ -118,7 +127,9 @@ func _on_end_portal_level_ended():
 
 func _on_continue_button_pressed():
 	aggregate_static_effects()
-	square_room.generate_level()
+	square_room.generate_level(walker_steps)
+	current_level += 1
+	square_room.set_tilemap(current_level)
 	Globals.player.set_intangible(false)
 	Globals.player.hud_visible(true)
 	%transition_animation.play("cover")
@@ -129,6 +140,8 @@ func _on_continue_button_pressed():
 	%portal_bg.visible = false
 	%continue_button.visible = false
 	%transition_animation.play("uncover")
+	
+	floor_timer.start()
 
 func aggregate_static_effects():
 	Globals.player.extra_max_hp = 0
@@ -140,6 +153,8 @@ func aggregate_static_effects():
 	
 	for node in get_tree().get_nodes_in_group("effect"):
 		node.backpack_prepass()
+	
+	for node in get_tree().get_nodes_in_group("effect"):
 		node._on_backpack_compile()
 		Globals.player.extra_max_hp += node.extra_max_hp
 		Globals.player.extra_attack_damage += node.extra_attack_damage
@@ -161,3 +176,6 @@ func _on_enemy_died(e : Node):
 		await portal_notice_anim.animation_finished
 		portal_notice_anim.play("fade_out")
 
+
+func _on_floor_timer_timeout():
+	timer_counter += 1

@@ -319,7 +319,7 @@ modulate = Color(0, 0, 0, 1)
 layout_mode = 1
 anchors_preset = 10
 anchor_right = 1.0
-offset_right = 84480.0
+offset_right = 86400.0
 offset_bottom = 1.0
 grow_horizontal = 2
 texture = ExtResource("6_d4sod")
@@ -332,7 +332,7 @@ anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
 offset_top = 1079.0
-offset_right = 84480.0
+offset_right = 86400.0
 offset_bottom = 1080.0
 grow_horizontal = 2
 grow_vertical = 0
@@ -344,6 +344,10 @@ libraries = {
 "": SubResource("AnimationLibrary_qhe4e")
 }
 
+[node name="floor_timer" type="Timer" parent="."]
+wait_time = 0.05
+
 [connection signal="map_generated" from="SquareRoom" to="." method="_on_square_room_map_generated"]
 [connection signal="level_ended" from="EndPortal" to="." method="_on_end_portal_level_ended"]
 [connection signal="pressed" from="CanvasLayer/continue_button" to="." method="_on_continue_button_pressed"]
+[connection signal="timeout" from="floor_timer" to="." method="_on_floor_timer_timeout"]

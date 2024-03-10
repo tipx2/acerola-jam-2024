@@ -41,6 +41,9 @@ func _on_backpack_compile():
 func _on_other_item_gain_money(_item : Node):
 	pass
 
+func _on_level_ended():
+	pass
+
 func _on_self_money_gain():
 	for item in get_tree().get_nodes_in_group("effect"):
 		item._on_other_item_gain_money(item_parent)

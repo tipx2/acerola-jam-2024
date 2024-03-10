@@ -81,13 +81,14 @@ func shoot():
 	if shottimer.time_left > 0:
 		return
 	
-	print(shottimer.wait_time)
+	#print(shottimer.wait_time)
 	
 	var adjusted_b_spread := bullet_spread * (1.0 + extra_bullet_spread)
 	var spread_offset := Vector2(randf_range(-adjusted_b_spread, adjusted_b_spread), randf_range(-adjusted_b_spread, adjusted_b_spread))
 	var bullet_dir := global_transform.origin.direction_to(get_global_mouse_position()) + spread_offset
 	var new_bullet = bullet_scene.instantiate()
 	# print(extra_bullet_speed)
+	print(BASE_BULLET_DAMAGE + extra_attack_damage)
 	add_child(new_bullet.initialise(bullet_dir, shotpoint.global_transform.origin, bullet_speed * (1.0 + extra_bullet_speed), BASE_BULLET_DAMAGE + extra_attack_damage))
 	new_bullet.set_as_top_level(true)
 	
@@ -132,7 +133,7 @@ func set_intangible(b : bool):
 	collision_shape_2d.call_deferred("set_disabled", b)
 
 func config_attack_speed(e : float):
-	print(e, " ", "config'd at speed")
+	# print(e, " ", "config'd at speed")
 	extra_attack_speed = e
 	shottimer.wait_time = SHOT_TIME / (1.0 + extra_attack_speed)
 	

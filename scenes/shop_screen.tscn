@@ -345,7 +345,7 @@ layout_mode = 0
 visible = false
 layout_mode = 0
 
-[node name="Inventory" type="Container" parent="."]
+[node name="Inventory" type="Container" parent="." groups=["inventory"]]
 self_modulate = Color(0.337255, 0.2, 0.0941176, 1)
 layout_mode = 1
 anchors_preset = -1

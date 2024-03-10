@@ -5,7 +5,7 @@ signal enemy_died(e)
 
 @export var reward = 5
 
-@export var MAX_HP := 5
+@export var MAX_HP := 10
 
 @export var BULLET_SPREAD := 0.3
 @export var BULLET_SPEED := 5.0
