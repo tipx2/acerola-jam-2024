@@ -17,7 +17,8 @@ var burst_enemy_scene = preload("res://scenes/burst_enemy.tscn")
 
 @onready var lose_screen = $CanvasLayer/lose_screen
 
-@onready var battle_music_1 = $battle_music_1
+@onready var music = $music
+var current_music : AudioStreamPlayer
 
 @onready var floor_timer = $floor_timer
 var timer_counter = 0
@@ -92,6 +93,10 @@ func round_start() -> void:
 			taken_enemy_spots.append(spawn_enemy_pos_random(basic_enemy_scene))
 	
 	%transition_animation.play("uncover")
+	
+	current_music = music.get_children().pick_random()
+	tween_battle_music_volume(current_music, 0, 0.5, true)
+	
 	# await %transition_animation.animation_finished
 	if current_level != 0:
 		start_notice_2.visible = false
@@ -100,6 +105,7 @@ func round_start() -> void:
 	start_notice_anim.play("fade_out")
 
 func win_game():
+	tween_battle_music_volume(current_music, -80, 2, false)
 	%transition_animation.play("uncover")
 	win_sound.play()
 	win_screen.visible = true
@@ -179,7 +185,7 @@ func _on_end_portal_level_ended():
 	%portal_bg.visible = true
 	%continue_button.visible = true
 	%ShopScreen.start_shop()
-	tween_battle_music_volume(-80, 2, false)
+	tween_battle_music_volume(current_music, -80, 2, false)
 	%ShopScreen.tween_music_volume(0, 0.01, true)
 	%transition_animation.play("uncover")
 	get_tree().call_group("enemy", "queue_free")
@@ -206,7 +212,6 @@ func _on_continue_button_pressed():
 	%ShopScreen.visible = false
 	%ShopScreen.stop_shop()
 	%ShopScreen.tween_music_volume(-80, 2, false)
-	tween_battle_music_volume(0, 2, true)
 	%portal_bg.visible = false
 	%continue_button.visible = false
 	%transition_animation.play("uncover")
@@ -261,6 +266,7 @@ func _on_quit_pressed():
 
 
 func _on_player_player_died():
+	tween_battle_music_volume(current_music, -80, 2, false)
 	Globals.player.set_intangible(true)
 	Globals.player.hud_visible(false)
 	get_tree().call_group("enemy", "set_intangible", true)
@@ -269,10 +275,11 @@ func _on_player_player_died():
 	await %transition_animation.animation_finished
 	%transition_animation.play("uncover")
 	lose_screen.visible = true
+	
 
-func tween_battle_music_volume(target : float, time : float, restart : bool):
+func tween_battle_music_volume(music : AudioStreamPlayer, target : float, time : float, restart : bool):
 	if restart:
-		battle_music_1.playing = false
-		battle_music_1.playing = true
+		music.playing = false
+		music.playing = true
 	var tween = get_tree().create_tween()
-	tween.tween_property(battle_music_1, "volume_db", target, time).set_trans(Tween.TRANS_QUAD)
+	tween.tween_property(music, "volume_db", target, time).set_trans(Tween.TRANS_QUAD)

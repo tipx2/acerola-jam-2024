@@ -492,7 +492,7 @@ bus = &"music"
 
 [node name="tutorial" parent="." instance=ExtResource("18_8t3hi")]
 layout_mode = 1
-tutorials = Array[String](["res://assets/visuals/tutorial/tutorial_2.png", "res://assets/visuals/tutorial/tutorial_3.png", "res://assets/visuals/tutorial/tutorial_rotate.png", "res://assets/visuals/tutorial/tutorial_sell.png", "res://assets/visuals/tutorial/tutorial_aberration.png", "res://assets/visuals/tutorial/tutorial_4.png", "res://assets/visuals/tutorial/tutorial_5.png", "res://assets/visuals/tutorial/tutorial_build.png"])
+tutorials = Array[String](["res://assets/visuals/tutorial/tutorial_2.png", "res://assets/visuals/tutorial/tutorial_3.png", "res://assets/visuals/tutorial/tutorial_rotate.png", "res://assets/visuals/tutorial/tutorial_sell.png", "res://assets/visuals/tutorial/tutorial_slots.png", "res://assets/visuals/tutorial/tutorial_aberration.png", "res://assets/visuals/tutorial/tutorial_4.png", "res://assets/visuals/tutorial/tutorial_5.png", "res://assets/visuals/tutorial/tutorial_build.png"])
 
 [connection signal="buy_button_pressed" from="Shop/MarginContainer/HBoxContainer/ShopContainer/ShopSlot" to="Shop" method="buy_button_pressed"]
 [connection signal="mouse_exited" from="Shop/MarginContainer/HBoxContainer/ShopContainer/ShopSlot" to="Shop" method="_on_slot_mouse_exited"]

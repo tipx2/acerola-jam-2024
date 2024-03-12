@@ -53,7 +53,7 @@
 			"Script_path": "red_velvet_cake.gd",
 			
 			"DisplayName": "Red Velvet Cake",
-			"Description": "+1 [color=#C20000]Max HP[/color] for each [color=yellow]Combat ✦[/color]",
+			"Description": "+1 [color=#C20000]Max HP[/color] for each [color=yellow]Combat [img]res://assets/visuals/star_outline.png[/img][/color]",
 			"Type": "Food",
 			
 			"Buy_price": 5,
@@ -69,7 +69,7 @@
 			"Script_path": "carrot_cake.gd",
 			
 			"DisplayName": "Carrot Cake",
-			"Description": "+1 [color=#C20000]Max HP[/color] for each [color=yellow]Casino ✦[/color]",
+			"Description": "+1 [color=#C20000]Max HP[/color] for each [color=yellow]Casino [img]res://assets/visuals/star_outline.png[/img][/color]",
 			"Type": "Food",
 			
 			"Buy_price": 5,
@@ -85,7 +85,7 @@
 			"Script_path": "fruit_cake.gd",
 			
 			"DisplayName": "Fruit Cake",
-			"Description": "+1 [color=#C20000]Max HP[/color] for each [color=yellow]Food ✦[/color]",
+			"Description": "+1 [color=#C20000]Max HP[/color] for each [color=yellow]Food [img]res://assets/visuals/star_outline.png[/img][/color]",
 			"Type": "Food",
 			
 			"Buy_price": 5,
@@ -100,7 +100,7 @@
 			"Script_path": "roulette_wheel.gd",
 			
 			"DisplayName": "Roulette Wheel",
-			"Description": "When you kill an enemy,\n 5% chance to gain [color=yellow]£5[/color] for each [color=yellow]Card ✦[/color]",
+			"Description": "When you kill an enemy,\n 5% chance to gain [color=yellow]£5[/color] for each [color=yellow]Card [img]res://assets/visuals/star_outline.png[/img][/color]",
 			"Type": "Casino",
 			
 			"Buy_price": 15,
@@ -115,7 +115,7 @@
 			"Script_path": "fruit_machine.gd",
 			
 			"DisplayName": "Fruit Machine",
-			"Description": "When you kill an enemy,\n (5% for each [color=yellow]Card ✦[/color]) chance to gain [color=yellow]£5[/color]",
+			"Description": "When you kill an enemy,\n (5% for each [color=yellow]Card [img]res://assets/visuals/star_outline.png[/img][/color]) chance to gain [color=yellow]£5[/color]",
 			"Type": "Casino",
 			
 			"Buy_price": 15,
@@ -147,7 +147,7 @@
 			"Script_path": "red_chip.gd",
 			
 			"DisplayName": "Red Chip",
-			"Description": "Whenever you gain money\n from any [color=yellow]✦[/color] (except Chips),\ngain an extra [color=yellow]£2[/color]",
+			"Description": "Whenever you gain money\n from any [color=yellow][img]res://assets/visuals/star_outline.png[/img][/color] (except Chips),\ngain an extra [color=yellow]£2[/color]",
 			"Type": "Casino",
 			
 			"Buy_price": 8,
@@ -162,7 +162,7 @@
 			"Script_path": "blue_chip.gd",
 			
 			"DisplayName": "Blue Chip",
-			"Description": "Whenever you gain money\n from any [color=yellow]✦[/color] (except Chips),\ngain an extra [color=yellow]£5[/color]",
+			"Description": "Whenever you gain money\n from any [color=yellow][img]res://assets/visuals/star_outline.png[/img][/color] (except Chips),\ngain an extra [color=yellow]£5[/color]",
 			"Type": "Casino",
 			
 			"Buy_price": 25,
@@ -177,7 +177,7 @@
 			"Script_path": "yellow_chip.gd",
 			
 			"DisplayName": "Yellow Chip",
-			"Description": "Whenever you gain money\n from any [color=yellow]✦[/color] (except Chips),\ngain an extra [color=yellow]£10[/color]",
+			"Description": "Whenever you gain money\n from any [color=yellow][img]res://assets/visuals/star_outline.png[/img][/color] (except Chips),\ngain an extra [color=yellow]£10[/color]",
 			"Type": "Casino",
 			
 			"Buy_price": 70,
@@ -256,7 +256,7 @@
 			"Script_path": "whetstone.gd",
 			
 			"DisplayName": "Whetstone",
-			"Description": "Your bullets deal [color=red]+1 Damage[/color] if [color=yellow]✦[/color] is [color=yellow]Combat[/color]",
+			"Description": "Your bullets deal [color=red]+1 Damage[/color] if [color=yellow][img]res://assets/visuals/star_outline.png[/img][/color] is [color=yellow]Combat[/color]",
 			"Type": "Combat",
 			
 			"Buy_price": 25,
@@ -272,7 +272,7 @@
 			"Script_path": "money_stone.gd",
 			
 			"DisplayName": "Moneystone",
-			"Description": "Your bullets deal +1 [color=red]Damage[/color] if [color=yellow]✦[/color] is [color=yellow] Casino[/color]",
+			"Description": "Your bullets deal +1 [color=red]Damage[/color] if [color=yellow][img]res://assets/visuals/star_outline.png[/img][/color] is [color=yellow] Casino[/color]",
 			"Type": "Combat",
 			
 			"Buy_price": 20,
@@ -288,7 +288,7 @@
 			"Script_path": "card_box.gd",
 			
 			"DisplayName": "Camo Card Box",
-			"Description": "Gain +5% [color=orange]Bullet Speed[/color] for each [color=yellow]Card ✦[/color]",
+			"Description": "Gain +5% [color=orange]Bullet Speed[/color] for each [color=yellow]Card [img]res://assets/visuals/star_outline.png[/img][/color]",
 			"Type": "Combat",
 			
 			"Buy_price": 15,
@@ -304,7 +304,7 @@
 			"Script_path": "GPU.gd",
 			
 			"DisplayName": "GPU",
-			"Description": "Gain +5% [color=blue]Attack Speed[/color] for each [color=yellow]Computer ✦[/color]",
+			"Description": "Gain +5% [color=blue]Attack Speed[/color] for each [color=yellow]Computer [img]res://assets/visuals/star_outline.png[/img][/color]",
 			"Type": "Computer",
 			
 			"Buy_price": 20,
@@ -320,7 +320,7 @@
 			"Script_path": "ram.gd",
 			
 			"DisplayName": "RAM Stick",
-			"Description": "If every [color=yellow]✦[/color] is [color=yellow]Computer[/color] (or empty),\ngain +10% [color=blue]Attack Speed[/color] for every [color=yellow]Computer ✦[/color]",
+			"Description": "If every [color=yellow][img]res://assets/visuals/star_outline.png[/img][/color] is [color=yellow]Computer[/color] (or empty),\ngain +10% [color=blue]Attack Speed[/color] for every [color=yellow]Computer [img]res://assets/visuals/star_outline.png[/img][/color]",
 			"Type": "Computer",
 			
 			"Buy_price": 15,
@@ -352,7 +352,7 @@
 			"Script_path": "motherboard.gd",
 			
 			"DisplayName": "Motherboard",
-			"Description": "+100% [color=blue]Attack Speed[/color] if [color=yellow]✦[/color]points to at least\none of each: CPU, RAM Stick, and GPU",
+			"Description": "+100% [color=blue]Attack Speed[/color] if [color=yellow][img]res://assets/visuals/star_outline.png[/img][/color]points to at least\none of each: CPU, RAM Stick, and GPU",
 			"Type": "Computer",
 			
 			"Buy_price": 40,
@@ -384,7 +384,7 @@
 			"Script_path": "addict_pot.gd",
 			
 			"DisplayName": "Addict's Healing Potion",
-			"Description": "After you take damage, (8% for each [color=yellow]Card ✦[/color]) chance to [color=green]Heal 1[/color]",
+			"Description": "After you take damage, (8% for each [color=yellow]Card [img]res://assets/visuals/star_outline.png[/img][/color]) chance to [color=green]Heal 1[/color]",
 			"Type": "Potion",
 			
 			"Buy_price": 15,
@@ -399,7 +399,7 @@
 			"Script_path": "camo_pot.gd",
 			
 			"DisplayName": "Camo Healing Potion",
-			"Description": "After you take damage, (8% for each [color=yellow]Combat ✦[/color]) chance to [color=green]Heal 1[/color]",
+			"Description": "After you take damage, (8% for each [color=yellow]Combat [img]res://assets/visuals/star_outline.png[/img][/color]) chance to [color=green]Heal 1[/color]",
 			"Type": "Potion",
 			
 			"Buy_price": 15,
@@ -414,7 +414,7 @@
 			"Script_path": "hearty_pot.gd",
 			
 			"DisplayName": "Hearty Healing Pot",
-			"Description": "After you take damage, 15% chance to\n[color=green]Heal 1[/color] for each [color=yellow]Food ✦[/color]",
+			"Description": "After you take damage, 15% chance to\n[color=green]Heal 1[/color] for each [color=yellow]Food [img]res://assets/visuals/star_outline.png[/img][/color]",
 			"Type": "Potion",
 			
 			"Buy_price": 35,
@@ -461,7 +461,7 @@
 			"Script_path": "recipe_book.gd",
 			
 			"DisplayName": "Recipe Book",
-			"Description": "If every [color=yellow]✦[/color] is [color=yellow]Food[/color] (or empty),\nyour bullets deal [color=red]+3 Damage[/color]",
+			"Description": "If every [color=yellow][img]res://assets/visuals/star_outline.png[/img][/color] is [color=yellow]Food[/color] (or empty),\nyour bullets deal [color=red]+3 Damage[/color]",
 			"Type": "Food",
 			
 			"Buy_price": 50,

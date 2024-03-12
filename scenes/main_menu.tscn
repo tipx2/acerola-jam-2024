@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=3 uid="uid://cv87vfcv7pivl"]
+[gd_scene load_steps=21 format=3 uid="uid://cv87vfcv7pivl"]
 
 [ext_resource type="Script" path="res://scripts/main_menu.gd" id="1_5wlri"]
 [ext_resource type="Shader" path="res://assets/shaders/perspective.gdshader" id="2_5m1t2"]
@@ -95,6 +95,8 @@ shader_parameter/vertical_scan_lines_amount = 320.0
 shader_parameter/vertical_scan_lines_opacity = 1.0
 shader_parameter/boost = 1.0
 shader_parameter/aberration_amount = 0.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_0p2vh"]
 
 [sub_resource type="Environment" id="Environment_5lqoj"]
 background_mode = 3
@@ -312,6 +314,7 @@ texture = ExtResource("2_qboyc")
 [node name="menu_music" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("5_ie47m")
 autoplay = true
+bus = &"music"
 
 [node name="CanvasLayer2" type="CanvasLayer" parent="."]
 
@@ -323,6 +326,89 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
+
+[node name="options" type="Control" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 1
+
+[node name="ColorRect" type="ColorRect" parent="options"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.105882, 0.105882, 0.105882, 0.592157)
+
+[node name="PanelContainer" type="PanelContainer" parent="options"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -328.0
+offset_top = -141.0
+offset_right = 328.0
+offset_bottom = 141.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_0p2vh")
+
+[node name="CenterContainer" type="CenterContainer" parent="options/PanelContainer"]
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="options/PanelContainer/CenterContainer"]
+layout_mode = 2
+theme_override_constants/separation = 25
+
+[node name="VBoxContainer2" type="VBoxContainer" parent="options/PanelContainer/CenterContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="music" type="Label" parent="options/PanelContainer/CenterContainer/VBoxContainer/VBoxContainer2"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("3_5u8hg")
+theme_override_font_sizes/font_size = 36
+text = "Music"
+
+[node name="music2" type="HSlider" parent="options/PanelContainer/CenterContainer/VBoxContainer/VBoxContainer2"]
+custom_minimum_size = Vector2(500, 0)
+layout_mode = 2
+max_value = 1.0
+step = 0.01
+value = 0.32
+
+[node name="VBoxContainer" type="VBoxContainer" parent="options/PanelContainer/CenterContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="sfx2" type="Label" parent="options/PanelContainer/CenterContainer/VBoxContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("3_5u8hg")
+theme_override_font_sizes/font_size = 36
+text = "SFX"
+
+[node name="sfx" type="HSlider" parent="options/PanelContainer/CenterContainer/VBoxContainer/VBoxContainer"]
+custom_minimum_size = Vector2(500, 0)
+layout_mode = 2
+max_value = 1.0
+step = 0.01
+value = 0.32
+
+[node name="CenterContainer2" type="CenterContainer" parent="options/PanelContainer/CenterContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="option_back" type="Button" parent="options/PanelContainer/CenterContainer/VBoxContainer/CenterContainer2"]
+custom_minimum_size = Vector2(200, 50)
+layout_mode = 2
+theme_override_fonts/font = ExtResource("3_5u8hg")
+theme_override_font_sizes/font_size = 31
+text = "Back"
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_5lqoj")
@@ -342,7 +428,7 @@ modulate = Color(0, 0, 0, 1)
 layout_mode = 1
 anchors_preset = 10
 anchor_right = 1.0
-offset_right = 120960.0
+offset_right = 126720.0
 offset_bottom = 1.0
 grow_horizontal = 2
 texture = ExtResource("7_vyq7t")
@@ -355,7 +441,7 @@ anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
 offset_top = 1079.0
-offset_right = 120960.0
+offset_right = 126720.0
 offset_bottom = 1080.0
 grow_horizontal = 2
 grow_vertical = 0
@@ -371,3 +457,6 @@ libraries = {
 [connection signal="pressed" from="Control/CenterContainer/VBoxContainer/VBoxContainer/CenterContainer3/options" to="." method="_on_options_pressed"]
 [connection signal="mouse_entered" from="logo" to="." method="_on_texture_rect_mouse_entered"]
 [connection signal="mouse_exited" from="logo" to="." method="_on_texture_rect_mouse_exited"]
+[connection signal="value_changed" from="options/PanelContainer/CenterContainer/VBoxContainer/VBoxContainer2/music2" to="." method="_on_music_2_value_changed"]
+[connection signal="value_changed" from="options/PanelContainer/CenterContainer/VBoxContainer/VBoxContainer/sfx" to="." method="_on_sfx_value_changed"]
+[connection signal="pressed" from="options/PanelContainer/CenterContainer/VBoxContainer/CenterContainer2/option_back" to="." method="_on_option_back_pressed"]

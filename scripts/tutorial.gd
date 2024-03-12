@@ -29,7 +29,7 @@ func _on_right_pressed():
 	update_tut_image()
 
 func update_tut_image():
-	out_of.text = str(current_tut) + "/" + str(tutorials.size() - 1)
+	out_of.text = str(current_tut + 1) + "/" + str(tutorials.size())
 	tut_image.texture = load(tutorials[current_tut])
 
 func on_screen():

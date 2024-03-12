@@ -6,6 +6,7 @@ const TILT_LERP_SPEED = 10
 var logo_moused_on = false
 
 @onready var logo = $logo
+@onready var options = $options
 
 func _on_play_pressed():
 	%transition_animation.play("cover")
@@ -13,8 +14,7 @@ func _on_play_pressed():
 	Globals.start_again()
 
 func _on_options_pressed():
-	# TODO options
-	pass # Replace with function body.
+	options.visible = true
 
 func _process(delta):
 	var curr_y_rot = logo.material.get_shader_parameter("y_rot")
@@ -32,3 +32,14 @@ func _on_texture_rect_mouse_entered():
 
 func _on_texture_rect_mouse_exited():
 	logo_moused_on = false
+
+
+func _on_option_back_pressed():
+	options.visible = false
+
+
+func _on_music_2_value_changed(value):
+	AudioServer.set_bus_volume_db(AudioServer.get_bus_index("music"), linear_to_db(value))
+
+func _on_sfx_value_changed(value):
+	AudioServer.set_bus_volume_db(AudioServer.get_bus_index("sfx"), linear_to_db(value))

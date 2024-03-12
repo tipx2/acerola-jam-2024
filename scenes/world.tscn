@@ -1,4 +1,4 @@
-[gd_scene load_steps=36 format=3 uid="uid://bqbk4qjsfcv20"]
+[gd_scene load_steps=39 format=3 uid="uid://bqbk4qjsfcv20"]
 
 [ext_resource type="Script" path="res://scripts/world.gd" id="1_wjo8l"]
 [ext_resource type="PackedScene" uid="uid://dx5x5ljxp22fg" path="res://scenes/square_room.tscn" id="2_04yut"]
@@ -10,7 +10,10 @@
 [ext_resource type="Shader" path="res://assets/shaders/warp.gdshader" id="6_fem7q"]
 [ext_resource type="FontFile" uid="uid://tpd5pc8oxjmq" path="res://assets/fonts/ArchivoBlack-Regular.ttf" id="8_8o0vw"]
 [ext_resource type="AudioStream" uid="uid://dt6kj8108bu1m" path="res://assets/audio/sfx/win_sound.wav" id="8_iq2m7"]
+[ext_resource type="AudioStream" uid="uid://boqtkbbnee2ph" path="res://assets/audio/music/acerola battle 3 Edit 1 Export 1.wav" id="11_uayas"]
 [ext_resource type="Shader" path="res://assets/shaders/crt.gdshader" id="11_yjkcm"]
+[ext_resource type="AudioStream" uid="uid://cv4vse3slgp2o" path="res://assets/audio/music/acerola jam battle music Edit 1 Export 1.wav" id="12_j8t2i"]
+[ext_resource type="AudioStream" uid="uid://dg53gsog34a5a" path="res://assets/audio/music/Jangwa - Jupiter Czar.mp3" id="13_eujvh"]
 
 [sub_resource type="Animation" id="Animation_w4exi"]
 length = 0.001
@@ -779,7 +782,7 @@ modulate = Color(0, 0, 0, 1)
 layout_mode = 1
 anchors_preset = 10
 anchor_right = 1.0
-offset_right = 122880.0
+offset_right = 130560.0
 offset_bottom = 540.5
 grow_horizontal = 2
 texture = ExtResource("6_d4sod")
@@ -792,7 +795,7 @@ anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
 offset_top = 539.5
-offset_right = 122880.0
+offset_right = 130560.0
 offset_bottom = 1080.0
 grow_horizontal = 2
 grow_vertical = 0
@@ -807,7 +810,23 @@ libraries = {
 [node name="floor_timer" type="Timer" parent="."]
 wait_time = 0.05
 
-[node name="battle_music_1" type="AudioStreamPlayer" parent="."]
+[node name="music" type="Node" parent="."]
+
+[node name="battle_music_2" type="AudioStreamPlayer" parent="music"]
+stream = ExtResource("11_uayas")
+volume_db = -80.0
+autoplay = true
+bus = &"music"
+
+[node name="battle_music_1" type="AudioStreamPlayer" parent="music"]
+stream = ExtResource("12_j8t2i")
+volume_db = -80.0
+autoplay = true
+bus = &"music"
+
+[node name="battle-Music3" type="AudioStreamPlayer" parent="music"]
+stream = ExtResource("13_eujvh")
+volume_db = -80.0
 autoplay = true
 bus = &"music"
 
