@@ -277,9 +277,9 @@ func _on_player_player_died():
 	lose_screen.visible = true
 	
 
-func tween_battle_music_volume(music : AudioStreamPlayer, target : float, time : float, restart : bool):
+func tween_battle_music_volume(_music : AudioStreamPlayer, target : float, time : float, restart : bool):
 	if restart:
-		music.playing = false
-		music.playing = true
+		_music.playing = false
+		_music.playing = true
 	var tween = get_tree().create_tween()
-	tween.tween_property(music, "volume_db", target, time).set_trans(Tween.TRANS_QUAD)
+	tween.tween_property(_music, "volume_db", target, time).set_trans(Tween.TRANS_QUAD)
