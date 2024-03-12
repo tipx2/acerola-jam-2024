@@ -1,4 +1,4 @@
-[gd_scene load_steps=30 format=3 uid="uid://bqbk4qjsfcv20"]
+[gd_scene load_steps=36 format=3 uid="uid://bqbk4qjsfcv20"]
 
 [ext_resource type="Script" path="res://scripts/world.gd" id="1_wjo8l"]
 [ext_resource type="PackedScene" uid="uid://dx5x5ljxp22fg" path="res://scenes/square_room.tscn" id="2_04yut"]
@@ -10,6 +10,7 @@
 [ext_resource type="Shader" path="res://assets/shaders/warp.gdshader" id="6_fem7q"]
 [ext_resource type="FontFile" uid="uid://tpd5pc8oxjmq" path="res://assets/fonts/ArchivoBlack-Regular.ttf" id="8_8o0vw"]
 [ext_resource type="AudioStream" uid="uid://dt6kj8108bu1m" path="res://assets/audio/sfx/win_sound.wav" id="8_iq2m7"]
+[ext_resource type="Shader" path="res://assets/shaders/crt.gdshader" id="11_yjkcm"]
 
 [sub_resource type="Animation" id="Animation_w4exi"]
 length = 0.001
@@ -90,7 +91,7 @@ scale_curve = SubResource("CurveTexture_awtk0")
 hue_variation_min = -1.0
 hue_variation_max = 1.0
 
-[sub_resource type="Animation" id="Animation_0nyhr"]
+[sub_resource type="Animation" id="Animation_72f4w"]
 length = 0.001
 tracks/0/type = "value"
 tracks/0/imported = false
@@ -105,9 +106,9 @@ tracks/0/keys = {
 "values": [Color(1, 1, 1, 0)]
 }
 
-[sub_resource type="Animation" id="Animation_mmwhh"]
+[sub_resource type="Animation" id="Animation_61mh0"]
 resource_name = "fade_in"
-length = 2.0
+length = 4.0
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -115,13 +116,13 @@ tracks/0/path = NodePath(".:modulate")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.5, 2),
+"times": PackedFloat32Array(0, 0.5, 4),
 "transitions": PackedFloat32Array(1, 1, 1),
 "update": 0,
 "values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1), Color(1, 1, 1, 1)]
 }
 
-[sub_resource type="Animation" id="Animation_1oxvn"]
+[sub_resource type="Animation" id="Animation_vy4g5"]
 resource_name = "fade_out"
 length = 0.5
 tracks/0/type = "value"
@@ -137,17 +138,108 @@ tracks/0/keys = {
 "values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
 }
 
-[sub_resource type="AnimationLibrary" id="AnimationLibrary_rl5mu"]
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_oenal"]
 _data = {
-"RESET": SubResource("Animation_0nyhr"),
-"fade_in": SubResource("Animation_mmwhh"),
-"fade_out": SubResource("Animation_1oxvn")
+"RESET": SubResource("Animation_72f4w"),
+"fade_in": SubResource("Animation_61mh0"),
+"fade_out": SubResource("Animation_vy4g5")
+}
+
+[sub_resource type="Animation" id="Animation_jxt8u"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("../start_notice2:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_7bivj"]
+resource_name = "fade_in"
+length = 5.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5, 5),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1), Color(1, 1, 1, 1)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("../start_notice2:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.5, 5),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1), Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_mop2h"]
+resource_name = "fade_out"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("../start_notice2:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_dx8bw"]
+_data = {
+"RESET": SubResource("Animation_jxt8u"),
+"fade_in": SubResource("Animation_7bivj"),
+"fade_out": SubResource("Animation_mop2h")
 }
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_6ssra"]
 bg_color = Color(0, 0, 0, 1)
 
-[sub_resource type="Animation" id="Animation_v82hm"]
+[sub_resource type="Animation" id="Animation_2t8ya"]
+resource_name = "RESET"
 length = 0.001
 tracks/0/type = "bezier"
 tracks/0/imported = false
@@ -157,7 +249,7 @@ tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
 "handle_modes": PackedInt32Array(0),
-"points": PackedFloat32Array(1, -0.25, 0, 0.25, 0),
+"points": PackedFloat32Array(540.5, -0.25, 0, 0.25, 0),
 "times": PackedFloat32Array(0)
 }
 tracks/1/type = "bezier"
@@ -168,7 +260,7 @@ tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
 "handle_modes": PackedInt32Array(0),
-"points": PackedFloat32Array(1, -0.25, 0, 0.25, 0),
+"points": PackedFloat32Array(540.5, -0.25, 0, 0.25, 0),
 "times": PackedFloat32Array(0)
 }
 tracks/2/type = "bezier"
@@ -179,7 +271,7 @@ tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
 "handle_modes": PackedInt32Array(0),
-"points": PackedFloat32Array(1079, -0.25, 0, 0.25, 0),
+"points": PackedFloat32Array(539.5, -0.25, 0, 0.25, 0),
 "times": PackedFloat32Array(0)
 }
 
@@ -257,10 +349,28 @@ tracks/2/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_qhe4e"]
 _data = {
-"RESET": SubResource("Animation_v82hm"),
+"RESET": SubResource("Animation_2t8ya"),
 "cover": SubResource("Animation_64qfl"),
 "uncover": SubResource("Animation_opvmd")
 }
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_l078j"]
+shader = ExtResource("11_yjkcm")
+shader_parameter/screen_size = Vector2(1280, 180)
+shader_parameter/show_curvature = true
+shader_parameter/curvature_x_amount = 8.77
+shader_parameter/curvature_y_amount = 7.07
+shader_parameter/corner_color = Vector4(0, 0, 0, 0)
+shader_parameter/show_vignette = true
+shader_parameter/vignette_opacity = 0.3
+shader_parameter/show_horizontal_scan_lines = true
+shader_parameter/horizontal_scan_lines_amount = 100.0
+shader_parameter/horizontal_scan_lines_opacity = 0.01
+shader_parameter/show_vertical_scan_lines = false
+shader_parameter/vertical_scan_lines_amount = 320.0
+shader_parameter/vertical_scan_lines_opacity = 1.0
+shader_parameter/boost = 1.0
+shader_parameter/aberration_amount = 0.0
 
 [node name="world" type="Node2D" groups=["world"]]
 script = ExtResource("1_wjo8l")
@@ -545,8 +655,62 @@ color = Color(0, 0, 0, 0.129412)
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="CanvasLayer/portal_notice"]
 libraries = {
-"": SubResource("AnimationLibrary_rl5mu")
+"": SubResource("AnimationLibrary_oenal")
 }
+
+[node name="start_notice" type="RichTextLabel" parent="CanvasLayer"]
+modulate = Color(1, 1, 1, 0)
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -370.0
+offset_top = -55.0
+offset_right = 370.0
+offset_bottom = 55.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_fonts/normal_font = ExtResource("8_8o0vw")
+theme_override_font_sizes/normal_font_size = 70
+bbcode_enabled = true
+text = "[center][wave amp=50.0 freq=5.0 connected=1]Kill all enemies to proceed![/wave][/center]"
+fit_content = true
+
+[node name="ColorRect" type="ColorRect" parent="CanvasLayer/start_notice"]
+show_behind_parent = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.129412)
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="CanvasLayer/start_notice"]
+libraries = {
+"": SubResource("AnimationLibrary_dx8bw")
+}
+
+[node name="start_notice2" type="Label" parent="CanvasLayer"]
+modulate = Color(1, 1, 1, 0)
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -290.0
+offset_top = 110.0
+offset_right = 290.0
+offset_bottom = 220.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_fonts/font = ExtResource("8_8o0vw")
+theme_override_font_sizes/font_size = 36
+text = "WASD to move, mouse to aim and left click to shoot!"
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 2
 
 [node name="portal_bg" type="Control" parent="CanvasLayer"]
 unique_name_in_owner = true
@@ -615,8 +779,8 @@ modulate = Color(0, 0, 0, 1)
 layout_mode = 1
 anchors_preset = 10
 anchor_right = 1.0
-offset_right = 103680.0
-offset_bottom = 1.0
+offset_right = 122880.0
+offset_bottom = 540.5
 grow_horizontal = 2
 texture = ExtResource("6_d4sod")
 
@@ -627,8 +791,8 @@ anchors_preset = 12
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_top = 1079.0
-offset_right = 103680.0
+offset_top = 539.5
+offset_right = 122880.0
 offset_bottom = 1080.0
 grow_horizontal = 2
 grow_vertical = 0
@@ -646,6 +810,17 @@ wait_time = 0.05
 [node name="battle_music_1" type="AudioStreamPlayer" parent="."]
 autoplay = true
 bus = &"music"
+
+[node name="CanvasLayer2" type="CanvasLayer" parent="."]
+
+[node name="ColorRect" type="ColorRect" parent="CanvasLayer2"]
+material = SubResource("ShaderMaterial_l078j")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
 
 [connection signal="map_generated" from="SquareRoom" to="." method="_on_square_room_map_generated"]
 [connection signal="player_died" from="player" to="." method="_on_player_player_died"]

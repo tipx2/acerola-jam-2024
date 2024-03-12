@@ -3,7 +3,7 @@ class_name BasicEnemy
 
 signal enemy_died(e)
 
-@export var reward = 2
+@export var reward = 4
 
 @export var MAX_HP := 5
 var additional_max_hp = 0

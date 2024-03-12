@@ -6,6 +6,8 @@ var burst_enemy_scene = preload("res://scenes/burst_enemy.tscn")
 
 @onready var square_room = $SquareRoom
 @onready var portal_notice_anim = $CanvasLayer/portal_notice/AnimationPlayer
+@onready var start_notice_anim = $CanvasLayer/start_notice/AnimationPlayer
+@onready var start_notice_2 = $CanvasLayer/start_notice2
 
 @onready var camera_player = $player/camera_player
 
@@ -88,6 +90,14 @@ func round_start() -> void:
 			taken_enemy_spots.append(spawn_enemy_pos_random(burst_enemy_scene))
 		else:
 			taken_enemy_spots.append(spawn_enemy_pos_random(basic_enemy_scene))
+	
+	%transition_animation.play("uncover")
+	# await %transition_animation.animation_finished
+	if current_level != 0:
+		start_notice_2.visible = false
+	start_notice_anim.play("fade_in")
+	await start_notice_anim.animation_finished
+	start_notice_anim.play("fade_out")
 
 func win_game():
 	%transition_animation.play("uncover")
@@ -160,7 +170,7 @@ func _on_end_portal_level_ended():
 	%transition_animation.play("cover")
 	await %transition_animation.animation_finished
 	
-	if current_level == 9:
+	if current_level == 8:
 		win_game()
 		return
 	
@@ -173,8 +183,14 @@ func _on_end_portal_level_ended():
 	%ShopScreen.tween_music_volume(0, 0.01, true)
 	%transition_animation.play("uncover")
 	get_tree().call_group("enemy", "queue_free")
+	
+	if Globals.show_shop_tutorial:
+		Globals.show_shop_tutorial = false
+		%ShopScreen.show_tutorial()
 
 func _on_continue_button_pressed():
+	if %ShopScreen.inventory.item_held:
+		return
 	aggregate_static_effects()
 	square_room.generate_level(step_count)
 	square_room.set_tilemap(current_level)
@@ -236,8 +252,9 @@ func _on_floor_timer_timeout():
 	timer_counter += 1
 
 func _on_again_pressed():
+	%transition_animation.play("cover")
+	await %transition_animation.animation_finished
 	Globals.start_again()
-
 
 func _on_quit_pressed():
 	get_tree().change_scene_to_file("res://scenes/main_menu.tscn")

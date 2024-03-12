@@ -1,0 +1,176 @@
+[gd_scene load_steps=11 format=3 uid="uid://cvdcaddcey441"]
+
+[ext_resource type="Script" path="res://scripts/tutorial.gd" id="1_kj4xy"]
+[ext_resource type="FontFile" uid="uid://tpd5pc8oxjmq" path="res://assets/fonts/ArchivoBlack-Regular.ttf" id="2_djqfb"]
+[ext_resource type="Texture2D" uid="uid://dae4quatm8nfh" path="res://assets/visuals/tutorial/tutorial_aberration.png" id="3_op0t6"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_k8kh3"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_oidqr"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_2d43r"]
+
+[sub_resource type="Animation" id="Animation_tfrf4"]
+resource_name = "off_screen"
+length = 0.4
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.4),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_etspp"]
+resource_name = "RESET"
+length = 0.4
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_i6de4"]
+resource_name = "on_screen"
+length = 0.4
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.4),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_m8pou"]
+_data = {
+"RESET": SubResource("Animation_etspp"),
+"off_screen": SubResource("Animation_tfrf4"),
+"on_screen": SubResource("Animation_i6de4")
+}
+
+[node name="tutorial" type="Control"]
+modulate = Color(1, 1, 1, 0)
+z_index = 2
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("1_kj4xy")
+tutorials = Array[String](["res://assets/visuals/tutorial/tutorial_2.png", ""])
+
+[node name="PanelContainer" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.0862745, 0.0862745, 0.0862745, 1)
+
+[node name="CenterContainer" type="CenterContainer" parent="PanelContainer"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer/CenterContainer"]
+layout_mode = 2
+theme_override_constants/separation = 30
+
+[node name="CenterContainer2" type="CenterContainer" parent="PanelContainer/CenterContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="PanelContainer/CenterContainer/VBoxContainer/CenterContainer2"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_djqfb")
+theme_override_font_sizes/font_size = 115
+text = "Shop Tutorial"
+horizontal_alignment = 1
+
+[node name="CenterContainer" type="CenterContainer" parent="PanelContainer/CenterContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="tut_image" type="TextureRect" parent="PanelContainer/CenterContainer/VBoxContainer/CenterContainer"]
+custom_minimum_size = Vector2(1100, 600)
+layout_mode = 2
+texture = ExtResource("3_op0t6")
+expand_mode = 1
+
+[node name="HBoxContainer" type="HBoxContainer" parent="PanelContainer/CenterContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 525
+
+[node name="left" type="Button" parent="PanelContainer/CenterContainer/VBoxContainer/HBoxContainer"]
+custom_minimum_size = Vector2(200, 200)
+layout_mode = 2
+theme_override_font_sizes/font_size = 116
+theme_override_styles/normal = SubResource("StyleBoxFlat_k8kh3")
+text = "<"
+
+[node name="out of" type="Label" parent="PanelContainer/CenterContainer/VBoxContainer/HBoxContainer"]
+custom_minimum_size = Vector2(400, 200)
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_djqfb")
+theme_override_font_sizes/font_size = 101
+text = "10/10"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="right" type="Button" parent="PanelContainer/CenterContainer/VBoxContainer/HBoxContainer"]
+custom_minimum_size = Vector2(200, 200)
+layout_mode = 2
+theme_override_font_sizes/font_size = 116
+theme_override_styles/normal = SubResource("StyleBoxFlat_oidqr")
+text = ">"
+
+[node name="Control" type="Control" parent="."]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -94.0
+offset_bottom = 94.0
+grow_horizontal = 0
+
+[node name="exit" type="Button" parent="Control"]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 51
+theme_override_styles/normal = SubResource("StyleBoxFlat_2d43r")
+text = "X"
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_m8pou")
+}
+
+[connection signal="pressed" from="PanelContainer/CenterContainer/VBoxContainer/HBoxContainer/left" to="." method="_on_left_pressed"]
+[connection signal="pressed" from="PanelContainer/CenterContainer/VBoxContainer/HBoxContainer/right" to="." method="_on_right_pressed"]
+[connection signal="pressed" from="Control/exit" to="." method="_on_exit_pressed"]

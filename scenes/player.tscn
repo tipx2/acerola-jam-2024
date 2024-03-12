@@ -1,6 +1,7 @@
-[gd_scene load_steps=23 format=3 uid="uid://cggixt2rmuqrk"]
+[gd_scene load_steps=24 format=3 uid="uid://cggixt2rmuqrk"]
 
 [ext_resource type="Script" path="res://scripts/player.gd" id="1_nx67x"]
+[ext_resource type="Texture2D" uid="uid://cpst1k8lmronk" path="res://assets/visuals/light_01.png" id="2_0ia88"]
 [ext_resource type="Texture2D" uid="uid://bvvgrhseu3yv0" path="res://assets/visuals/character_legs.png" id="2_a724e"]
 [ext_resource type="Texture2D" uid="uid://ccuqjq1v8ayuy" path="res://assets/visuals/character.png" id="2_oklud"]
 [ext_resource type="Texture2D" uid="uid://cvppvc6armqm1" path="res://assets/visuals/seamlessed_leather.png" id="3_c7gje"]
@@ -185,11 +186,18 @@ collision_layer = 29
 collision_mask = 29
 script = ExtResource("1_nx67x")
 
+[node name="PointLight2D" type="PointLight2D" parent="."]
+top_level = true
+shadow_enabled = true
+texture = ExtResource("2_0ia88")
+
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, -1)
 shape = SubResource("CircleShape2D_71bwt")
 
 [node name="legs" type="Sprite2D" parent="."]
+light_mask = 2
+visibility_layer = 2
 position = Vector2(0.83, 0)
 rotation = 1.5708
 scale = Vector2(0.52, 0.52)
@@ -202,6 +210,8 @@ libraries = {
 }
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
+light_mask = 2
+visibility_layer = 2
 z_index = 1
 rotation = 1.5708
 scale = Vector2(0.52, 0.52)

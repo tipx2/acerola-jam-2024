@@ -384,7 +384,7 @@
 			"Script_path": "addict_pot.gd",
 			
 			"DisplayName": "Addict's Healing Potion",
-			"Description": "After you take damage, (8% for each [color=yellow]Casino ✦[/color]) chance to [color=green]Heal 1[/color]",
+			"Description": "After you take damage, (8% for each [color=yellow]Card ✦[/color]) chance to [color=green]Heal 1[/color]",
 			"Type": "Potion",
 			
 			"Buy_price": 15,
@@ -414,7 +414,7 @@
 			"Script_path": "hearty_pot.gd",
 			
 			"DisplayName": "Hearty Healing Pot",
-			"Description": "When you take damage, 15% chance to\n[color=green]Heal 1[/color] for each [color=yellow]Food ✦[/color]",
+			"Description": "After you take damage, 15% chance to\n[color=green]Heal 1[/color] for each [color=yellow]Food ✦[/color]",
 			"Type": "Potion",
 			
 			"Buy_price": 35,
@@ -468,7 +468,7 @@
 			"Sell_price": 10,
 			
 			"Grid": "0,0/1,0/1,1/0,1",
-			"Adj_grid": "0,2/-1,0/1,-1",
+			"Adj_grid": "0,2/-1,0/1,-1/0,1/-1,1/2,0/2,1/1,2",
 			"Stars_config": "recipe_book"
 		},
 		

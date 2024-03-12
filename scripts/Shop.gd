@@ -22,6 +22,7 @@ func _process(delta):
 		cost_tooltip.global_position = lerp(cost_tooltip.global_position, get_global_mouse_position() + Vector2(0, tooltip.size.y) + adjustment, 20 * delta)
 		if !margin_container.get_global_rect().has_point(get_global_mouse_position()):
 			tooltip.visible = false
+			cost_tooltip.visible = false
 
 func load_items():
 	update_money_label()

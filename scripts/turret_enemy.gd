@@ -2,7 +2,7 @@ extends StaticBody2D
 class_name TurretEnemy
 signal enemy_died(e)
 
-@export var reward = 2
+@export var reward = 3
 @export var MAX_HP := 5
 var additional_max_hp = 0
 var current_hp : int

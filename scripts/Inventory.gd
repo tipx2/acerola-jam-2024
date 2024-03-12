@@ -177,7 +177,6 @@ func place_item():
 	
 	items_slots_held.append(item_held)
 	
-	# TODO show aberration in tooltip
 	# item_held.set_aberrated(true)
 	
 	item_held.selected = false

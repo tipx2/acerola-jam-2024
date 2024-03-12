@@ -1,13 +1,55 @@
-[gd_scene load_steps=10 format=3 uid="uid://cv87vfcv7pivl"]
+[gd_scene load_steps=20 format=3 uid="uid://cv87vfcv7pivl"]
 
 [ext_resource type="Script" path="res://scripts/main_menu.gd" id="1_5wlri"]
-[ext_resource type="Shader" path="res://assets/shaders/warp.gdshader" id="1_n12fk"]
+[ext_resource type="Shader" path="res://assets/shaders/perspective.gdshader" id="2_5m1t2"]
 [ext_resource type="Texture2D" uid="uid://bh6fat0omfoff" path="res://assets/visuals/logo.png" id="2_qboyc"]
 [ext_resource type="FontFile" uid="uid://tpd5pc8oxjmq" path="res://assets/fonts/ArchivoBlack-Regular.ttf" id="3_5u8hg"]
 [ext_resource type="AudioStream" uid="uid://d00fwyd5yf16c" path="res://assets/audio/music/simple_song.wav" id="5_ie47m"]
+[ext_resource type="Shader" path="res://assets/shaders/crt.gdshader" id="6_c3dwo"]
+[ext_resource type="Texture2D" uid="uid://bgcxc026klhjd" path="res://assets/visuals/1x1white.png" id="7_vyq7t"]
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_gp0t8"]
-shader = ExtResource("1_n12fk")
+[sub_resource type="Shader" id="Shader_2ccdp"]
+code = "shader_type canvas_item;
+
+const vec2 center =  vec2(0.5,0.5);
+uniform float intensity : hint_range(0.0, 20.0) = 9.14159265359;
+varying float angle;
+varying float time;
+uniform float radius : hint_range(0.0, 1.0) = 0.5;
+
+//loops through the sprite top to bottom, left to right pixel by pixel
+void fragment(){
+    // Get the current UV coordinates
+    vec2 uv = UV;
+
+//Ignoring the outbound zone
+if(length(center - uv) > radius ) {
+COLOR = texture(TEXTURE, UV);
+}
+
+//Real work section
+else{
+time = 10.0 * cos(TIME/5.0);
+//Wrip effect making the angle relative to the distance to the center
+angle = intensity * (length(center - uv) - sqrt(0.5)) * time;
+
+
+    // Rotate the UV coordinates around the center of the sprite
+    uv -= vec2(0.5, 0.5);
+    uv = vec2(
+        uv.x * cos(angle) - uv.y * sin(angle),
+        uv.x * sin(angle) + uv.y * cos(angle)
+    );
+    uv += vec2(0.5, 0.5);
+
+    // Output the result pixel from the original texture
+    COLOR = texture(TEXTURE, uv);
+}
+
+}"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_m2lua"]
+shader = SubResource("Shader_2ccdp")
 shader_parameter/intensity = 1.202
 shader_parameter/radius = 0.735
 
@@ -28,6 +70,153 @@ seamless = true
 color_ramp = SubResource("Gradient_lsap4")
 noise = SubResource("FastNoiseLite_h5jho")
 
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_tih5u"]
+shader = ExtResource("2_5m1t2")
+shader_parameter/fov = 90.0
+shader_parameter/cull_back = true
+shader_parameter/y_rot = 0.0
+shader_parameter/x_rot = 0.0
+shader_parameter/inset = 0.0
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_7t6w7"]
+shader = ExtResource("6_c3dwo")
+shader_parameter/screen_size = Vector2(1280, 180)
+shader_parameter/show_curvature = true
+shader_parameter/curvature_x_amount = 6.0
+shader_parameter/curvature_y_amount = 4.0
+shader_parameter/corner_color = Vector4(0, 0, 0, 0)
+shader_parameter/show_vignette = true
+shader_parameter/vignette_opacity = 0.3
+shader_parameter/show_horizontal_scan_lines = true
+shader_parameter/horizontal_scan_lines_amount = 100.0
+shader_parameter/horizontal_scan_lines_opacity = 0.1
+shader_parameter/show_vertical_scan_lines = false
+shader_parameter/vertical_scan_lines_amount = 320.0
+shader_parameter/vertical_scan_lines_opacity = 1.0
+shader_parameter/boost = 1.0
+shader_parameter/aberration_amount = 0.0
+
+[sub_resource type="Environment" id="Environment_5lqoj"]
+background_mode = 3
+glow_enabled = true
+glow_intensity = 4.18
+glow_strength = 2.0
+
+[sub_resource type="Animation" id="Animation_d0udw"]
+resource_name = "RESET"
+tracks/0/type = "bezier"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("TextureRect:size:y")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(1, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0)
+}
+tracks/1/type = "bezier"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("TextureRect2:size:y")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(1, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0)
+}
+tracks/2/type = "bezier"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("TextureRect2:position:y")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(1079, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0)
+}
+
+[sub_resource type="Animation" id="Animation_3df3j"]
+resource_name = "cover"
+tracks/0/type = "bezier"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("TextureRect:size:y")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"handle_modes": PackedInt32Array(0, 0),
+"points": PackedFloat32Array(1, -0.25, 0, 0.25, 0, 1080, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0, 1)
+}
+tracks/1/type = "bezier"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("TextureRect2:size:y")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"handle_modes": PackedInt32Array(0, 0),
+"points": PackedFloat32Array(1, -0.25, 0, 0.25, 0, 1080, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0, 1)
+}
+tracks/2/type = "bezier"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("TextureRect2:position:y")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"handle_modes": PackedInt32Array(0, 0),
+"points": PackedFloat32Array(1079, -0.25, 0, 0.25, 0, 0, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0, 1)
+}
+
+[sub_resource type="Animation" id="Animation_rx74f"]
+resource_name = "uncover"
+tracks/0/type = "bezier"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("TextureRect:size:y")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"handle_modes": PackedInt32Array(0, 0),
+"points": PackedFloat32Array(540.5, -0.25, 0, 0.25, 0, 1, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0, 1)
+}
+tracks/1/type = "bezier"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("TextureRect2:size:y")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"handle_modes": PackedInt32Array(0, 0),
+"points": PackedFloat32Array(540.5, -0.25, 0, 0.25, 0, 1, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0, 1)
+}
+tracks/2/type = "bezier"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("TextureRect2:position:y")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"handle_modes": PackedInt32Array(0, 0),
+"points": PackedFloat32Array(539.5, -0.25, 0, 0.25, 0, 1079, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0, 1)
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_yb7ma"]
+_data = {
+"RESET": SubResource("Animation_d0udw"),
+"cover": SubResource("Animation_3df3j"),
+"uncover": SubResource("Animation_rx74f")
+}
+
 [node name="MainMenu" type="Control"]
 layout_mode = 3
 anchors_preset = 15
@@ -46,7 +235,7 @@ grow_horizontal = 2
 grow_vertical = 2
 
 [node name="TextureRect" type="TextureRect" parent="portal_bg"]
-material = SubResource("ShaderMaterial_gp0t8")
+material = SubResource("ShaderMaterial_m2lua")
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -71,48 +260,114 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 2
 
 [node name="CenterContainer" type="CenterContainer" parent="Control"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+offset_top = 328.0
 grow_horizontal = 2
 grow_vertical = 2
 
 [node name="VBoxContainer" type="VBoxContainer" parent="Control/CenterContainer"]
 layout_mode = 2
-theme_override_constants/separation = 40
+theme_override_constants/separation = -65
 
-[node name="CenterContainer" type="CenterContainer" parent="Control/CenterContainer/VBoxContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="Control/CenterContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 35
+
+[node name="CenterContainer2" type="CenterContainer" parent="Control/CenterContainer/VBoxContainer/VBoxContainer"]
 layout_mode = 2
 
-[node name="TextureRect" type="TextureRect" parent="Control/CenterContainer/VBoxContainer/CenterContainer"]
-custom_minimum_size = Vector2(626.667, 293.333)
-layout_mode = 2
-texture = ExtResource("2_qboyc")
-
-[node name="CenterContainer2" type="CenterContainer" parent="Control/CenterContainer/VBoxContainer"]
-layout_mode = 2
-
-[node name="play" type="Button" parent="Control/CenterContainer/VBoxContainer/CenterContainer2"]
+[node name="play" type="Button" parent="Control/CenterContainer/VBoxContainer/VBoxContainer/CenterContainer2"]
 layout_mode = 2
 theme_override_fonts/font = ExtResource("3_5u8hg")
 theme_override_font_sizes/font_size = 110
 text = "Play"
 
-[node name="CenterContainer3" type="CenterContainer" parent="Control/CenterContainer/VBoxContainer"]
+[node name="CenterContainer3" type="CenterContainer" parent="Control/CenterContainer/VBoxContainer/VBoxContainer"]
 layout_mode = 2
 
-[node name="options" type="Button" parent="Control/CenterContainer/VBoxContainer/CenterContainer3"]
+[node name="options" type="Button" parent="Control/CenterContainer/VBoxContainer/VBoxContainer/CenterContainer3"]
 layout_mode = 2
 theme_override_fonts/font = ExtResource("3_5u8hg")
 theme_override_font_sizes/font_size = 110
 text = "Options"
 
+[node name="logo" type="TextureRect" parent="."]
+material = SubResource("ShaderMaterial_tih5u")
+custom_minimum_size = Vector2(1253.33, 586.666)
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_left = 285.0
+offset_right = -285.0
+offset_bottom = 587.0
+grow_horizontal = 2
+texture = ExtResource("2_qboyc")
+
 [node name="menu_music" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("5_ie47m")
 autoplay = true
 
-[connection signal="pressed" from="Control/CenterContainer/VBoxContainer/CenterContainer2/play" to="." method="_on_play_pressed"]
-[connection signal="pressed" from="Control/CenterContainer/VBoxContainer/CenterContainer3/options" to="." method="_on_options_pressed"]
+[node name="CanvasLayer2" type="CanvasLayer" parent="."]
+
+[node name="ColorRect" type="ColorRect" parent="CanvasLayer2"]
+material = SubResource("ShaderMaterial_7t6w7")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_5lqoj")
+
+[node name="transition" type="Control" parent="."]
+z_index = 3
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="TextureRect" type="TextureRect" parent="transition"]
+modulate = Color(0, 0, 0, 1)
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_right = 120960.0
+offset_bottom = 1.0
+grow_horizontal = 2
+texture = ExtResource("7_vyq7t")
+
+[node name="TextureRect2" type="TextureRect" parent="transition"]
+modulate = Color(0, 0, 0, 1)
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = 1079.0
+offset_right = 120960.0
+offset_bottom = 1080.0
+grow_horizontal = 2
+grow_vertical = 0
+texture = ExtResource("7_vyq7t")
+
+[node name="transition_animation" type="AnimationPlayer" parent="transition"]
+unique_name_in_owner = true
+libraries = {
+"": SubResource("AnimationLibrary_yb7ma")
+}
+
+[connection signal="pressed" from="Control/CenterContainer/VBoxContainer/VBoxContainer/CenterContainer2/play" to="." method="_on_play_pressed"]
+[connection signal="pressed" from="Control/CenterContainer/VBoxContainer/VBoxContainer/CenterContainer3/options" to="." method="_on_options_pressed"]
+[connection signal="mouse_entered" from="logo" to="." method="_on_texture_rect_mouse_entered"]
+[connection signal="mouse_exited" from="logo" to="." method="_on_texture_rect_mouse_exited"]

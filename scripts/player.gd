@@ -49,6 +49,8 @@ var extra_crit_chance := 0.0
 @onready var damage_sound = $damage_sound
 @onready var shot_sound = $shot_sound
 
+@onready var point_light_2d = $PointLight2D
+
 func _ready():
 	
 	shottimer.wait_time = SHOT_TIME / (1.0 + extra_attack_speed)
@@ -65,6 +67,9 @@ func _ready():
 
 
 func _physics_process(_delta):
+	
+	point_light_2d.global_position = global_position
+	
 	if intangible:
 		return
 	var direction = Input.get_vector("move_left", "move_right", "move_up", "move_down")
@@ -158,6 +163,7 @@ func config_attack_speed(e : float):
 	extra_attack_speed = e
 	shottimer.wait_time = SHOT_TIME / (1.0 + extra_attack_speed)
 	
+
 
 func update_max_hp():
 	hp_bar.max_value = MAX_HP + extra_max_hp

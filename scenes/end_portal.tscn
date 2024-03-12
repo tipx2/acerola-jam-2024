@@ -1,11 +1,51 @@
-[gd_scene load_steps=9 format=3 uid="uid://bvka4v8r5qjnb"]
+[gd_scene load_steps=10 format=3 uid="uid://bvka4v8r5qjnb"]
 
 [ext_resource type="Script" path="res://scripts/end_portal.gd" id="1_xvhge"]
 [ext_resource type="Texture2D" uid="uid://cdrwgi8ynb6wy" path="res://assets/visuals/50x50blackcircle.png" id="2_ke2a4"]
-[ext_resource type="Shader" path="res://assets/shaders/warp.gdshader" id="3_7bcoq"]
+[ext_resource type="Texture2D" uid="uid://cpst1k8lmronk" path="res://assets/visuals/light_01.png" id="4_eneua"]
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_ex7qi"]
-shader = ExtResource("3_7bcoq")
+[sub_resource type="Shader" id="Shader_spvr1"]
+code = "shader_type canvas_item;
+
+const vec2 center =  vec2(0.5,0.5);
+uniform float intensity : hint_range(0.0, 20.0) = 9.14159265359;
+varying float angle;
+varying float time;
+uniform float radius : hint_range(0.0, 1.0) = 0.5;
+
+//loops through the sprite top to bottom, left to right pixel by pixel
+void fragment(){
+    // Get the current UV coordinates
+    vec2 uv = UV;
+
+//Ignoring the outbound zone
+if(length(center - uv) > radius ) {
+COLOR = texture(TEXTURE, UV);
+}
+
+//Real work section
+else{
+time = 10.0 * cos(1.0 * TIME);
+//Wrip effect making the angle relative to the distance to the center
+angle = intensity * (length(center - uv) - sqrt(0.5)) * time;
+
+
+    // Rotate the UV coordinates around the center of the sprite
+    uv -= vec2(0.5, 0.5);
+    uv = vec2(
+        uv.x * cos(angle) - uv.y * sin(angle),
+        uv.x * sin(angle) + uv.y * cos(angle)
+    );
+    uv += vec2(0.5, 0.5);
+
+    // Output the result pixel from the original texture
+    COLOR = texture(TEXTURE, uv);
+}
+
+}"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_odhr8"]
+shader = SubResource("Shader_spvr1")
 shader_parameter/intensity = 1.202
 shader_parameter/radius = 0.735
 
@@ -38,7 +78,7 @@ scale = Vector2(0.6, 0.6)
 texture = ExtResource("2_ke2a4")
 
 [node name="TextureRect" type="TextureRect" parent="Sprite2D"]
-material = SubResource("ShaderMaterial_ex7qi")
+material = SubResource("ShaderMaterial_odhr8")
 anchors_preset = -1
 anchor_left = -0.78
 anchor_top = -0.78
@@ -55,5 +95,12 @@ texture = SubResource("NoiseTexture2D_g6g02")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_skobg")
+
+[node name="PointLight2D" type="PointLight2D" parent="."]
+color = Color(0.427451, 0.176471, 0.803922, 1)
+energy = 2.0
+shadow_enabled = true
+shadow_color = Color(0.180392, 0.0862745, 0.243137, 0)
+texture = ExtResource("4_eneua")
 
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]

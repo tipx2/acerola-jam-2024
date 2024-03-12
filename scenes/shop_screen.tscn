@@ -1,4 +1,4 @@
-[gd_scene load_steps=33 format=3 uid="uid://c0hnp5n85ngx0"]
+[gd_scene load_steps=34 format=3 uid="uid://c0hnp5n85ngx0"]
 
 [ext_resource type="Script" path="res://scripts/shop_screen.gd" id="1_rdggk"]
 [ext_resource type="Script" path="res://scripts/Shop.gd" id="2_cvtyw"]
@@ -18,6 +18,7 @@
 [ext_resource type="Texture2D" uid="uid://dfsf187bdnu0u" path="res://assets/visuals/sell_lid_grey.png" id="15_17fd6"]
 [ext_resource type="AudioStream" uid="uid://cql740fn4l0bp" path="res://assets/audio/sfx/Bin_open.wav" id="16_87klg"]
 [ext_resource type="AudioStream" uid="uid://cb3wk7kklwvny" path="res://assets/audio/sfx/Bin_close.wav" id="17_0k745"]
+[ext_resource type="PackedScene" uid="uid://cvdcaddcey441" path="res://scenes/tutorial.tscn" id="18_8t3hi"]
 
 [sub_resource type="Animation" id="Animation_xt4id"]
 length = 0.001
@@ -488,6 +489,10 @@ stream = ExtResource("11_klcfw")
 volume_db = -80.0
 autoplay = true
 bus = &"music"
+
+[node name="tutorial" parent="." instance=ExtResource("18_8t3hi")]
+layout_mode = 1
+tutorials = Array[String](["res://assets/visuals/tutorial/tutorial_2.png", "res://assets/visuals/tutorial/tutorial_3.png", "res://assets/visuals/tutorial/tutorial_rotate.png", "res://assets/visuals/tutorial/tutorial_sell.png", "res://assets/visuals/tutorial/tutorial_aberration.png", "res://assets/visuals/tutorial/tutorial_4.png", "res://assets/visuals/tutorial/tutorial_5.png", "res://assets/visuals/tutorial/tutorial_build.png"])
 
 [connection signal="buy_button_pressed" from="Shop/MarginContainer/HBoxContainer/ShopContainer/ShopSlot" to="Shop" method="buy_button_pressed"]
 [connection signal="mouse_exited" from="Shop/MarginContainer/HBoxContainer/ShopContainer/ShopSlot" to="Shop" method="_on_slot_mouse_exited"]
